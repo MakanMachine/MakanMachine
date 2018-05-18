@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var webhookRouter = require('./routes/webhook');
+var tgCaller = require('./api_caller/telegram_caller');
 
 var app = express();
 
@@ -39,5 +40,16 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+init();
+
+async function init() {
+	try{
+		const result = await tgCaller.setWebHook();
+		console.log(result);
+	} catch(error) {
+		console.log(error);
+	}
+}
 
 module.exports = app;
