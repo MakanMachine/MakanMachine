@@ -2,7 +2,7 @@ const request = require('request');
 
 function setWebHook() {
 	console.log("Setting Webhook on Telegram");
-	return new Promise(function(resolve, reject)) {
+	return new Promise(function(resolve, reject){
 		const url = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/setwebhook`;
 		const options = {
 			method: 'post',
@@ -26,7 +26,7 @@ function setWebHook() {
 
 function sendMessage(chatID, message) {
 	console.log("Sending message to chat_id" + chatID);
-	return new Promise(function(resolve, reject)) {
+	return new Promise(function(resolve, reject) {
 		const url = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`;
 		const options = {
 			method: 'post',
@@ -47,9 +47,10 @@ function sendMessage(chatID, message) {
 			}
 		});
 	});
+		
 }
 
 module.exports = {
 	setWebHook,
-	sendMessasge,
+	sendMessage,
 }
