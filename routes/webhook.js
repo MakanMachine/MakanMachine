@@ -12,4 +12,12 @@ router.post('/', function(req, res, next) {
 	tgCaller.sendMessage(chat_id, message);
 });
 
+router.get('/help', function(req, res) {
+    const objectBody = req.body;
+    console.log('received /help from telegram');
+    res.status(200).send('Help');
+    let chat_id = objectBody.message.chat.id;
+    tgCaller.sendMessage(chat_id, 'Makan Machine recommends you places to eat based on criteria that you decide! Type /recommend to begin.');
+});
+
 module.exports = router;
