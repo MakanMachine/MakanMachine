@@ -9,6 +9,8 @@ router.post('/', function(req, res, next) {
 	res.status(200).send('Rubbish');
 	let chat_id = objectBody.message.chat.id;
 	let message = objectBody.message.text;
+    if(message === '/help')
+        message = 'Makan Machine recommends you restaurants to dine at based on your criteria! Type /recommend to begin.';
 	tgCaller.sendMessage(chat_id, message);
 });
 
