@@ -6,12 +6,16 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
+    "mongoose": "^5.1.2",
     "morgan": "~1.9.0",
+    "node-cache": "^4.2.0",
+    "npm": "^6.1.0",
     "request": "^2.86.0"
   }
 }
