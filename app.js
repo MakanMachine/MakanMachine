@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var webhookRouter = require('./routes/webhook');
 var tgCaller = require('./api_caller/telegram_caller');
-var userPref = require('./userpref')
 
 var app = express();
 
