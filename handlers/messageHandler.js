@@ -13,7 +13,7 @@ function handleMessageEvent(msgObj) {
 	if(text) {
 		text = text.trim();
 		if(isCommand(text)) {
-			const command = text.spilt('@')[0].substr(1);
+			const command = text.spilt[0].substr(1);
 			console.log("Command Detected: " + command);
 			cmdHandler.handleCommand(chatID, msgObj, command);
 		}
