@@ -7,7 +7,7 @@ const messageHandler = require('./messageHandler');
 
 function handleTgEvent(objectBody) {
 	console.log("Handling Telegram Event");
-	if(eventObj.message) {
+	if(objectBody.message) {
 		messageHandler.handleMessageEvent(objectBody.message);
 	}
 	else {
