@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var tgCaller = require('../api_caller/telegram_caller');
+var eventHandler = require('../handlers/eventHandler');
 
 /* GET home page. */
 router.post('/', function(req, res, next) {
@@ -9,9 +10,7 @@ router.post('/', function(req, res, next) {
 	res.status(200).send('Rubbish');
 	let chat_id = objectBody.message.chat.id;
 	let message = objectBody.message.text;
-    if(message == '/help')
-        message = 'Makan Machine recommends you restaurants to dine at based on your criteria! Type /recommend to begin.';
-	tgCaller.sendMessage(chat_id, message);
+	eventHandler.handleTgEvent(objectBody);
 });
 
 module.exports = router;
