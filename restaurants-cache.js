@@ -12,7 +12,7 @@ axios({
     responseType: 'json'
 })
     .then(function(response) {
-        const content = util.inspect(response);
+        const content = util.inspect(response.data);
         fs.writeFile("./allRestaurants.json", content, function(err) {
             if (err)
                 return console.log(err);
