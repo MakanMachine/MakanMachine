@@ -12,8 +12,8 @@ function handleMessageEvent(msgObj) {
 	let text = msgObj.text;
 	if(text) {
 		text = text.trim();
-		if(isCommand(text)) {
-			const command = text.spilt()[0].substr(1);
+		if(isCommand(text)) { 
+			const command = text.substr(1);
 			console.log("Command Detected: " + command);
 			cmdHandler.handleCommand(chatID, msgObj, command);
 		}
