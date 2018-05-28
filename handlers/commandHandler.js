@@ -10,13 +10,13 @@ function handleCommand(chatID, msgObj, command) {
 	const firstName = msgObj.chat.first_name ? msgObj.chat.first_name : ' ';
 
 	switch (command) {
-		case 'start':
+		case '/start':
 			handleStart(chatID, firstName);
 			break;
-		case 'help':
+		case '/help':
 			handleHelp(chatID);
 			break;
-		case 'recommend':
+		case '/recommend':
 			handleRecommend(chatID);
 			break;
 		default:
