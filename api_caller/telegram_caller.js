@@ -106,4 +106,5 @@ async function sendMessageWithInlineKeyboard(chatID, message, inlineKeyboardButt
 module.exports = {
 	setWebHook,
 	sendMessage,
+	sendMessageWithInlineKeyboard,
 }
