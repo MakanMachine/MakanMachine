@@ -14,7 +14,7 @@ function getMessage(type, data) {
 }
 
 function getInlineKeyboard(type, data) {
-	switch (type) 
+	switch (type) {
 		case 'recommend':
 			return getRecommendInlineKeyboard();
 	}
