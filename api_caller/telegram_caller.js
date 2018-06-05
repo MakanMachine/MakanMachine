@@ -45,10 +45,10 @@ function setWebHook() {
 
 async function sendMessage(chatID, message, option) {
 	console.log("Sending message to chat_id" + chatID);
-	let parseMode = ' ';
+	let parseMode = '';
 	let replyMarkup = {};
 	if (option) {
-		parseMode = option.parse_mode || ' ';
+		parseMode = option.parse_mode || '';
 		replyMarkup =
 			option.force_reply ||
 			option.inline_keyboard ||
