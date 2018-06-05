@@ -9,12 +9,12 @@
 function getMessage(type, data) {
 	switch (type) {
 		case 'recommend':
-			return `Which cuisine would you like to have?`;
+			return `Please specify your preferences so that we can find the most suitable restaurant for you! You need to specify at least 1 option.`;
 	}
 }
 
 function getInlineKeyboard(type, data) {
-	switch (type) {
+	switch (type) 
 		case 'recommend':
 			return getRecommendInlineKeyboard();
 	}
@@ -23,12 +23,12 @@ function getInlineKeyboard(type, data) {
 function getRecommendInlineKeyboard() {
 	return [[
 		{
-			text: 'Chinese',
-			callback_data: 'recommend/chinese',
+			text: 'Cuisine',
+			callback_data: 'recommend/cuisine',
 		},
 		{
-			text: 'Malay',
-			callback_data: 'recommend/malay',
+			text: 'Location',
+			callback_data: 'recommend/location',
 		}
 		]]
 }
