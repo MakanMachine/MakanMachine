@@ -1,6 +1,19 @@
-const fs = require('fs');
 var axios = require('axios');
 var util = require('util');
+var NodeCache = require('node-cache');
+var is = require('is_js');
+
+const CACHE_TABLE = {
+    GENERAL: 'general',
+    CUISINE: 'cuisine',
+};
+
+const cache = {};
+
+if (is.empty(cache)) {
+    cache.cuisine = new NodeCache();
+    cache.general = new NodeCache();
+}
 
 axios({
     method:'get',
@@ -12,13 +25,68 @@ axios({
     responseType: 'json'
 })
     .then(function(response) {
-        const content = util.inspect(response.data);
-        fs.writeFile("./allRestaurants.json", content, function(err) {
-            if (err)
-                return console.log(err);
-            console.log("All restaurants data written");
-        });
+        const content = response.data;
+        updateGeneral(content);
+        updateCuisine(content);
+        // console.log(cache.cuisine.keys());
+        var arr = cache.cuisine.get('Western');
+        console.log(arr);
     })
     .catch(function(error) {
-        console.log(error)
+        console.log(error);
     });
+
+function updateGeneral(content) {
+    cache.general.set(CACHE_TABLE.GENERAL, content, (err) => {
+    if(err)
+        console.log('Failed to store in cache.');
+    });
+    console.log("All restaurants data written");
+    // mykeys = cache.general.keys(); 
+    // console.log(mykeys);
+    // cache.general.get(CACHE_TABLE.GENERAL, (err, value) => {
+    //     if(err) {
+    //         console.log('Failed to retrieve from cache.');
+    //     } else {
+    //         if(value) {
+    //             console.log(value);
+    //         }
+    //     }
+    // });
+}
+
+function updateCuisine(content) {
+    for(var i=0; i < content.length; i++) {
+        var obj = content[i];
+        for(var j=0; j < obj.cuisine.length; j++) {
+            value = cache.cuisine.get(obj.cuisine[j]);
+            if(value == undefined) {
+                cache.cuisine.set(obj.cuisine[j], new Array(obj));
+                //console.log('new cuisine key');
+            } else {
+                value.push(obj);
+                cache.cuisine.set(obj.cuisine[j], value);
+                //console.log('new restaurant added');
+            }
+        }
+    }
+}
+
+//This version doesn't work.
+// function updateCuisine(content) {
+//     var x;
+//     var y;
+//     for(x in content) {
+//         for(y in x.cuisine) {
+//             value = cache.cuisine.get(y);
+//             if(value == undefined) {
+//                 cache.cuisine.set(y, new Array(x));
+//                 //console.log('new cuisine key');
+//             } else {
+//                 value.push(x);
+//                 cache.cuisine.set(y, value);
+//                 //console.log('new restaurant added');
+//             }
+//         }
+//     }
+// }

@@ -15,10 +15,10 @@ function handleUser(objectBody) {
     User.findOneAndUpdate({chat_id: objectBody.message.chat.id}, )
 }
 
-function createNewUser(username, chatID, first_name, cuisine) {
+function createNewUser(username, chatId, first_name, cuisine) {
     User.create({
         username: username,
-        chat_id: chatid,
+        chat_id: chatId,
         first_name: first_name,
         cuisine: cuisine,
         created_at: new Date(),
