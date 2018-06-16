@@ -11,11 +11,15 @@ db.once('open', function() {
     console.log('Successfully connected.');
 });
 
-function updateUser(objectBody) {
-    User.findOneAndUpdate({chat_id: objectBody.message.chat.id}, )
+function updateUser(msgObj) {
+    var message = msgObj.text.split(',');
+    User.findByIdAndUpdate(msgObj.chat.id, {cuisine: [message[0], message[1], message[2]]}, {upsert: true}, (err, user) => {
+        if(err)
+            console.log(err);
+    });
 }
 
-function startUser(chatId, objectBody) {
+function startUser(chatId, msgObj) {
     User.findById(chatId, (err, user) => {
         if(err)
             console.log(err);
@@ -25,19 +29,21 @@ function startUser(chatId, objectBody) {
     });
 }
 
-function createNewUser(username, chatId, first_name, cuisine) {
+function createNewUser(chatId, firstName, msgObj) {
     User.create({
-        username: username,
+        username: msgObj.chat.username,
         _id: chatId,
-        first_name: first_name,
-        cuisine: cuisine,
+        first_name: firstName,
+        cuisine: [],
         created_at: new Date(),
         updated_at: new Date()
     });
+    console.log(`Username: ${msgObj.chat.username} created. ChatId: ${chatId}.`);
 }
 
 module.exports = {
-    createNewUser
+    startUser,
+    updateUser,
 };
 
 // db.once('open', function() {

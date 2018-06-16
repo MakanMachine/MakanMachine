@@ -5,6 +5,7 @@
 
 const tgCaller = require('../api_caller/telegram_caller');
 const recommendUtil = require('../utils/recommendUtils');
+const userpref = require('../userpref');
 
 function handleCommand(chatID, msgObj, command) {
 	console.log("Handling command: " + command);
@@ -12,7 +13,7 @@ function handleCommand(chatID, msgObj, command) {
 
 	switch (command) {
 		case 'start':
-			handleStart(chatID, firstName);
+			handleStart(chatID, firstName, msgObj);
 			break;
 		case 'help':
 			handleHelp(chatID);
@@ -20,14 +21,18 @@ function handleCommand(chatID, msgObj, command) {
 		case 'recommend':
 			handleRecommend(chatID);
 			break;
+		case 'settings':
+			handleSettings(chatID, msgObj);
+			break;
 		default:
 			handleUnknown(chatID);
 			break;
 	}
 }
 
-async function handleStart(chatID, firstName) {
+async function handleStart(chatID, firstName, msgObj) {
 	const message = `Hello ${firstName}! Hungry but don't know where to eat? Type /recommend to begin!`;
+	userpref.startUser(chatID, firstName, msgObj);
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
@@ -47,6 +52,15 @@ async function handleRecommend(chatID) {
 }
 
 async function handleUnknown(chatID) {
+	const message = "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
+	await tgCaller.sendMessage(chatID, message, { parse_mode: 'markdown'}).catch((error) => {
+			console.log(error);
+		});
+}
+
+// Edit this function to tell user to type in 3 cuisines separated with commas (Eg. American, Chinese, Japanese). Then use that
+// msgObj and call updateUser from userpref.
+async function handleSettings(chatID, msgObj) {
 	const message = "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
 	await tgCaller.sendMessage(chatID, message, { parse_mode: 'markdown'}).catch((error) => {
 			console.log(error);
