@@ -4,6 +4,7 @@
 */
 
 const tgCaller = require('../api_caller/telegram_caller');
+const recommendUtil = require('../utils/recommendUtils');
 
 function handleCommand(chatID, msgObj, command) {
 	console.log("Handling command: " + command);
@@ -25,38 +26,29 @@ function handleCommand(chatID, msgObj, command) {
 	}
 }
 
-function handleStart(chatID, firstName) {
+async function handleStart(chatID, firstName) {
 	const message = `Hello ${firstName}! Hungry but don't know where to eat? Type /recommend to begin!`;
-	tgCaller.sendMessage(chatID, message).then((result) => {
-		console.log(result.message);
-	}).catch((error) => {
+	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
 }
 
-function handleHelp(chatID) {
+async function handleHelp(chatID) {
 	const message = "Makan Machine recommends you restaurants to dine at based on your criteria! Type /recommend to begin."
-	tgCaller.sendMessage(chatID, message).then((result) => {
-		console.log(result.message);
-	}).catch((error) => {
+	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
 }
 
-function handleRecommend(chatID) {
-	const message = "Please select your preferences so that we can recommend something you are craving for!"
-	tgCaller.sendMessage(chatID, message).then((result) => {
-			console.log(result.message);
-		}).catch((error) => {
-			console.log(error);
-		});
+async function handleRecommend(chatID) {
+	const message = await recommendUtil.getMessage('recommend');
+	const inlineKeyboardButtonList = await recommendUtil.getInlineKeyboard('recommend');
+	tgCaller.sendMessageWithInlineKeyboard(chatID, message, inlineKeyboardButtonList);
 }
 
-function handleUnknown(chatID) {
+async function handleUnknown(chatID) {
 	const message = "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
-	tgCaller.sendMessage(chatID, message).then((result) => {
-			console.log(result.message);
-		}).catch((error) => {
+	await tgCaller.sendMessage(chatID, message, { parse_mode: 'markdown'}).catch((error) => {
 			console.log(error);
 		});
 }
