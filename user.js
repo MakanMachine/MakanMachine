@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
 username: String,
-chat_id: String,
+_id: String,
 first_name: String,
 cuisine: String,
 created_at: Date,

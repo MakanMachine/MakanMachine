@@ -11,14 +11,24 @@ db.once('open', function() {
     console.log('Successfully connected.');
 });
 
-function handleUser(objectBody) {
+function updateUser(objectBody) {
     User.findOneAndUpdate({chat_id: objectBody.message.chat.id}, )
+}
+
+function startUser(chatId, objectBody) {
+    User.findById(chatId, (err, user) => {
+        if(err)
+            console.log(err);
+        else
+            if(typeof user == 'undefined')
+                createNewUser(chatId, objectBody);
+    });
 }
 
 function createNewUser(username, chatId, first_name, cuisine) {
     User.create({
         username: username,
-        chat_id: chatId,
+        _id: chatId,
         first_name: first_name,
         cuisine: cuisine,
         created_at: new Date(),
