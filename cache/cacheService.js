@@ -2,7 +2,7 @@ const NodeCache = require('node-cache');
 const cacheProvider = require('./cacheProvider');
 
 // Takes in an options object containing cuisine and location.
-function recommend(options) {
+function get(options) {
     return new Promise((resolve, reject) => {
         cacheProvider.getInstance()[cuisine].get(options.cuisine, (err, result) => {
             if(err) {
@@ -16,5 +16,5 @@ function recommend(options) {
 }
 
 module.exports = {
-    recommend,
+    get,
 }
