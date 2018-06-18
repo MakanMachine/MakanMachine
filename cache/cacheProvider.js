@@ -8,33 +8,32 @@ const CACHE_TABLE = {
     CUISINE: 'cuisine',
 };
 
-const cache = {};
+var cache = {};
 
-if (is.empty(cache)) {
-    cache.cuisine = new NodeCache();
-    cache.general = new NodeCache();
-}
+function start() {
+    if (is.empty(cache)) {
+        cache.cuisine = new NodeCache();
+        cache.general = new NodeCache();
+    }
 
-axios({
-    method:'get',
-    url:'https://enigmatic-forest-44322.herokuapp.com/api/restaurants',
-    auth: {
-        username: 'x-api-key',
-        password: 'bd345546-672d-4f09-b25a-97e7eebc6ac2'
-    },
-    responseType: 'json'
-})
-    .then(function(response) {
-        const content = response.data;
-        updateGeneral(content);
-        updateCuisine(content);
-        // console.log(cache.cuisine.keys());
-        var arr = cache.cuisine.get('Western');
-        console.log(arr);
+    axios({
+        method:'get',
+        url:'https://enigmatic-forest-44322.herokuapp.com/api/restaurants',
+        auth: {
+            username: 'x-api-key',
+            password: 'bd345546-672d-4f09-b25a-97e7eebc6ac2'
+        },
+        responseType: 'json'
     })
-    .catch(function(error) {
-        console.log(error);
-    });
+        .then(function(response) {
+            const content = response.data;
+            updateGeneral(content);
+            updateCuisine(content);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+}
 
 function updateGeneral(content) {
     cache.general.set(CACHE_TABLE.GENERAL, content, (err) => {
@@ -72,6 +71,14 @@ function updateCuisine(content) {
     }
 }
 
+function getInstance() {
+    return cache;
+}
+
+module.exports = {
+    getInstance,
+    start,
+}
 //This version doesn't work.
 // function updateCuisine(content) {
 //     var x;
