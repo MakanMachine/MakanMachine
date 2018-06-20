@@ -67,29 +67,7 @@ async function sendMessage(chatID, message, option) {
 		console.log(`Message sent to ${chatID}. ${result}`);	
 	} catch (error) {
 		throw new Error(`Failed to send message to ${chatID}. ${error}`);
-	}
-	// return new Promise(function(resolve, reject) {
-	// 	const url = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`;
-	// 	const options = {
-	// 		method: 'post',
-	// 		url: url,
-	// 		headers: {'content-type': 'application/json'},
-	// 		body: {
-	// 			chat_id: chatID,
-	// 			text: message,				
-	// 		},
-	// 		json: true,
-	// 	};
-
-	// 	request(options, function(error, response, body) {
-	// 		if(!error && response.statusCode == 200) {
-	// 			resolve('Message Sent');
-	// 		} else {
-	// 			reject(error);
-	// 		}
-	// 	});
-	// });
-		
+	}	
 }
 
 async function sendMessageWithInlineKeyboard(chatID, message, inlineKeyboardButtonList) {
@@ -103,8 +81,17 @@ async function sendMessageWithInlineKeyboard(chatID, message, inlineKeyboardButt
 	await sendMessage(chatID, message, sendOptions);
 }
 
+async function sendMessageWithForcedReply(chatID, message) {
+	console.log('Forcing reply for preference: ', chatID);
+	await sendMessage(chatID, message, {
+		parse_mode: 'markdown',
+		force_reply: {force_reply: true },
+	});
+}
+
 module.exports = {
 	setWebHook,
 	sendMessage,
 	sendMessageWithInlineKeyboard,
+	sendMessageWithForcedReply,
 }
