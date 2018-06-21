@@ -32,8 +32,9 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 	const message = `Your preference has been updated! Type /surprise_me to get a random restaurent!`
 	await Promise.all([
 		tgCaller.sendMessage(chatID, message, {'parse_mode': 'markdown'}),
-		userPref.updateUser(msgObj)
-		])
+		userPref.updateUser(msgObj)]).catch((error => {
+			console.log(error);
+		}))
 }
 
 function getReplyType(previousMsg) {
