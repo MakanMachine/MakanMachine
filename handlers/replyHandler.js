@@ -10,7 +10,7 @@ const types = {
 	PREFRENCE: 'preference'
 }
 
-function handleReply(chatID, msgObg) {
+function handleReply(chatID, msgObj) {
 	const replyID = msgObj.reply_to_message.message_id;
 	const previousMsg = msgObj.reply_to_message.text;
 	const firstName = msgObj.chat.first_name || '';
