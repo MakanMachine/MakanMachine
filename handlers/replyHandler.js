@@ -4,7 +4,7 @@
 */
 
 const tgCaller = require('../api_caller/telegram_caller');
-const userPref = require('../userPref');
+const userPref = require('../userpref');
 
 const types = {
 	PREFRENCE: 'preference'
