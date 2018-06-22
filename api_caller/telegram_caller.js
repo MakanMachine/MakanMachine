@@ -93,5 +93,5 @@ module.exports = {
 	setWebHook,
 	sendMessage,
 	sendMessageWithInlineKeyboard,
-	sendMessageWithForcedReply,
+	sendMessageWithForcedReply,	
 }

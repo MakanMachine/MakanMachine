@@ -7,7 +7,7 @@ const tgCaller = require('../api_caller/telegram_caller');
 const userPref = require('../userpref');
 
 const types = {
-	PREFRENCE: 'preference'
+	PREFERENCE: 'preference'
 }
 
 function handleReply(chatID, msgObj) {
@@ -16,7 +16,7 @@ function handleReply(chatID, msgObj) {
 	const firstName = msgObj.chat.first_name || '';
 	console.log("Handling reply to message: " + previousMsg);
 	const replyType = getReplyType(previousMsg);
-	console.log("Reply type: ", replyType);
+	console.log("Reply type:", replyType);
 	switch(replyType) {
 		case (types.PREFERENCE):
 			handlePreferenceReply(chatID, firstName, msgObj);
@@ -31,7 +31,7 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 	console.log("Preference updated: " + preference);
 	const message = `Your preference has been updated! Type /surprise_me to get a random restaurent!`
 	await Promise.all([
-		tgCaller.sendMessage(chatID, message, {'parse_mode': 'markdown'}),
+		tgCaller.sendMessage(chatID, message, {parse_mode: 'markdown'}),
 		userPref.updateUser(msgObj)]).catch((error => {
 			console.log(error);
 		}))
