@@ -53,6 +53,9 @@ function createNewUser(chatId, msgObj) {
         cuisine: [],
         created_at: new Date(),
         updated_at: new Date()
+    })
+    .catch((err) => {
+        console.log(err);
     });
     console.log(`Username: ${msgObj.chat.username} created. ChatId: ${chatId}.`);
 }
