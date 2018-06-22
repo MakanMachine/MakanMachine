@@ -61,8 +61,8 @@ async function handleUnknown(chatID) {
 // Edit this function to tell user to type in 3 cuisines separated with commas (Eg. American, Chinese, Japanese). Then use that
 // msgObj and call updateUser from userpref.
 async function handleSettings(chatID, msgObj) {
-	const message = "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
-	await tgCaller.sendMessage(chatID, message, { parse_mode: 'markdown'}).catch((error) => {
+	const message = "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
+	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
 		});
 }
