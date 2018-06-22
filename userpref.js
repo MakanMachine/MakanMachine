@@ -62,7 +62,7 @@ function createNewUser(chatId, msgObj) {
 }
 
 function getUser(chatId) {
-    User.findById(chatId, (err, user) => {
+    User.findById(chatId, var result = (err, user) => {
         if(err) {
             console.log(err);
         } else {
@@ -70,7 +70,7 @@ function getUser(chatId) {
                 console.log(`ChatID: ${chatId} not found.`);
             } else {
                 console.log(user);
-                var result = user;
+                return user;
             }
         }
     });
