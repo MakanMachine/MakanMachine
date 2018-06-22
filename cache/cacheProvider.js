@@ -30,6 +30,7 @@ function start() {
             updateGeneral(content);
             updateCuisine(content);
             //console.log(cache.cuisine.keys())
+            console.log(cache.cuisine.get('Japanese'));
         })
         .catch(function(error) {
             console.log(error);
@@ -56,21 +57,37 @@ function updateGeneral(content) {
 }
 
 function updateCuisine(content) {
-    for(var i=0; i < content.length; i++) {
-        var obj = content[i];
-        for(var j=0; j < obj.cuisine.length; j++) {
-            value = cache.cuisine.get(obj.cuisine[j]);
+    for(var x of content) {
+        for(var y of x.cuisine) {
+            value = cache.cuisine.get(y);
             if(value == undefined) {
-                cache.cuisine.set(obj.cuisine[j], new Array(obj));
+                cache.cuisine.set(y, new Array(x));
                 //console.log('new cuisine key');
             } else {
-                value.push(obj);
-                cache.cuisine.set(obj.cuisine[j], value);
+                value.push(x);
+                cache.cuisine.set(y, value);
                 //console.log('new restaurant added');
             }
         }
     }
 }
+
+// function updateCuisine(content) {
+//     for(var i=0; i < content.length; i++) {
+//         var obj = content[i];
+//         for(var j=0; j < obj.cuisine.length; j++) {
+//             value = cache.cuisine.get(obj.cuisine[j]);
+//             if(value == undefined) {
+//                 cache.cuisine.set(obj.cuisine[j], new Array(obj));
+//                 //console.log('new cuisine key');
+//             } else {
+//                 value.push(obj);
+//                 cache.cuisine.set(obj.cuisine[j], value);
+//                 //console.log('new restaurant added');
+//             }
+//         }
+//     }
+// }
 
 function getInstance() {
     return cache;
@@ -80,21 +97,3 @@ module.exports = {
     getInstance,
     start,
 }
-//This version doesn't work.
-// function updateCuisine(content) {
-//     var x;
-//     var y;
-//     for(x in content) {
-//         for(y in x.cuisine) {
-//             value = cache.cuisine.get(y);
-//             if(value == undefined) {
-//                 cache.cuisine.set(y, new Array(x));
-//                 //console.log('new cuisine key');
-//             } else {
-//                 value.push(x);
-//                 cache.cuisine.set(y, value);
-//                 //console.log('new restaurant added');
-//             }
-//         }
-//     }
-// }

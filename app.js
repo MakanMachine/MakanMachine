@@ -8,7 +8,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var webhookRouter = require('./routes/webhook');
 var tgCaller = require('./api_caller/telegram_caller');
-var userPref = require('./userpref')
+var userPref = require('./userpref');
+var cacheProvider = require('./cache/cacheProvider');
 
 var app = express();
 
@@ -46,6 +47,7 @@ init();
 
 async function init() {
 	try{
+    cacheProvider.start();
 		const result = await tgCaller.setWebHook();
 		console.log(result);
 	} catch(error) {

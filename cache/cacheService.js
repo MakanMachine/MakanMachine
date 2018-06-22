@@ -16,6 +16,17 @@ function get(options) {
     });
 }
 
+// Takes in array of restaurants, and filter out info to return to user
+function refineMessage(array) {
+    var newArr = [];
+    for(var x of array) {
+        newArr.push({name: x.name, opening_hours: x.opening_hours, address: x.address, nearest_mrt: x.nearest_mrt, map_url: x.map_url});
+    }
+    console.log(newArr);
+    return newArr;
+}
+
 module.exports = {
     get,
+    refineMessage,
 }

@@ -24,6 +24,9 @@ function handleCommand(chatID, msgObj, command) {
 		case 'settings':
 			handleSettings(chatID, msgObj);
 			break;
+		case 'surprise_me':
+			handleSurprise(chatID);
+			break;
 		default:
 			handleUnknown(chatID);
 			break;
@@ -65,6 +68,13 @@ async function handleSettings(chatID, msgObj) {
 	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
 		});
+}
+
+async function handleSurpise(chatID) {
+	const message = "Makan Machine recommends you restaurants to dine at based on your criteria! Type /recommend to begin."
+	await tgCaller.sendMessage(chatID, message).catch((error) => {
+		console.log(error);
+	});
 }
 
 module.exports = {
