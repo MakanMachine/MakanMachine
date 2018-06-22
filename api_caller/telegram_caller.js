@@ -28,7 +28,7 @@ function setWebHook() {
 			url: url,
 			headers: {'content-type': 'application/json'},
 			body: {
-				url: `https://serene-meadow-74652.herokuapp.com/bot${process.env.BOT_TOKEN}`,				
+				url: `${process.env.APP_SECURE_URL}/bot${process.env.BOT_TOKEN}`,				
 			},
 			json: true,
 		};
