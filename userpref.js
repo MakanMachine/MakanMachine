@@ -12,6 +12,7 @@ db.once('open', function() {
 });
 
 function updateUser(msgObj) {
+    console.log("Data has been updated!");
     var message = msgObj.text.split(',');
     User.findByIdAndUpdate(msgObj.chat.id, {cuisine: [message[0], message[1], message[2]]}, {upsert: true}, (err, user) => {
         if(err)

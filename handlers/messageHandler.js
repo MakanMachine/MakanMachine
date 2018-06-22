@@ -5,6 +5,7 @@
 
 const tgCaller = require('../api_caller/telegram_caller.js');
 const cmdHandler = require('./commandHandler');
+const rpHandler = require('./replyHandler');
 
 function handleMessageEvent(msgObj) {
 	console.log("Handling Telegram Message Event");
@@ -12,7 +13,11 @@ function handleMessageEvent(msgObj) {
 	let text = msgObj.text;
 	if(text) {
 		text = text.trim();
-		if(isCommand(text)) { 
+		if(isReply(msgObj)) {
+			console.log("Reply Detected");
+			rpHandler.handleReply(chatID, msgObj);
+		}
+		else if(isCommand(text)) { 
 			const command = text.substr(1);
 			console.log("Command Detected: " + command);
 			cmdHandler.handleCommand(chatID, msgObj, command);
@@ -33,6 +38,15 @@ function handleMessageEvent(msgObj) {
 
 function isCommand(text) {
 	if(text.charAt(0) == '/') {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+function isReply(msgObj) {
+	if(msgObj.reply_to_message) {
 		return true;
 	}
 	else {
