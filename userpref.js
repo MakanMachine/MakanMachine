@@ -61,7 +61,7 @@ function createNewUser(chatId, msgObj) {
     console.log(`Username: ${msgObj.chat.username} created. ChatId: ${chatId}.`);
 }
 
-function getUserPref(chatId) {
+function getUser(chatId) {
     User.findById(chatId, (err, user) => {
         if(err) {
             console.log(err);
@@ -70,7 +70,7 @@ function getUserPref(chatId) {
             if(user == undefined) {
                 console.log(`ChatID: ${chatId} not found.`);
             } else {
-                return user.cuisine;
+                return user;
             }
         }
     });
@@ -79,7 +79,7 @@ function getUserPref(chatId) {
 module.exports = {
     startUser,
     updateUser,
-    getUserPref,
+    getUser,
 };
 
 // db.once('open', function() {
