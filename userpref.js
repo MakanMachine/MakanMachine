@@ -62,13 +62,15 @@ function createNewUser(chatId, msgObj) {
 }
 
 function getUser(chatId) {
-    return User.findById(chatId, (err, user) => {
+    User.findById(chatId, (err, user) => {
         if(err) {
             console.log(err);
         } else {
-            console.log(user);
             if(user == undefined) {
                 console.log(`ChatID: ${chatId} not found.`);
+            } else {
+                console.log(user);
+                return user;
             }
         }
     });
