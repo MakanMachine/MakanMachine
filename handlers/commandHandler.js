@@ -70,7 +70,7 @@ async function handleSettings(chatID, msgObj) {
 		});
 }
 
-async function handleSurpise(chatID) {
+async function handleSurprise(chatID) {
 	const message = "Makan Machine recommends you restaurants to dine at based on your criteria! Type /recommend to begin."
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
