@@ -16,9 +16,9 @@ function updateUser(chatId, msgObj) {
     var message = msgObj.text.split(',');
 
     User.findById(chatId, (err, user) => {
-        if(err)
+        if(err) {
             console.log(err);
-        else
+        } else {
             if(user == undefined) {
                 createNewUser(chatId, msgObj);
                 updateUser(chatId, msgObj);
@@ -26,6 +26,7 @@ function updateUser(chatId, msgObj) {
                 user.cuisine = [message[0], message[1], message[2]];
                 user.updated_at = new Date();
             }
+        }
     });
 
     // startUser(chatId, msgObj)
