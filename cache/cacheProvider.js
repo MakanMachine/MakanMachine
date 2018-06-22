@@ -29,6 +29,7 @@ function start() {
             const content = response.data;
             updateGeneral(content);
             updateCuisine(content);
+            //console.log(cache.cuisine.keys())
         })
         .catch(function(error) {
             console.log(error);
