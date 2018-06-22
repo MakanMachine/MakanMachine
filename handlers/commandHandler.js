@@ -35,7 +35,7 @@ function handleCommand(chatID, msgObj, command) {
 
 async function handleStart(chatID, firstName, msgObj) {
 	const message = `Hello ${firstName}! Hungry but don't know where to eat? Type /recommend to begin!`;
-	userpref.startUser(chatID, firstName, msgObj);
+	userpref.startUser(chatID, msgObj);
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});

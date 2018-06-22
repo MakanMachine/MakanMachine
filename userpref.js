@@ -27,15 +27,15 @@ function startUser(chatId, msgObj) {
             console.log(err);
         else
             if(user == undefined)
-                createNewUser(chatId, objectBody);
+                createNewUser(chatId, msgObj);
     });
 }
 
-function createNewUser(chatId, firstName, msgObj) {
+function createNewUser(chatId, msgObj) {
     User.create({
         username: msgObj.chat.username,
         _id: chatId,
-        first_name: firstName,
+        first_name: msgObj.chat.first_name,
         cuisine: [],
         created_at: new Date(),
         updated_at: new Date()
