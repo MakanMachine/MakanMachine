@@ -15,25 +15,26 @@ function updateUser(chatId, msgObj) {
     console.log(`Data for chatId: ${chatId} has been updated!`);
     var message = msgObj.text.split(',');
 
-    User.findById(chatId, (err, user) => {
-        if(err) {
-            console.log(err);
-        } else {
-            if(user == undefined) {
-                createNewUser(chatId, msgObj);
-                updateUser(chatId, msgObj);
-            } else {
-                user.cuisine = [message[0], message[1], message[2]];
-                user.updated_at = new Date();
-            }
-        }
-    });
-
-    // startUser(chatId, msgObj)
-    // User.findByIdAndUpdate(chatId, {cuisine: [message[0], message[1], message[2]], updated_at: new Date()}, {upsert: true, setDefaultsOnInsert: true}, (err, user) => {
-    //     if(err)
+    // This method doesn't update the user
+    // User.findById(chatId, (err, user) => {
+    //     if(err) {
     //         console.log(err);
+    //     } else {
+    //         if(user == undefined) {
+    //             createNewUser(chatId, msgObj);
+    //             updateUser(chatId, msgObj);
+    //         } else {
+    //             user.cuisine = [message[0], message[1], message[2]];
+    //             user.updated_at = new Date();
+    //         }
+    //     }
     // });
+
+    startUser(chatId, msgObj);
+    User.findByIdAndUpdate(chatId, {cuisine: [message[0], message[1], message[2]], updated_at: new Date()}, {upsert: true, setDefaultsOnInsert: true}, (err, user) => {
+        if(err)
+            console.log(err);
+    });
 }
 
 function startUser(chatId, msgObj) {
