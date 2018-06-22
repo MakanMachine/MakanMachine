@@ -11,10 +11,11 @@ db.once('open', function() {
     console.log('Successfully connected.');
 });
 
-function updateUser(msgObj) {
+function updateUser(chatId, msgObj) {
     console.log("Data has been updated!");
     var message = msgObj.text.split(',');
-    User.findByIdAndUpdate(msgObj.chat.id, {cuisine: [message[0], message[1], message[2]]}, {upsert: true, setDefaultsOnInsert: true}, (err, user) => {
+    startUser(chatId, msgObj);
+    User.findByIdAndUpdate(chatId, {cuisine: [message[0], message[1], message[2]]}, {upsert: true, setDefaultsOnInsert: true}, (err, user) => {
         if(err)
             console.log(err);
     });
@@ -25,7 +26,7 @@ function startUser(chatId, msgObj) {
         if(err)
             console.log(err);
         else
-            if(typeof user == 'undefined')
+            if(user == undefined)
                 createNewUser(chatId, objectBody);
     });
 }
@@ -40,6 +41,20 @@ function createNewUser(chatId, firstName, msgObj) {
         updated_at: new Date()
     });
     console.log(`Username: ${msgObj.chat.username} created. ChatId: ${chatId}.`);
+}
+
+function getUserPref(chatId) {
+    User.findById(chatId, (err, user) => {
+        if(err) {
+            console.log(err);
+        } else {
+            if(user == undefined) {
+                console.log(`ChatID: ${chatId} not found.`);
+            } else {
+                return user.cuisine;
+            }
+        }
+    });
 }
 
 module.exports = {
