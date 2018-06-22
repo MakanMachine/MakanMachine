@@ -1,19 +1,25 @@
 const NodeCache = require('node-cache');
 const cacheProvider = require('./cacheProvider');
 
-// Takes in an options object containing cuisine and location.
-function get(options) {
-    console.log(`Getting cache value for cuisine: ${options.cuisine}.`)
+function getByCuisine(option) {
+    console.log(`Getting cache value for cuisine: ${option}.`)
     return new Promise((resolve, reject) => {
-        cacheProvider.getInstance()[cuisine].get(options.cuisine, (err, result) => {
+        cacheProvider.getInstance()[cuisine].get(option, (err, result) => {
             if(err) {
-                reject(new Error(`Unable to get cache value for cuisine: ${options.cuisine} => Err: ${err}`));
+                reject(new Error(`Unable to get cache value for cuisine: ${option} => Err: ${err}`));
             } else {
-                console.log(`Got cache value for cuisine: ${options.cuisine}.`);
+                console.log(`Got cache value for cuisine: ${option}.`);
                 resolve(result);
             }
         });
     });
+}
+
+function surprise(preference) {
+    console.log(`Preparing surprise!`);
+    var rdmCuisine = preference[Math.floor(Math.random() * 2)];
+    var arrCuisine = getByCuisine(rdmCuisine);
+    return arrCuisine[Math.floor(Math.random() * arrCuisine.length)];
 }
 
 // Takes in array of restaurants, and filter out info to return to user
@@ -27,6 +33,7 @@ function refineMessage(array) {
 }
 
 module.exports = {
-    get,
+    getByCuisine,
+    surprise,
     refineMessage,
 }
