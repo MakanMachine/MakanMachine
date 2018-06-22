@@ -66,6 +66,7 @@ function getUserPref(chatId) {
         if(err) {
             console.log(err);
         } else {
+            console.log(user);
             if(user == undefined) {
                 console.log(`ChatID: ${chatId} not found.`);
             } else {
