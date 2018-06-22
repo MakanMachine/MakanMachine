@@ -14,11 +14,12 @@ db.once('open', function() {
 function updateUser(chatId, msgObj) {
     console.log("Data has been updated!");
     var message = msgObj.text.split(',');
-    startUser(chatId, msgObj);
-    User.findByIdAndUpdate(chatId, {cuisine: [message[0], message[1], message[2]]}, {upsert: true, setDefaultsOnInsert: true}, (err, user) => {
+    startUser(chatId, msgObj).then(
+    User.findByIdAndUpdate(chatId, {cuisine: [message[0], message[1], message[2]], updated_at: new Date()}, {upsert: true, setDefaultsOnInsert: true}, (err, user) => {
         if(err)
             console.log(err);
-    });
+    })
+    );
 }
 
 function startUser(chatId, msgObj) {
