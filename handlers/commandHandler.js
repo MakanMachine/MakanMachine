@@ -74,14 +74,14 @@ async function handleSettings(chatID, msgObj) {
 async function handleSurprise(chatID) {
 	const message = 'There you go!';
 	
-	var result = userpref.getUser(chatID)
+	var result = Promise.resolve(userpref.getUser(chatID)
 	.then(function(response) {
 		console.log(`Response: ${response.cuisine}`);
 		return response.cuisine;
 	})
 	.catch(function(error) {
 		console.log(error);
-	})
+	}));
 	console.log(`Result: ${result}.`);
 	//var query = userpref.getUser(chatID);
 	// query.exec((err, user) => {
