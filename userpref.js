@@ -62,19 +62,18 @@ function createNewUser(chatId, msgObj) {
 }
 
 function getUser(chatId) {
-    return User.findById(chatId);
-    // , (err, user) => {
-    //     if(err) {
-    //         console.log(err);
-    //     } else {
-    //         if(user == undefined) {
-    //             console.log(`ChatID: ${chatId} not found.`);
-    //         } else {
-    //             console.log(user);
-    //             return user;
-    //         }
-    //     }
-    // });
+    return User.findById(chatId, (err, user) => {
+        if(err) {
+            console.log(err);
+        } else {
+            if(user == undefined) {
+                console.log(`ChatID: ${chatId} not found.`);
+            } else {
+                console.log(user);
+                return user;
+            }
+        }
+    });
 }
 
 module.exports = {
