@@ -59,13 +59,13 @@ function updateGeneral(content) {
 function updateCuisine(content) {
     for(var x of content) {
         for(var y of x.cuisine) {
-            value = cache.cuisine.get(y);
+            value = cache.cuisine.get(y.toLowerCase());
             if(value == undefined) {
-                cache.cuisine.set(y, new Array(x));
+                cache.cuisine.set(y.toLowerCase(), new Array(x));
                 //console.log('new cuisine key');
             } else {
                 value.push(x);
-                cache.cuisine.set(y, value);
+                cache.cuisine.set(y.toLowerCase(), value);
                 //console.log('new restaurant added');
             }
         }

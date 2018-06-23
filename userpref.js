@@ -14,23 +14,7 @@ db.once('open', function() {
 function updateUser(chatId, msgObj) {
     console.log(`Data for chatId: ${chatId} has been updated!`);
     var message = msgObj.text.split(',');
-
-    // This method doesn't update the user
-    // User.findById(chatId, (err, user) => {
-    //     if(err) {
-    //         console.log(err);
-    //     } else {
-    //         if(user == undefined) {
-    //             createNewUser(chatId, msgObj);
-    //             updateUser(chatId, msgObj);
-    //         } else {
-    //             user.cuisine = [message[0], message[1], message[2]];
-    //             user.updated_at = new Date();
-    //         }
-    //     }
-    // });
-
-    User.findByIdAndUpdate(chatId, {cuisine: [message[0], message[1], message[2]], updated_at: new Date()}, {upsert: true, setDefaultsOnInsert: true}, (err, user) => {
+    User.findByIdAndUpdate(chatId, {_id: chatId, username: msgObj.chat.username, first_name: msgObj.chat.first_name, cuisine: message, updated_at: new Date()}, {upsert: true, setDefaultsOnInsert: true}, (err, user) => {
         if(err)
             console.log(err);
     });

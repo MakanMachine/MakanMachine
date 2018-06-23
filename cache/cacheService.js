@@ -2,6 +2,7 @@ const NodeCache = require('node-cache');
 const cacheProvider = require('./cacheProvider');
 
 function getByCuisine(option) {
+    option.trim().toLowerCase();
     console.log(`Getting cache value for cuisine: ${option}.`)
     return new Promise((resolve, reject) => {
         cacheProvider.getInstance()[cuisine].get(option, (err, result) => {
@@ -15,11 +16,18 @@ function getByCuisine(option) {
     });
 }
 
+// Returns a random restaurant based on array of cuisines.
 function surprise(preference) {
     console.log(`Preparing surprise!`);
-    var rdmCuisine = preference[Math.floor(Math.random() * 2)];
-    var arrCuisine = getByCuisine(rdmCuisine);
+    var arrCuisine = [];
+    for(var x of preference) {
+        arrCuisine = arrCuisine.concat(getByCuisine(x));
+    }
     return arrCuisine[Math.floor(Math.random() * arrCuisine.length)];
+
+    // var rdmCuisine = preference[Math.floor(Math.random() * 2)];
+    // var arrCuisine = getByCuisine(rdmCuisine);
+    // return arrCuisine[Math.floor(Math.random() * arrCuisine.length)];
 }
 
 // Takes in array of restaurants, and filter out info to return to user

@@ -6,6 +6,7 @@
 const tgCaller = require('../api_caller/telegram_caller');
 const recommendUtil = require('../utils/recommendUtils');
 const userpref = require('../userpref');
+const cacheService = require('../cache/cacheService');
 
 function handleCommand(chatID, msgObj, command) {
 	console.log("Handling command: " + command);
@@ -77,10 +78,11 @@ async function handleSurprise(chatID) {
 		if(err) {
 			console.log(err);
 		} else {
-			console.log(`User: ${user}`);
-			return user;
+			console.log(`User: ${user.cuisine}`);
+			return cacheService.surprise(user.cuisine);
 		}
 	});
+	console.log(`Result: ${result}`);
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
