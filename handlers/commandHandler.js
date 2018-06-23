@@ -77,10 +77,10 @@ async function handleSurprise(chatID) {
 		if(err) {
 			console.log(err);
 		} else {
+			console.log(`User: ${user}`);
 			return user;
 		}
 	});
-	console.log(result);
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
