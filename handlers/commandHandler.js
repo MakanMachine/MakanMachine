@@ -77,7 +77,7 @@ async function handleSurprise(chatID) {
 	var result = await userpref.getUser(chatID)
 	.then(function(response) {
 		console.log(`Response: ${response.cuisine}`);
-		var answer = cacheService.surprise(response.cuisine);
+		return cacheService.surprise(response.cuisine);
 	})
 	.catch(function(error) {
 		console.log(error);
