@@ -72,7 +72,7 @@ async function handleSettings(chatID, msgObj) {
 }
 
 async function handleSurprise(chatID) {
-	//const message = 'There you go!';
+	const message = 'There you go!';
 	var query = userpref.getUser(chatID);
 	query.exec((err, user) => {
 		if(err) {
@@ -80,14 +80,11 @@ async function handleSurprise(chatID) {
 		} else {
 			console.log(`User: ${user.cuisine}`);
 			var result = cacheService.surprise(user.cuisine);
-			await tgCaller.sendMessage(chatID, result).catch((error) => {
-				console.log(error);
-			});
 		}
 	});
-	// await tgCaller.sendMessage(chatID, message).catch((error) => {
-	// 	console.log(error);
-	// });
+	await tgCaller.sendMessage(chatID, message).catch((error) => {
+		console.log(error);
+	});
 }
 
 module.exports = {
