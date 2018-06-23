@@ -2,14 +2,14 @@ const NodeCache = require('node-cache');
 const cacheProvider = require('./cacheProvider');
 
 function getByCuisine(option) {
-    option.trim().toLowerCase();
-    console.log(`Getting cache value for cuisine: ${option}.`)
+    var key = option.trim().toLowerCase();
+    console.log(`Getting cache value for cuisine: ${key}.`)
     return new Promise((resolve, reject) => {
-        cacheProvider.getInstance()[cuisine].get(option, (err, result) => {
+        cacheProvider.getInstance().cuisine.get(key, (err, result) => {
             if(err) {
-                reject(new Error(`Unable to get cache value for cuisine: ${option} => Err: ${err}`));
+                reject(new Error(`Unable to get cache value for cuisine: ${key} => Err: ${err}`));
             } else {
-                console.log(`Got cache value for cuisine: ${option}.`);
+                console.log(`Got cache value for cuisine: ${key}.`);
                 resolve(result);
             }
         });
