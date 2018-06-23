@@ -8,7 +8,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error.'));
 
 db.once('open', function() {
-    console.log('Successfully connected.');
+    console.log('Successfully connected to userpref.');
 });
 
 function updateUser(chatId, msgObj) {

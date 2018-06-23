@@ -73,15 +73,25 @@ async function handleSettings(chatID, msgObj) {
 
 async function handleSurprise(chatID) {
 	const message = 'There you go!';
-	var query = userpref.getUser(chatID);
-	query.exec((err, user) => {
-		if(err) {
-			console.log(err);
-		} else {
-			console.log(`User: ${user.cuisine}`);
-			var result = cacheService.surprise(user.cuisine);
-		}
-	});
+	
+	var result = userpref.getUser(chatID)
+	.then(function(response) {
+		console.log(`Response: ${response.cuisine}`);
+		return response.cuisine;
+	})
+	.catch(function(error) {
+		console.log(error);
+	})
+	console.log(`Result: ${result}.`);
+	//var query = userpref.getUser(chatID);
+	// query.exec((err, user) => {
+	// 	if(err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		console.log(`User: ${user.cuisine}`);
+	// 		var result = cacheService.surprise(user.cuisine);
+	// 	}
+	// });
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});

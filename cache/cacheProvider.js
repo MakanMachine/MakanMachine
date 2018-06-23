@@ -30,7 +30,7 @@ function start() {
             updateGeneral(content);
             updateCuisine(content);
             //console.log(cache.cuisine.keys())
-            console.log(cache.cuisine.get('Japanese'));
+            //console.log(cache.cuisine.get('Japanese'));
         })
         .catch(function(error) {
             console.log(error);
@@ -42,7 +42,7 @@ function updateGeneral(content) {
     if(err)
         console.log('Failed to store in cache.');
     });
-    console.log("All restaurants data written");
+    console.log("All restaurants data written (cacheProvider)");
     // mykeys = cache.general.keys(); 
     // console.log(mykeys);
     // cache.general.get(CACHE_TABLE.GENERAL, (err, value) => {
