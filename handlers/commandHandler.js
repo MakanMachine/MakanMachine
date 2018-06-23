@@ -73,7 +73,14 @@ async function handleSettings(chatID, msgObj) {
 async function handleSurprise(chatID) {
 	const message = 'There you go!';
 	var query = userpref.getUser(chatID);
-	console.log(query);
+	var result = query.exec((err, user) => {
+		if(err) {
+			console.log(err);
+		} else {
+			return user;
+		}
+	});
+	console.log(result);
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
