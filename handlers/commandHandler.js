@@ -74,15 +74,16 @@ async function handleSettings(chatID, msgObj) {
 async function handleSurprise(chatID) {
 	const message = 'There you go!';
 	
-	var result = await userpref.getUser(chatID)
+	var result = await userpref.getUser(chatID);
 	.then(function(response) {
-		console.log(`Response: ${response.cuisine}`);
-		return cacheService.surprise(response.cuisine);
-	})
-	.catch(function(error) {
-		console.log(error);
-	});
-	console.log(`Result: ${result}.`);
+	// 	console.log(`Response: ${response.cuisine}`);
+	// 	return cacheService.surprise(response.cuisine);
+	// })
+	// .catch(function(error) {
+	// 	console.log(error);
+	// });
+	// console.log(`Result: ${result}.`);
+	
 	//var query = userpref.getUser(chatID);
 	// query.exec((err, user) => {
 	// 	if(err) {

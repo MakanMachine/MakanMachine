@@ -1,7 +1,7 @@
 const NodeCache = require('node-cache');
 const cacheProvider = require('./cacheProvider');
 
-function getByCuisine(option) {
+async function getByCuisine(option) {
     var key = option.trim().toLowerCase();
     console.log(`Getting cache value for cuisine: ${key}.`)
     return new Promise((resolve, reject) => {
