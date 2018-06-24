@@ -84,7 +84,7 @@ async function handleSurprise(chatID) {
 	// 	console.log(error);
 	// });
 	console.log(`User: ${user}.`);
-	console.log(`Result: ${result}`);
+	console.log(`Result: ${result.name}`);
 
 	//var query = userpref.getUser(chatID);
 	// query.exec((err, user) => {
