@@ -71,30 +71,17 @@ async function handleSettings(chatID, msgObj) {
 		});
 }
 
-async function handleSurprise(chatID) {
-	const message = 'There you go!';
-	
+async function handleSurprise(chatID) {	
 	const user = await userpref.getUser(chatID);
 	const result = await cacheService.surprise(user.cuisine);
-	//.then(function(response) {
-	// 	console.log(`Response: ${response.cuisine}`);
-	// 	return cacheService.surprise(response.cuisine);
-	// })
-	// .catch(function(error) {
-	// 	console.log(error);
-	// });
 	console.log(`User: ${user}.`);
 	console.log(`Result: ${result.name}`);
-
-	//var query = userpref.getUser(chatID);
-	// query.exec((err, user) => {
-	// 	if(err) {
-	// 		console.log(err);
-	// 	} else {
-	// 		console.log(`User: ${user.cuisine}`);
-	// 		var result = cacheService.surprise(user.cuisine);
-	// 	}
-	// });
+	const message = `There you go!
+	Restaurant name: ${result.name}
+	Address: ${result.address}
+	Opening hours: ${result.opening_hours}
+	Nearest MRT: ${result.nearest_mrt}
+	Google Maps: ${result.map_url}`;
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
