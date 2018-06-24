@@ -18,29 +18,16 @@ async function getByCuisine(option) {
 
 // Returns a random restaurant based on array of cuisines.
 async function surprise(preference) {
-    // console.log(`Preparing surprise!`);
-    // console.log(`Preference: ${preference}`);
-    // var arrCuisine = [];
-    // for(var x of preference) {
-    //     var arrTemp = await getByCuisine(x);
-    //     arrCuisine = arrCuisine.concat(arrTemp);
-    //     console.log(`arrTemp: ${arrTemp}`);
-    // }
-    // console.log(`Array: ${arrCuisine}`);
-    // return arrCuisine[Math.floor(Math.random() * arrCuisine.length)];
-
     console.log(`Preparing surprise!`);
     console.log(`Preference: ${preference}`);
-    return new Promise((resolve, reject) => {
-        for(var x of preference) {
-            var arrTemp = await getByCuisine(x);
-            arrCuisine = arrCuisine.concat(arrTemp);
-            console.log(`arrTemp: ${arrTemp}`);
-        }
-        console.log(`Array: ${arrCuisine}`);
-        resolve(arrCuisine);    
-    });
-
+    var arrCuisine = [];
+    for(var x of preference) {
+        var arrTemp = await getByCuisine(x);
+        arrCuisine = arrCuisine.concat(arrTemp);
+        console.log(`arrTemp: ${arrTemp}`);
+    }
+    console.log(`Array: ${arrCuisine}`);
+    return arrCuisine[Math.floor(Math.random() * arrCuisine.length)];
 }
 
 // Takes in array of restaurants, and filter out info to return to user
