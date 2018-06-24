@@ -19,10 +19,12 @@ function getByCuisine(option) {
 // Returns a random restaurant based on array of cuisines.
 function surprise(preference) {
     console.log(`Preparing surprise!`);
+    console.log(`Preference: ${preference}`);
     var arrCuisine = [];
     for(var x of preference) {
         arrCuisine = arrCuisine.concat(getByCuisine(x));
     }
+    console.log(`Array: ${arrCuisine}`);
     return arrCuisine[Math.floor(Math.random() * arrCuisine.length)];
 
     // var rdmCuisine = preference[Math.floor(Math.random() * 2)];
