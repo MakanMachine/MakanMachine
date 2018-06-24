@@ -82,7 +82,7 @@ async function handleSurprise(chatID) {
 	// .catch(function(error) {
 	// 	console.log(error);
 	// });
-	// console.log(`Result: ${result}.`);
+	console.log(`Result: ${result}.`);
 
 	//var query = userpref.getUser(chatID);
 	// query.exec((err, user) => {
