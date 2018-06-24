@@ -75,7 +75,7 @@ async function handleSurprise(chatID) {
 	const message = 'There you go!';
 	
 	var result = await userpref.getUser(chatID);
-	.then(function(response) {
+	//.then(function(response) {
 	// 	console.log(`Response: ${response.cuisine}`);
 	// 	return cacheService.surprise(response.cuisine);
 	// })
@@ -83,7 +83,7 @@ async function handleSurprise(chatID) {
 	// 	console.log(error);
 	// });
 	// console.log(`Result: ${result}.`);
-	
+
 	//var query = userpref.getUser(chatID);
 	// query.exec((err, user) => {
 	// 	if(err) {
