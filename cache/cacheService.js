@@ -1,15 +1,15 @@
 const NodeCache = require('node-cache');
 const cacheProvider = require('./cacheProvider');
 
-async function getByCuisine(option) {
+async function get(table, option) {
     var key = option.trim().toLowerCase();
-    console.log(`Getting cache value for cuisine: ${key}.`)
+    console.log(`Getting cache value for: ${key}.`)
     return new Promise((resolve, reject) => {
-        cacheProvider.getInstance().cuisine.get(key, (err, result) => {
+        cacheProvider.getInstance()[table].get(key, (err, result) => {
             if(err) {
-                reject(new Error(`Unable to get cache value for cuisine: ${key} => Err: ${err}`));
+                reject(new Error(`Unable to get cache value for: ${key} => Err: ${err}`));
             } else {
-                console.log(`Got cache value for cuisine: ${key}.`);
+                console.log(`Got cache value for: ${key}.`);
                 resolve(result);
             }
         });
@@ -22,7 +22,7 @@ async function surprise(preference) {
     console.log(`Preference: ${preference}`);
     var arrCuisine = [];
     for(var x of preference) {
-        var arrTemp = await getByCuisine(x);
+        var arrTemp = await get(CACHE_TABLE.CUISINE, x);
         arrCuisine = arrCuisine.concat(arrTemp);
         console.log(`arrTemp: ${arrTemp}`);
     }
@@ -41,7 +41,7 @@ function refineMessage(array) {
 }
 
 module.exports = {
-    getByCuisine,
+    get,
     surprise,
     refineMessage,
 }
