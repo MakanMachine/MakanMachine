@@ -22,7 +22,7 @@ async function surprise(preference) {
     console.log(`Preference: ${preference}`);
     var arrCuisine = [];
     for(var x of preference) {
-        var arrTemp = await get(CACHE_TABLE.CUISINE, x);
+        var arrTemp = await get(cacheProvider.CACHE_TABLE.CUISINE, x);
         arrCuisine = arrCuisine.concat(arrTemp);
         console.log(`arrTemp: ${arrTemp}`);
     }
