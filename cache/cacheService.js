@@ -1,6 +1,11 @@
 const NodeCache = require('node-cache');
 const cacheProvider = require('./cacheProvider');
 
+const CACHE_TABLE = {
+    GENERAL: 'general',
+    CUISINE: 'cuisine',
+};
+
 async function get(table, option) {
     var key = option.trim().toLowerCase();
     console.log(`Getting cache value for: ${key}.`)
@@ -22,7 +27,7 @@ async function surprise(preference) {
     console.log(`Preference: ${preference}`);
     var arrCuisine = [];
     for(var x of preference) {
-        var arrTemp = await get(cacheProvider.CACHE_TABLE.CUISINE, x);
+        var arrTemp = await get(CACHE_TABLE.CUISINE, x);
         arrCuisine = arrCuisine.concat(arrTemp);
         console.log(`arrTemp: ${arrTemp}`);
     }
@@ -41,6 +46,7 @@ function refineMessage(array) {
 }
 
 module.exports = {
+    cacheTables: CACHE_TABLE,
     get,
     surprise,
     refineMessage,
