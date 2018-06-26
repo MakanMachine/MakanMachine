@@ -9,8 +9,10 @@
 function getMessage(type, data) {
 	switch (type) {
 		case 'recommend':
-			return `Please specify your preferences so that we can find the most suitable restaurant for you! You need to specify at least 1 option.`;
-	}
+			return `What cuisine are you craving?`;
+		case 'settings':
+			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
+		}
 }
 
 function getInlineKeyboard(type, data) {
