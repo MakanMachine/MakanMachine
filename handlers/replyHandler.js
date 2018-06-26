@@ -59,7 +59,7 @@ async function handleLocationReply(chatID, firstName, message) {
 	console.log("Use location:" + useLocation);
 	const message = `Ok, getting you the list of restaurants now! Please hold on!`;
 	await Promise.all([
-		tgCaller.sendMessage(chatID, message)
+		tgCaller.sendMessage(chatID, message, {parse_mode: 'markdown'})
 		])
 }
 
