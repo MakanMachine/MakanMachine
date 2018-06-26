@@ -50,17 +50,19 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	console.log("Preference updated:" + preference);
 	const message = `Your preference has been updated! Do you want to specify your location?`;
 	await Promise.all([
-		tgCaller.sendMessageWithForcedReply(chatID, message)
-		])
+		tgCaller.sendMessageWithForcedReply(chatID, message)]).catch((error => {
+			console.log(error);
+		}))
 }
 
 async function handleLocationReply(chatID, firstName, msgObj) {
-	const useLocation = msgObg.text;
+	const useLocation = msgObj.text;
 	console.log("Use location:" + useLocation);
 	const message = `Ok, getting you the list of restaurants now! Please hold on!`;
 	await Promise.all([
-		tgCaller.sendMessage(chatID, message, {parse_mode: 'markdown'})
-		])
+		tgCaller.sendMessage(chatID, message, {parse_mode: 'markdown'})]).catch((error => {
+			console.log(error);
+		}))
 }
 
 function getReplyType(previousMsg) {
