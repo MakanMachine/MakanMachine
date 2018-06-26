@@ -51,8 +51,10 @@ async function handleHelp(chatID) {
 
 async function handleRecommend(chatID) {
 	const message = await recommendUtil.getMessage('recommend');
-	const inlineKeyboardButtonList = await recommendUtil.getInlineKeyboard('recommend');
-	tgCaller.sendMessageWithInlineKeyboard(chatID, message, inlineKeyboardButtonList);
+	//const inlineKeyboardButtonList = await recommendUtil.getInlineKeyboard('recommend');
+	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
+		console.log(error);
+	});
 }
 
 async function handleUnknown(chatID) {
@@ -65,7 +67,7 @@ async function handleUnknown(chatID) {
 // Edit this function to tell user to type in 3 cuisines separated with commas (Eg. American, Chinese, Japanese). Then use that
 // msgObj and call updateUser from userpref.
 async function handleSettings(chatID, msgObj) {
-	const message = "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
+	const message = await recommendUtil.getMessage('settings');
 	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
 		});

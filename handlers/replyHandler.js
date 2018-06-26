@@ -7,7 +7,9 @@ const tgCaller = require('../api_caller/telegram_caller');
 const userPref = require('../userpref');
 
 const types = {
-	PREFERENCE: 'preference'
+	PREFERENCE: 'preference',
+	RECOMMEND: 'recommend',
+	LOCATION: 'location'
 }
 
 function handleReply(chatID, msgObj) {
@@ -20,6 +22,12 @@ function handleReply(chatID, msgObj) {
 	switch(replyType) {
 		case (types.PREFERENCE):
 			handlePreferenceReply(chatID, firstName, msgObj);
+			break;
+		case (types.RECOMMEND):
+			handleRecommendReply(chatID, firstName, msgObj);
+			break;
+		case (types.LOCATION):
+			handleLocationReply(chatID, firstName, msgObj);
 			break;
 		default:
 			break;
@@ -37,10 +45,32 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 		}))
 }
 
+async function handleRecommendReply(chatID, firstName, msgObj) {
+	const preference = msgObj.text;
+	console.log("Preference updated:" + preference);
+	const message = `Your preference has been updated! Do you want to specify your location?`;
+	await Promise.all([
+		tgCaller.sendMessageWithForcedReply(chatID, message)
+		])
+}
+
+async function handleLocationReply(chatID, firstName, message) {
+	const useLocation = msgObg.text;
+	console.log("Use location:" + useLocation);
+	const message = `Ok, getting you the list of restaurants now! Please hold on!`;
+	await Promise.all([
+		tgCaller.sendMessage(chatID, message)
+		])
+}
+
 function getReplyType(previousMsg) {
 	switch(previousMsg) {
 		case 'Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese':
 			return types.PREFERENCE;
+		case 'What cuisine are you craving?':
+			return types.RECOMMEND;
+		case 'Your preference has been updated! Do you want to specify your location?':
+			return types.LOCATION;
 		default:
 			console.log("Reply to message not supported");
 			return null;
