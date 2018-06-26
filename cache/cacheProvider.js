@@ -16,6 +16,7 @@ function start() {
     if (is.empty(cache)) {
         cache.cuisine = new NodeCache();
         cache.general = new NodeCache();
+        cache.location = new NodeCache();
     }
 
     axios({
@@ -31,6 +32,7 @@ function start() {
             const content = response.data;
             updateGeneral(content);
             updateCuisine(content);
+            updateLocation(content);
             //console.log(cache.cuisine.keys())
             //console.log(cache.cuisine.get('Japanese'));
         })

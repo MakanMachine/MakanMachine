@@ -66,25 +66,3 @@ module.exports = {
     updateUser,
     getUser,
 };
-
-// db.once('open', function() {
-//     console.log('Successfully connected.')
-
-//     var userSchema = mongoose.Schema({
-//         username: String,
-//         first_name: String,
-//         cuisine: String,
-//         created_at: Date,
-//         updated_at: Date
-//     });
-
-//     var User = mongoose.model('User', userSchema, 'User');
-
-//     User.create({
-//         username: 'test',
-//         first_name: 'te',
-//         cuisine: "test cuisine",
-//         created_at: new Date(),
-//         updated_at: new Date()
-//     });
-// });
