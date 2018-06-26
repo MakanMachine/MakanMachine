@@ -4,6 +4,7 @@ const cacheProvider = require('./cacheProvider');
 const CACHE_TABLE = {
     GENERAL: 'general',
     CUISINE: 'cuisine',
+    LOCATION: 'location',
 };
 
 async function get(table, option) {
