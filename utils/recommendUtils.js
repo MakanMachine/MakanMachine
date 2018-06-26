@@ -12,6 +12,10 @@ function getMessage(type, data) {
 			return `What cuisine are you craving?`;
 		case 'settings':
 			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
+		case 'help':
+			return "Makan Machine recommends you restaurants to dine at based on your criteria! Type /recommend to begin.";
+		case 'unknown':
+			return "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
 		}
 }
 

@@ -43,7 +43,7 @@ async function handleStart(chatID, firstName, msgObj) {
 }
 
 async function handleHelp(chatID) {
-	const message = "Makan Machine recommends you restaurants to dine at based on your criteria! Type /recommend to begin."
+	const message = await recommendUtil.getMessage('help');
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
@@ -58,7 +58,7 @@ async function handleRecommend(chatID) {
 }
 
 async function handleUnknown(chatID) {
-	const message = "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
+	const message = await recommendUtil.getMessage('unknown');
 	await tgCaller.sendMessage(chatID, message, { parse_mode: 'markdown'}).catch((error) => {
 			console.log(error);
 		});

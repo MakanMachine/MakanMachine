@@ -48,7 +48,7 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text;
 	console.log("Preference updated:" + preference);
-	const message = `Your preference has been updated! Do you want to specify your location? Please reply with Y or N.`;
+	const message = `Got it! Do you want to specify your location? Please reply with Y or N.`;
 	await Promise.all([
 		tgCaller.sendMessageWithForcedReply(chatID, message)]).catch((error => {
 			console.log(error);
@@ -71,7 +71,7 @@ function getReplyType(previousMsg) {
 			return types.PREFERENCE;
 		case 'What cuisine are you craving?':
 			return types.RECOMMEND;
-		case 'Your preference has been updated! Do you want to specify your location? Please reply with Y or N.':
+		case 'Got it! Do you want to specify your location? Please reply with Y or N.':
 			return types.LOCATION;
 		default:
 			console.log("Reply to message not supported");
