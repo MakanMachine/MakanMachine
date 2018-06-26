@@ -54,7 +54,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 		])
 }
 
-async function handleLocationReply(chatID, firstName, message) {
+async function handleLocationReply(chatID, firstName, msgObj) {
 	const useLocation = msgObg.text;
 	console.log("Use location:" + useLocation);
 	const message = `Ok, getting you the list of restaurants now! Please hold on!`;
