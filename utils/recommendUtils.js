@@ -5,6 +5,10 @@
 * 2. getInlineKeyboard(type, data): For inline keyboard for
 * 	 recommend. 'data' is in JSON format
 */
+const KEYBOARD_TYPES = {
+	RECOMMEND: 'recommend',
+	LOCATION: 'location',
+};
 
 function getMessage(type, data) {
 	switch (type) {
@@ -19,10 +23,14 @@ function getMessage(type, data) {
 		}
 }
 
-function getInlineKeyboard(type, data) {
+function getKeyboard(type, data) {
 	switch (type) {
 		case 'recommend':
 			return getRecommendInlineKeyboard();
+			break;
+		case 'location':
+			return getRequestLocationReplyKeyboard(data);
+			break;
 	}
 }
 
@@ -39,7 +47,17 @@ function getRecommendInlineKeyboard() {
 		]]
 }
 
+function getRequestLocationReplyKeyboard(cuisine) {
+	return [
+		[{
+			text: '${cuisine} near me!',
+			request_location: true,
+		}],
+	]
+}
+
 module.exports = {
 	getMessage,
-	getInlineKeyboard,
+	getKeyboard,
+	keyboardTypes: KEYBOARD_TYPES,
 }

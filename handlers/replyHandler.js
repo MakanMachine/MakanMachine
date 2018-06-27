@@ -8,6 +8,7 @@ const userPref = require('../userpref');
 const cService = require('../cache/cacheService');
 const lService = require('../location/locationService');
 const msgFormatter = require('../formatters/messageFormatter');
+const recommendUtils = require('../utils/recommendUtils');
 
 const types = {
 	PREFERENCE: 'preference',
@@ -48,35 +49,39 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 		}))
 }
 
+async function handleLocationReply(chatID, firstName, msgObj) {
+	const preference = msgObj.text.split(' ')[0];
+	console.log("Preference updated:" + preference);
+	const message = `Got it! Please wait while I get the list of restaurants!`;
+	var arr = await cService.get(cService.cacheTables.CUISINE, preference);	
+	arr = await lService.filterLocation(arr, long, lat);
+	const restaurants = msgFormatter.formatRestaurantMessage(arr);
+	await Promise.all([
+		tgCaller.sendMessage(chatID, message),
+		tgCaller.sendMessage(chatID, restaurants.join('\n'))]).catch((error => {
+			console.log(error);
+		}));
+}
+
 async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
 	if(useLocation == 'y') {
-		var long = msgObj.location.longitude;
-		var lat = msgObj.location.latitude;
-	}
-	console.log("Preference updated:" + preference);
-	const message = `Got it! Please wait while I get the list of restaurants!`;
-	var arr = await cService.get(cService.cacheTables.CUISINE, preference);
-	if(useLocation == 'y') {	
-		arr = await lService.filterLocation(arr, long, lat);
-	}
-	const restaurants = msgFormatter.formatRestaurantMessage(arr);
-	await Promise.all([
-		tgCaller.sendMessage(chatID, message),
-		tgCaller.sendMessage(chatID, restaurants)]).catch((error => {
+		var message = `Please click the button below to send us your location!`;
+		await Promise.all(tgCaller.sendMessageWithForcedReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 			console.log(error);
-		}))
-}
-
-async function handleLocationReply(chatID, firstName, msgObj) {
-	const useLocation = msgObj.text;
-	console.log("Use location:" + useLocation);
-	const message = `Ok, getting you the list of restaurants now! Please hold on!`;
-	await Promise.all([
-		tgCaller.sendMessage(chatID, message, {parse_mode: 'markdown'})]).catch((error => {
-			console.log(error);
-		}))
+		}));
+	} else {
+		console.log("Preference updated:" + preference);
+		const message = `Got it! Please wait while I get the list of restaurants!`;
+		var arr = await cService.get(cService.cacheTables.CUISINE, preference);
+		const restaurants = msgFormatter.formatRestaurantMessage(arr);
+		await Promise.all([
+			tgCaller.sendMessage(chatID, message),
+			tgCaller.sendMessage(chatID, restaurants.join('\n'))]).catch((error => {
+				console.log(error);
+			}));
+	}
 }
 
 function getReplyType(previousMsg) {
@@ -85,7 +90,7 @@ function getReplyType(previousMsg) {
 			return types.PREFERENCE;
 		case 'Please specify a cuisine that you prefer, followed by a Y or N to indicate if you want to search by your current location!\nE.g Korean Y':
 			return types.RECOMMEND;
-		case 'Got it! Do you want to specify your location? Please reply with Y or N.':
+		case 'Please click the button below to send us your location!':
 			return types.LOCATION;
 		default:
 			console.log("Reply to message not supported");
@@ -94,5 +99,5 @@ function getReplyType(previousMsg) {
 }
 
 module.exports = {
-	handleReply,
+	handleReplyStep,
 }
