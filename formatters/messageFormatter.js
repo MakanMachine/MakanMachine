@@ -1,3 +1,5 @@
+const is = require('is_js');
+
 // Takes in array of restaurants, and craft a single long string of messages.
 function formatRestaurantMessage(array) {
     var newArr = [];
@@ -10,7 +12,11 @@ Google Maps: ${x.map_url}`;
         newArr.push(message);
     }
     console.log(newArr);
-    return newArr;
+    if is.empty(newArr) {
+        newArr.push("Oops! We couldn't find any restaurants that match your criteria.");
+    } else {
+        return newArr;
+    }
 }
 
 module.exports = {
