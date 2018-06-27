@@ -57,7 +57,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	}
 	console.log("Preference updated:" + preference);
 	const message = `Got it! Please wait while I get the list of restaurants!`;
-	var arr = await cService.get(cService.CACHE_TABLE.CUISINE, preference);
+	var arr = await cService.get(cService.cacheTables.CUISINE, preference);
 	if(useLocation == 'y') {	
 		arr = await lService.filterLocation(arr, long, lat);
 	}
