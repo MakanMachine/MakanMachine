@@ -6,7 +6,8 @@
 const tgCaller = require('../api_caller/telegram_caller');
 const userPref = require('../userpref');
 const cService = require('../cache/cacheService');
-const location = require('../location/locationService');
+const lService = require('../location/locationService');
+const msgFormatter = require('../formatters/messageFormatter');
 
 const types = {
 	PREFERENCE: 'preference',
@@ -49,12 +50,21 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 
 async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.spilt(' ')[0];
-	const useLocation = msgObj.text.spilt(' ')[1];
+	const useLocation = msgObj.text.spilt(' ')[1].toLowerCase();
+	if(useLocation == 'y') {
+		var long = msgObj.location.longitude;
+		var lat = msgObj.location.latitude;
+	}
 	console.log("Preference updated:" + preference);
 	const message = `Got it! Please wait while I get the list of restaurants!`;
+	var arr = await cService.get(cService.CACHE_TABLE.CUISINE, preference);
+	if(useLocation == 'y') {	
+		arr = await lService.filterLocation(arr, long, lat);
+	}
+	const restaurants = msgFormatter.formatRestaurantMessage(arr);
 	await Promise.all([
 		tgCaller.sendMessage(chatID, message),
-		cService.get(CUISINE, preference)]).catch((error => {
+		tgCaller.sendMessage(chatID, restaurants)]).catch((error => {
 			console.log(error);
 		}))
 }
