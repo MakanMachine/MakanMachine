@@ -49,8 +49,8 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 }
 
 async function handleRecommendReply(chatID, firstName, msgObj) {
-	const preference = msgObj.text.spilt(' ')[0];
-	const useLocation = msgObj.text.spilt(' ')[1].toLowerCase();
+	const preference = msgObj.text.split(' ')[0];
+	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
 	if(useLocation == 'y') {
 		var long = msgObj.location.longitude;
 		var lat = msgObj.location.latitude;
