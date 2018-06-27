@@ -47,7 +47,7 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 		tgCaller.sendMessage(chatID, message, {parse_mode: 'markdown'}),
 		userPref.updateUser(chatID, msgObj)]).catch((error => {
 			console.log(error);
-		}))
+		}));
 }
 
 async function handleLocationReply(chatID, firstName, msgObj) {
@@ -59,11 +59,12 @@ async function handleLocationReply(chatID, firstName, msgObj) {
 	var arr = await cService.get(cService.cacheTables.CUISINE, preference);	
 	arr = await lService.filterLocation(arr, long, lati);
 	const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
-	await tgCaller.sendMessage(chatID, message).catch((error => {
-			console.log(error);
-	await tgCaller.sendMessage(chatID, restaurants).catch((error => {
-			console.log(error);
-		}));
+	await tgCaller.sendMessage(chatID, message).catch((error) => {
+		console.log(error);
+	});
+	await tgCaller.sendMessage(chatID, restaurants).catch((error) => {
+		console.log(error);
+	});
 }
 
 async function handleRecommendReply(chatID, firstName, msgObj) {
@@ -80,11 +81,12 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 		const message = `Got it! Please wait while I get the list of restaurants!`;
 		var arr = await cService.get(cService.cacheTables.CUISINE, preference);
 		const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
-		await tgCaller.sendMessage(chatID, message).catch((error => {
-				console.log(error);
-		await tgCaller.sendMessage(chatID, restaurants).catch((error => {
-				console.log(error);
-			}));
+		await tgCaller.sendMessage(chatID, message).catch((error) => {
+			console.log(error);
+		});
+		await tgCaller.sendMessage(chatID, restaurants).catch((error) => {
+			console.log(error);
+		});
 	}
 }
 
