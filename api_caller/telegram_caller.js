@@ -102,20 +102,6 @@ async function sendMessageWithReplyKeyboard(chatID, message, replyKeyboardButton
 	await sendMessage(chatID, message, sendOptions);
 }
 
-async function sendMessageWithForcedReplyKeyboard(chatID, message, replyKeyboardButtonList) {
-	console.log('Sending message with reply keyboard:', chatID);
-	const sendOptions = {
-		parse_mode: 'markdown',
-		force_reply: {force_reply: true },
-		keyboard: {
-			keyboard: replyKeyboardButtonList,
-			one_time_keyboard: true,
-			resize_keyboard: true,
-		},
-	};
-	await sendMessage(chatID, message, sendOptions);
-}
-
 async function sendMessageWithReplyKeyboardRemoved(chatID, message) {
 	console.log('Sending message with reply keyboard removed:', chatID);
 	const sendOptions = {
@@ -134,5 +120,4 @@ module.exports = {
 	sendMessageWithForcedReply,	
 	sendMessageWithReplyKeyboard,
 	sendMessageWithReplyKeyboardRemoved,
-	sendMessageWithForcedReplyKeyboard,
 }

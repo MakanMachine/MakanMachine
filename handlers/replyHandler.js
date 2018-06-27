@@ -17,24 +17,25 @@ const types = {
 }
 
 function handleReply(chatID, msgObj) {
-	const replyID = msgObj.reply_to_message.message_id;
-	const previousMsg = msgObj.reply_to_message.text;
 	const firstName = msgObj.chat.first_name || '';
-	console.log("Handling reply to message: " + previousMsg);
-	const replyType = getReplyType(previousMsg);
-	console.log("Reply type:", replyType);
-	switch(replyType) {
-		case (types.PREFERENCE):
-			handlePreferenceReply(chatID, firstName, msgObj);
-			break;
-		case (types.RECOMMEND):
-			handleRecommendReply(chatID, firstName, msgObj);
-			break;
-		case (types.LOCATION):
-			handleLocationReply(chatID, firstName, msgObj);
-			break;
-		default:
-			break;
+	if(msgObj.text.includes('Send location!')) {
+		handleLocationReply(chatID, firstName, msgObj)
+	} else {
+		const replyID = msgObj.reply_to_message.message_id;
+		const previousMsg = msgObj.reply_to_message.text;
+		console.log("Handling reply to message: " + previousMsg);
+		const replyType = getReplyType(previousMsg);
+		console.log("Reply type:", replyType);
+		switch(replyType) {
+			case (types.PREFERENCE):
+				handlePreferenceReply(chatID, firstName, msgObj);
+				break;
+			case (types.RECOMMEND):
+				handleRecommendReply(chatID, firstName, msgObj);
+				break;
+			default:
+				break;
+		}
 	}
 }
 
@@ -50,7 +51,7 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 }
 
 async function handleLocationReply(chatID, firstName, msgObj) {
-	const preference = msgObj.text.split(' ')[0];
+	const preference = msgObj.text.substring(msgObj.text.indexOf('(') + 1, msgObj.text.indexOf(')'));
 	console.log("Preference updated:" + preference);
 	const message = `Got it! Please wait while I get the list of restaurants!`;
 	var arr = await cService.get(cService.cacheTables.CUISINE, preference);	
@@ -68,7 +69,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
 	if(useLocation == 'y') {
 		var message = `Please click the button below to send us your location!`;
-		await tgCaller.sendMessageWithForcedReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
+		await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 			console.log(error);
 		});
 	} else {

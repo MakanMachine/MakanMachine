@@ -46,7 +46,7 @@ function isCommand(text) {
 }
 
 function isReply(msgObj) {
-	if(msgObj.reply_to_message) {
+	if(msgObj.reply_to_message || msgObj.text.includes('Send location!')) {
 		return true;
 	}
 	else {
