@@ -9,7 +9,7 @@ const CACHE_TABLE = {
 };
 
 async function get(table, key) {
-    if (typeof key == string) {
+    if (typeof key == "string") {
         var key = key.trim().toLowerCase();
     }
     console.log(`Getting cache value for: ${key}.`)
