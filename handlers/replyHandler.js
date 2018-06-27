@@ -99,5 +99,5 @@ function getReplyType(previousMsg) {
 }
 
 module.exports = {
-	handleReplyStep,
+	handleReply,
 }
