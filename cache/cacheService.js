@@ -5,10 +5,13 @@ const CACHE_TABLE = {
     GENERAL: 'general',
     CUISINE: 'cuisine',
     LOCATION: 'location',
+    RECOMMEND: 'recommend',
 };
 
-async function get(table, option) {
-    var key = option.trim().toLowerCase();
+async function get(table, key) {
+    if (typeof key == string) {
+        var key = key.trim().toLowerCase();
+    }
     console.log(`Getting cache value for: ${key}.`)
     return new Promise((resolve, reject) => {
         cacheProvider.getInstance()[table].get(key, (err, result) => {
@@ -19,6 +22,22 @@ async function get(table, option) {
                 resolve(result);
             }
         });
+    });
+}
+
+async function set(table, key, value) {
+    return new Promise((resolve, reject) => {
+        if (key) {
+          cacheProvider.getInstance()[table].set(key, value, (err) => {
+            if (err) {
+              reject(new Error(`Unable to set cache for key: ${key} => Err: ${err}`));
+            } else {
+              resolve(`Cache updated for: ${key}`);
+            }
+          });
+        } else {
+          reject(new Error('No cache key given.'));
+        }
     });
 }
 
@@ -40,4 +59,5 @@ module.exports = {
     cacheTables: CACHE_TABLE,
     get,
     surprise,
+    set,
 }

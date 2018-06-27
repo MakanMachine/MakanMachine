@@ -8,6 +8,7 @@ const CACHE_TABLE = {
     GENERAL: 'general',
     CUISINE: 'cuisine',
     LOCATION: 'location',
+    RECOMMEND: 'recommend',
 };
 
 var cache = {};
@@ -17,6 +18,7 @@ function start() {
         cache.cuisine = new NodeCache();
         cache.general = new NodeCache();
         cache.location = new NodeCache();
+        cache.recommend = new NodeCache();
     }
 
     axios({

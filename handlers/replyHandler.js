@@ -18,8 +18,8 @@ const types = {
 
 function handleReply(chatID, msgObj) {
 	const firstName = msgObj.chat.first_name || '';
-	if(msgObj.text.includes('Send location!')) {
-		handleLocationReply(chatID, firstName, msgObj)
+	if(msgObj.location) {
+		handleLocationReply(chatID, firstName, msgObj);
 	} else {
 		const replyID = msgObj.reply_to_message.message_id;
 		const previousMsg = msgObj.reply_to_message.text;
@@ -51,11 +51,13 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 }
 
 async function handleLocationReply(chatID, firstName, msgObj) {
-	const preference = msgObj.text.substring(msgObj.text.indexOf('(') + 1, msgObj.text.indexOf(')'));
+	var lon = msgObj.location.longitude;
+	var lat = msgObj.location.latitude;
+	const preference = await cService.get(cService.cacheTables.RECOMMEND, chatID);
 	console.log("Preference updated:" + preference);
 	const message = `Got it! Please wait while I get the list of restaurants!`;
 	var arr = await cService.get(cService.cacheTables.CUISINE, preference);	
-	arr = await lService.filterLocation(arr, long, lat);
+	arr = await lService.filterLocation(arr, lon, lat);
 	const restaurants = msgFormatter.formatRestaurantMessage(arr);
 	await Promise.all([
 		tgCaller.sendMessage(chatID, message),
@@ -68,6 +70,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
 	if(useLocation == 'y') {
+		await cService.set(cService.cacheTables.RECOMMEND, chatID, preference);
 		var message = `Please click the button below to send us your location!`;
 		await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 			console.log(error);
@@ -91,8 +94,6 @@ function getReplyType(previousMsg) {
 			return types.PREFERENCE;
 		case 'Please specify a cuisine that you prefer, followed by a Y or N to indicate if you want to search by your current location!\nE.g Korean Y':
 			return types.RECOMMEND;
-		case 'Please click the button below to send us your location!':
-			return types.LOCATION;
 		default:
 			console.log("Reply to message not supported");
 			return null;

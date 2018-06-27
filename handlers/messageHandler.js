@@ -10,10 +10,13 @@ const rpHandler = require('./replyHandler');
 function handleMessageEvent(msgObj) {
 	console.log("Handling Telegram Message Event");
 	const chatID = msgObj.chat.id;
+	let location = msgObj.location;
 	let text = msgObj.text;
-	if(text) {
-		text = text.trim();
-		if(isReply(msgObj)) {
+	if(text || location) {
+		if (text) {
+			text = text.trim();
+		}
+		if(isReply(msgObj) || location) {
 			console.log("Reply Detected");
 			rpHandler.handleReply(chatID, msgObj);
 		}
@@ -30,8 +33,7 @@ function handleMessageEvent(msgObj) {
 				console.log(error);
 			})
 		}
-	}
-	else {
+	} else {
 		console.log("Unhandled Message Event received: " + msgObj);
 	}
 }
@@ -46,7 +48,7 @@ function isCommand(text) {
 }
 
 function isReply(msgObj) {
-	if(msgObj.reply_to_message || msgObj.text.includes('Send location!')) {
+	if(msgObj.reply_to_message) {
 		return true;
 	}
 	else {

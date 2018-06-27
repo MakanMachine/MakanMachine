@@ -50,7 +50,7 @@ function getRecommendInlineKeyboard() {
 function getRequestLocationReplyKeyboard(cuisine) {
 	return [
 		[{
-			text: `Send location! (${cuisine})`,
+			text: `Send location`,
 			request_location: true,
 		}],
 	]
