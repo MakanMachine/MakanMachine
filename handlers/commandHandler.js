@@ -79,11 +79,11 @@ async function handleSurprise(chatID) {
 	console.log(`User: ${user}.`);
 	console.log(`Result: ${result.name}`);
 	const message = `There you go!
-	Restaurant name: ${result.name}
-	Address: ${result.address}
-	Opening hours: ${result.opening_hours}
-	Nearest MRT: ${result.nearest_mrt}
-	Google Maps: ${result.map_url}`;
+Restaurant name: ${result.name}
+Address: ${result.address}
+Opening hours: ${result.opening_hours}
+Nearest MRT: ${result.nearest_mrt}
+Google Maps: ${result.map_url}`;
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
