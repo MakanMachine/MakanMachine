@@ -27,11 +27,9 @@ function handleMessageEvent(msgObj) {
 		}
 		else {
 			console.log("Echoing Message");
-			tgCaller.sendMessage(chatID, text).then((result) => {
-				console.log(result.message);
-			}).catch((error) => {
+			tgCaller.sendMessage(chatID, text).catch((error) => {
 				console.log(error);
-			})
+			});
 		}
 	} else {
 		console.log("Unhandled Message Event received: " + msgObj);
