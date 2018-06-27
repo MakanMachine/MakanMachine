@@ -68,9 +68,9 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
 	if(useLocation == 'y') {
 		var message = `Please click the button below to send us your location!`;
-		await Promise.all(tgCaller.sendMessageWithForcedReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
+		await tgCaller.sendMessageWithForcedReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 			console.log(error);
-		}));
+		});
 	} else {
 		console.log("Preference updated:" + preference);
 		const message = `Got it! Please wait while I get the list of restaurants!`;
