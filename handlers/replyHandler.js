@@ -5,6 +5,9 @@
 
 const tgCaller = require('../api_caller/telegram_caller');
 const userPref = require('../userpref');
+const cService = require('../cache/cacheService');
+const lService = require('../location/locationService');
+const msgFormatter = require('../formatters/messageFormatter');
 
 const types = {
 	PREFERENCE: 'preference',
@@ -46,11 +49,22 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 }
 
 async function handleRecommendReply(chatID, firstName, msgObj) {
-	const preference = msgObj.text;
+	const preference = msgObj.text.split(' ')[0];
+	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
+	if(useLocation == 'y') {
+		var long = msgObj.location.longitude;
+		var lat = msgObj.location.latitude;
+	}
 	console.log("Preference updated:" + preference);
-	const message = `Got it! Do you want to specify your location? Please reply with Y or N.`;
+	const message = `Got it! Please wait while I get the list of restaurants!`;
+	var arr = await cService.get(cService.cacheTables.CUISINE, preference);
+	if(useLocation == 'y') {	
+		arr = await lService.filterLocation(arr, long, lat);
+	}
+	const restaurants = msgFormatter.formatRestaurantMessage(arr);
 	await Promise.all([
-		tgCaller.sendMessageWithForcedReply(chatID, message)]).catch((error => {
+		tgCaller.sendMessage(chatID, message),
+		tgCaller.sendMessage(chatID, restaurants)]).catch((error => {
 			console.log(error);
 		}))
 }
@@ -69,7 +83,7 @@ function getReplyType(previousMsg) {
 	switch(previousMsg) {
 		case 'Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese':
 			return types.PREFERENCE;
-		case 'What cuisine are you craving?':
+		case 'Please specify a cuisine that you prefer, followed by a Y or N to indicate if you want to search by your current location!\nE.g Korean Y':
 			return types.RECOMMEND;
 		case 'Got it! Do you want to specify your location? Please reply with Y or N.':
 			return types.LOCATION;

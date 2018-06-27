@@ -51,7 +51,8 @@ async function handleHelp(chatID) {
 
 async function handleRecommend(chatID) {
 	const message = await recommendUtil.getMessage('recommend');
-	//const inlineKeyboardButtonList = await recommendUtil.getInlineKeyboard('recommend');
+	const availCuisines = "The available cuisines are: American, Mexican, Western, Indian, Desserts, Beer, Latin American, European, Italian, Asian, Korean, Chinese, Vegetarian, Japanese, German, Indonesian, Malay, French, International, English, Indochinese, Thai, Turkish, Argentinean, Vietnamese";
+	await tgCaller.sendMessage(chatID, availCuisines);
 	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 		console.log(error);
 	});

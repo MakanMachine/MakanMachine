@@ -9,7 +9,7 @@
 function getMessage(type, data) {
 	switch (type) {
 		case 'recommend':
-			return `What cuisine are you craving?`;
+			return `Please specify a cuisine that you prefer, followed by a Y or N to indicate if you want to search by your current location!\nE.g Korean Y`;
 		case 'settings':
 			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
 		case 'help':
