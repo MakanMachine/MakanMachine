@@ -51,13 +51,13 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 }
 
 async function handleLocationReply(chatID, firstName, msgObj) {
-	var lon = msgObj.location.longitude;
-	var lat = msgObj.location.latitude;
+	var long = msgObj.location.longitude;
+	var lati = msgObj.location.latitude;
 	const preference = await cService.get(cService.cacheTables.RECOMMEND, chatID);
 	console.log("Preference updated:" + preference);
 	const message = `Got it! Please wait while I get the list of restaurants!`;
 	var arr = await cService.get(cService.cacheTables.CUISINE, preference);	
-	arr = await lService.filterLocation(arr, lon, lat);
+	arr = await lService.filterLocation(arr, long, lati);
 	const restaurants = msgFormatter.formatRestaurantMessage(arr);
 	await Promise.all([
 		tgCaller.sendMessage(chatID, message),
