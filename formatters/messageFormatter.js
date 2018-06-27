@@ -13,12 +13,12 @@ Google Maps: ${x.map_url}
         newArr.push(message);
     }
     console.log(newArr);
-    
+
     if (is.empty(newArr)) {
-        return newArr.push("Oops! We couldn't find any restaurants that match your criteria.");
-    } else {
-        return newArr;
+        newArr.push("Oops! We couldn't find any restaurants that match your criteria.");
     }
+    
+    return newArr;
 }
 
 module.exports = {
