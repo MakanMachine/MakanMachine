@@ -13,7 +13,7 @@ Google Maps: ${x.map_url}`;
     }
     console.log(newArr);
     if (is.empty(newArr)) {
-        newArr.push("Oops! We couldn't find any restaurants that match your criteria.");
+        return newArr.push("Oops! We couldn't find any restaurants that match your criteria.");
     } else {
         return newArr;
     }
