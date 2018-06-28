@@ -5,8 +5,8 @@ const msgFormatter = require('../formatters/messageFormatter');
 const MAX_RESTAURANT_PER_PAGE = 3;
 
 const types = {
-	All_PAGES = 'all_pages',
-	START = 'start'
+	All_PAGES: 'all_pages',
+	START: 'start'
 }
 
 async function handleAllPages(chatID, msgID, payload, restaurants) {
