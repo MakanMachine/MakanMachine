@@ -55,7 +55,7 @@ function getMessageForRestaurantList(restaurants) {
 
 function getMessageForListView(restaurants, totalRestaurants, pageNo, lastPageNo) {
 	let message = '';
-	if (totalRestaurants) > 0 {
+	if (totalRestaurants > 0) {
 		message = 
 		`There are a total of ${totalRestaurants} restaurants!\n\n`;
 		message += getMessageForRestaurantList(restaurants);
