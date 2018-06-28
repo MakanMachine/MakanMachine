@@ -86,7 +86,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 				//console.log(error);
 			//}));
 		try {
-			const chatData = {chat_id: chat_id};
+			const chatData = {chat_id: chatID};
 			await rHandler.handleRestaurants(rHandler.types.START, chatData, arr);
 		} catch (error) {
 			console.log(error);
