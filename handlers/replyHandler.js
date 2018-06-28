@@ -59,6 +59,12 @@ async function handleLocationReply(chatID, firstName, msgObj) {
 	var arr = await cService.get(cService.cacheTables.CUISINE, preference);	
 	arr = await lService.filterLocation(arr, long, lati);
 	const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
+	// await tgCaller.sendMessage(chatID, message).catch((error) => {
+	// 	console.log(error);
+	// });
+	await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, restaurants).catch((error) => {
+		console.log(error);
+	});
 }
 
 async function handleRecommendReply(chatID, firstName, msgObj) {
