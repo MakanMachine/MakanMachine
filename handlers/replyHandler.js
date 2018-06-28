@@ -9,6 +9,7 @@ const cService = require('../cache/cacheService');
 const lService = require('../location/locationService');
 const msgFormatter = require('../formatters/messageFormatter');
 const recommendUtils = require('../utils/recommendUtils');
+const rHandler = require('../handlers/restaurantHandler');
 
 const types = {
 	PREFERENCE: 'preference',
