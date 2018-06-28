@@ -51,36 +51,37 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 }
 
 async function handleLocationReply(chatID, firstName, msgObj) {
-	const preference = msgObj.text.split(' ')[0];
+	var long = msgObj.location.longitude;
+	var lati = msgObj.location.latitude;
+	const preference = await cService.get(cService.cacheTables.RECOMMEND, chatID);
 	console.log("Preference updated:" + preference);
-	const message = `Got it! Please wait while I get the list of restaurants!`;
+	//const message = `Got it! Please wait while I get the list of restaurants!`;
 	var arr = await cService.get(cService.cacheTables.CUISINE, preference);	
-	arr = await lService.filterLocation(arr, long, lat);
-	const restaurants = msgFormatter.formatRestaurantMessage(arr);
-	await Promise.all([
-		tgCaller.sendMessage(chatID, message),
-		tgCaller.sendMessage(chatID, restaurants.join('\n'))]).catch((error => {
-			console.log(error);
-		}));
+	arr = await lService.filterLocation(arr, long, lati);
+	const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
+		//await tgCaller.sendMessage(chatID, message),
+		//tgCaller.sendMessage(chatID, restaurants.join('\n'))]).catch((error => {
+			//console.log(error);;
+	await tgCaller.sendMessageWithForcedReplyKeyboardRemoved(chatID, restaurants).catch((error) => {
+		console.log(error);
+	})
 }
 
 async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
 	if(useLocation == 'y') {
+		await cService.set(cService.cacheTables.RECOMMEND, chatID, preference);
 		var message = `Please click the button below to send us your location!`;
 		await tgCaller.sendMessageWithForcedReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 			console.log(error);
 		});
 	} else {
 		console.log("Preference updated:" + preference);
-		const message = `Got it! Please wait while I get the list of restaurants!`;
+		//const message = `Got it! Please wait while I get the list of restaurants!`;
 		var arr = await cService.get(cService.cacheTables.CUISINE, preference);
-		const restaurants = msgFormatter.formatRestaurantMessage(arr);
-		await Promise.all([
-			tgCaller.sendMessage(chatID, message),
-			//tgCaller.sendMessage(chatID, restaurants.join('\n'))
-			]).catch((error => {
+		const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
+		await tgCaller.sendMessage(chatID, message).catch((error => {
 				console.log(error);
 			}));
 		try {
