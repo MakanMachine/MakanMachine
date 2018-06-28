@@ -14,6 +14,12 @@ async function handleAllPages(chatID, msgID, payload, restaurants) {
 		const pageNo = payload.page_no;
 		const startIndex = (parseInt(pageNo, 10) - 1) * MAX_RESTAURANT_PER_PAGE;
 
+		if(restaurants.constructor === Array) {
+			console.log("restaurants is an array");
+		}
+		else {
+			console.log("restaurants is not an array");
+		}
 		const selectedRestaurantList = restaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
 		if(selectedRestaurantList.length > 0) {
 			const lastPageNo = 
@@ -45,7 +51,7 @@ function handleStart(chatID, arr) {
 }
 
 async function handleRestaurants(type, chatData, payload, arr) {
-	console.log("Handling Restaurant Request:" + type);
+	console.log(`Handling Restaurant Request: ${type}`);
 	switch(type) {
 		case types.All_PAGES:
 			await handleAllPages(chatData.chat_id, chatData.msg_id, payload, arr);
