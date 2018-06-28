@@ -9,6 +9,7 @@ const cService = require('../cache/cacheService');
 const lService = require('../location/locationService');
 const msgFormatter = require('../formatters/messageFormatter');
 const recommendUtils = require('../utils/recommendUtils');
+const rHandler = require('../handlers/restaurantHandler');
 
 const types = {
 	PREFERENCE: 'preference',
@@ -78,9 +79,16 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 		const restaurants = msgFormatter.formatRestaurantMessage(arr);
 		await Promise.all([
 			tgCaller.sendMessage(chatID, message),
-			tgCaller.sendMessage(chatID, restaurants.join('\n'))]).catch((error => {
+			//tgCaller.sendMessage(chatID, restaurants.join('\n'))
+			]).catch((error => {
 				console.log(error);
 			}));
+		try {
+			const chatData = {chat_id: chat_id};
+			await rHandler.handleRestaurants(rHandler.types.ALL_PAGES, chatData, arr);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 }
 
