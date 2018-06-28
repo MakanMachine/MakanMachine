@@ -22,7 +22,21 @@ async function handleAllPages(chatID, msgID, payload, restaurants) {
 					: restaurants.length / MAX_RESTAURANT_PER_PAGE;
 			const message = msgFormatter.getMessageForListView(selectedRestaurantList, restaurants.length, pageNo, lastPageNo);
 			const inlineKeyboard = msgFormatter.getInlineKeyboardForListView('restaurants', selectedRestaurantList, pageNo, lastPageNo);
+			if (msgID) {
+				await tgCaller.editMessageWithInlineKeyboard(chatID, msgID, message, inlineKeyboard);
+			}
+			else {
+				await tgCaller.sendMessageWithInlineKeyboard(chatID, message, inlineKeyboard);
+			}
 		}
+		else {
+			console.log('Empty Restaurant List Page.');
+			const message = msgFormatter.getMessageForEmptyPage();
+			await tgCaller.sendMessage(chatID, message);
+		} 
+	}	
+	catch (error) {
+			console.log(error);
 	}
 }
 

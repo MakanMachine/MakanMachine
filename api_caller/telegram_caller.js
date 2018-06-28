@@ -113,6 +113,40 @@ async function sendMessageWithReplyKeyboardRemoved(chatID, message) {
 	await sendMessage(chatID, message, sendOptions);
 }
 
+async function editMessageWithInlineKeyboard(chatID, msgID, editedMessage, editedInlineKeyboardButtonList) {
+	 console.log('Editing message with inline keyboard:' + chatID);
+	 const sendOptions = {
+	 	parse_mode: 'markdown',
+	 	inline_keyboard: {
+	 		inline_keyboard: editedInlineKeyboardButtonList,
+	 	},
+	 };
+	 await editMessage(chatID, msgID, editedMessage, sendOptions);
+}
+
+async function editMessage(chatID, msgID, editedMessage, options) {
+	console.log(`Editing Message[${msgID}] for chat_id: ${chatID}`);
+	let parseMode = '';
+	let replyMarkup = {};
+	if(options) {
+		parseMode = options.parse_mode || '';
+		replyMarkup = options.force_reply || options.inline_keyboard || {};
+	}
+	const payload = {
+		chat_id: chatID,
+		message_id: msgID,
+		text: editedMessage,
+		parse_mode: parseMode,
+		reply_markup: replyMarkup,
+	};
+	try {
+		const result = await postToTelegram('editMessageText', payload) 
+		console.log(`Message sent to ${chatID}. ${result}`);
+	} catch (error) {
+		throw new Error(`Error: Failed to edit message at ${chatID}. ${error}`);
+	}
+}
+
 module.exports = {
 	setWebHook,
 	sendMessage,
@@ -120,4 +154,5 @@ module.exports = {
 	sendMessageWithForcedReply,	
 	sendMessageWithReplyKeyboard,
 	sendMessageWithReplyKeyboardRemoved,
+	editMessageWithInlineKeyboard,
 }

@@ -66,8 +66,13 @@ function getMessageForListView(restaurants, totalRestaurants, pageNo, lastPageNo
 	return message;
 }
 
+function getMessageForEmptyPage() {
+	return ("Oh no! So sorry but I could not find any restaurants to recommend! Why not try another cuisine?");
+}
+
 module.exports = {
     formatRestaurantMessage,
     getMessageForListView,
     getInlineKeyboardForListView,
+    getMessageForEmptyPage,
 }
