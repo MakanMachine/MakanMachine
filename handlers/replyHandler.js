@@ -81,19 +81,19 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 		console.log("Preference updated:" + preference);
 		//const message = `Got it! Please wait while I get the list of restaurants!`;
 		const arr = await cService.get(cService.cacheTables.CUISINE, preference);
-		if(arr.constructor === Array) {
-			console.log("arr is an Array");
-		}
-		else {
-			console.log("arr is not an Array");
-		}
+		//if(arr.constructor === Array) {
+		//	console.log("arr is an Array");
+		//}
+		//else {
+		//	console.log("arr is not an Array");
+		//}
 		//const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
 		//await tgCaller.sendMessage(chatID, message).catch((error => {
 				//console.log(error);
 			//}));
 		try {
 			const chatData = {chat_id: chatID};
-			await rHandler.handleRestaurants(rHandler.types.START, chatData, arr);
+			await rHandler.handleRestaurants(rHandler.types.START, chatData, ,arr);
 		} catch (error) {
 			console.log(error);
 		}
