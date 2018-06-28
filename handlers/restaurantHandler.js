@@ -40,15 +40,15 @@ async function handleAllPages(chatID, msgID, payload, restaurants) {
 	}
 }
 
-function handleStart(chatID) {
-	handleAllPages(chatID, null, {page_no: 1});
+function handleStart(chatID, arr) {
+	handleAllPages(chatID, null, {page_no: 1}, arr);
 }
 
 async function handleRestaurants(type, chatData, payload, arr) {
 	console.log("Handling Promotion Request:" + type);
 	switch(type) {
 		case types.All_PAGES:
-			await handleAllPages(chatData.chat_id, chatData.msg_id, payload);
+			await handleAllPages(chatData.chat_id, chatData.msg_id, payload, arr);
 			break;
 		case types.START:
 			await handleStart(chatData.chat_id, arr);
