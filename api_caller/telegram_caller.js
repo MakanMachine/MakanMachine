@@ -147,9 +147,26 @@ async function editMessage(chatID, msgID, editedMessage, options) {
 	}
 }
 
+async function sendAnswerCallbackQuery(callbackQueryID, callbackOptions) {
+	console.log(`Sending answer callback query (${JSON.stringify(callbackOptions)}) to callback query: ${callbackQueryID}`);
+	let payload = {
+		callback_query_id: callbackQueryID,
+	};
+	if(callbackOptions) {
+		payload = Object.assign({}, payload, callbackOptions);
+	}
+	try {
+		const result = await postToTelegram('answerCallbackQuery', payload);
+		console.log(`Answer Callback Query sent to callback_query_id: ${callbackQueryID}. ${result}`);
+	} catch (error) {
+		throw new Error(`Error: Failed to send answer callback query to ${callbackQueryID}. ${error}.`);
+	}
+}
+
 module.exports = {
 	setWebHook,
 	sendMessage,
+	sendAnswerCallbackQuery,
 	sendMessageWithInlineKeyboard,
 	sendMessageWithForcedReply,	
 	sendMessageWithReplyKeyboard,

@@ -60,4 +60,5 @@ async function handleRestaurants(type, chatData, payload, arr) {
 
 module.exports = {
 	handleRestaurants,
+	types,
 };
