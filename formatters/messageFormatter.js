@@ -45,10 +45,10 @@ function getMessageForRestaurantList(restaurants) {
 	let message = '';
 	for(let i = 0; i < restaurants.length; i++) {
 		message += `*${restaurants[i].name}*
-				Address: ${restaurants[i].address}
-				Opening Hours: ${restaurants[i].opening_hours}
-				Nearest MRT: ${restaurants[i].nearest_mrt}
-				Google Maps: ${restaurants[i].map_url}\n`;
+		Address: ${restaurants[i].address}
+		Opening Hours: ${restaurants[i].opening_hours}
+		Nearest MRT: ${restaurants[i].nearest_mrt}
+		Google Maps: ${restaurants[i].map_url}\n`;
 	}
 	return message;
 }
