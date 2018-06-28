@@ -80,7 +80,13 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	} else {
 		console.log("Preference updated:" + preference);
 		//const message = `Got it! Please wait while I get the list of restaurants!`;
-		var arr = await cService.get(cService.cacheTables.CUISINE, preference);
+		const arr = await cService.get(cService.cacheTables.CUISINE, preference);
+		if(arr.constructor === Array) {
+			console.log("arr is an Array");
+		}
+		else {
+			console.log("arr is not an Array");
+		}
 		//const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
 		//await tgCaller.sendMessage(chatID, message).catch((error => {
 				//console.log(error);
