@@ -13,13 +13,14 @@ async function handleRestaurantCallbackQuery(chatData, callbackQueryData) {
 		const pageNo = callbackQueryData[1];
 		if(pageNo) {
 			const payload = {page_no: pageNo};
-			rHandler.handleRestaurants(rHandler.types.ALL_PAGES, chatData, payload);
+			console.log(rHandler.types['ALL_PAGES']);
+			rHandler.handleRestaurants('all_pages', chatData, payload);
 		}
 		else {
 			console.log('Error: Page No Invalid');
 		}
 	}
-	await tgCaller.sendAnswerCallbackQuery(chatData.callbacck_query_id).catch((error) => {
+	await tgCaller.sendAnswerCallbackQuery(chatData.callback_query_id).catch((error) => {
 		console.log(error);
 	});
 }

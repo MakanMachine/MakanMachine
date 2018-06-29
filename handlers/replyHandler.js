@@ -14,7 +14,7 @@ const rHandler = require('../handlers/restaurantHandler');
 const types = {
 	PREFERENCE: 'preference',
 	RECOMMEND: 'recommend',
-	LOCATION: 'location'
+	LOCATION: 'location',
 }
 
 function handleReply(chatID, msgObj) {
@@ -93,7 +93,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 			//}));
 		try {
 			const chatData = {chat_id: chatID};
-			await rHandler.handleRestaurants(rHandler.types.START, chatData, null ,arr);
+			await rHandler.handleRestaurants(rHandler.types.START, chatData, {userPref: preference});
 		} catch (error) {
 			console.log(error);
 		}
