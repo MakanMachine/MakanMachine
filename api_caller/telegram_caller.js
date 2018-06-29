@@ -113,11 +113,63 @@ async function sendMessageWithReplyKeyboardRemoved(chatID, message) {
 	await sendMessage(chatID, message, sendOptions);
 }
 
+async function editMessageWithInlineKeyboard(chatID, msgID, editedMessage, editedInlineKeyboardButtonList) {
+	 console.log('Editing message with inline keyboard:' + chatID);
+	 const sendOptions = {
+	 	parse_mode: 'markdown',
+	 	inline_keyboard: {
+	 		inline_keyboard: editedInlineKeyboardButtonList,
+	 	},
+	 };
+	 await editMessage(chatID, msgID, editedMessage, sendOptions);
+}
+
+async function editMessage(chatID, msgID, editedMessage, options) {
+	console.log(`Editing Message[${msgID}] for chat_id: ${chatID}`);
+	let parseMode = '';
+	let replyMarkup = {};
+	if(options) {
+		parseMode = options.parse_mode || '';
+		replyMarkup = options.force_reply || options.inline_keyboard || {};
+	}
+	const payload = {
+		chat_id: chatID,
+		message_id: msgID,
+		text: editedMessage,
+		parse_mode: parseMode,
+		reply_markup: replyMarkup,
+	};
+	try {
+		const result = await postToTelegram('editMessageText', payload) 
+		console.log(`Message sent to ${chatID}. ${result}`);
+	} catch (error) {
+		throw new Error(`Error: Failed to edit message at ${chatID}. ${error}`);
+	}
+}
+
+async function sendAnswerCallbackQuery(callbackQueryID, callbackOptions) {
+	console.log(`Sending answer callback query (${JSON.stringify(callbackOptions)}) to callback query: ${callbackQueryID}`);
+	let payload = {
+		callback_query_id: callbackQueryID,
+	};
+	if(callbackOptions) {
+		payload = Object.assign({}, payload, callbackOptions);
+	}
+	try {
+		const result = await postToTelegram('answerCallbackQuery', payload);
+		console.log(`Answer Callback Query sent to callback_query_id: ${callbackQueryID}. ${result}`);
+	} catch (error) {
+		throw new Error(`Error: Failed to send answer callback query to ${callbackQueryID}. ${error}.`);
+	}
+}
+
 module.exports = {
 	setWebHook,
 	sendMessage,
+	sendAnswerCallbackQuery,
 	sendMessageWithInlineKeyboard,
 	sendMessageWithForcedReply,	
 	sendMessageWithReplyKeyboard,
 	sendMessageWithReplyKeyboardRemoved,
+	editMessageWithInlineKeyboard,
 }

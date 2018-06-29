@@ -14,7 +14,7 @@ const rHandler = require('../handlers/restaurantHandler');
 const types = {
 	PREFERENCE: 'preference',
 	RECOMMEND: 'recommend',
-	LOCATION: 'location'
+	LOCATION: 'location',
 }
 
 function handleReply(chatID, msgObj) {
@@ -80,14 +80,20 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	} else {
 		console.log("Preference updated:" + preference);
 		//const message = `Got it! Please wait while I get the list of restaurants!`;
-		var arr = await cService.get(cService.cacheTables.CUISINE, preference);
-		const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
-		await tgCaller.sendMessage(chatID, message).catch((error => {
-				console.log(error);
-			}));
+		const arr = await cService.get(cService.cacheTables.CUISINE, preference);
+		//if(arr.constructor === Array) {
+		//	console.log("arr is an Array");
+		//}
+		//else {
+		//	console.log("arr is not an Array");
+		//}
+		//const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
+		//await tgCaller.sendMessage(chatID, message).catch((error => {
+				//console.log(error);
+			//}));
 		try {
-			const chatData = {chat_id: chat_id};
-			await rHandler.handleRestaurants(rHandler.types.ALL_PAGES, chatData, arr);
+			const chatData = {chat_id: chatID};
+			await rHandler.handleRestaurants(rHandler.types.START, chatData, {userPref: preference});
 		} catch (error) {
 			console.log(error);
 		}

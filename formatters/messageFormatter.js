@@ -21,21 +21,21 @@ Google Maps: ${x.map_url}
     return newArr;
 }
 
-function getInlineKeyboardForListView(listType, restaurantList, currentPage, lastPage) {
+function getInlineKeyboardForListView(listType, restaurantList, currentPage, lastPage, preference) {
 	const inlineKeyboardButtonList = [[]];
 	const lastPageNo = parseInt(lastPage, 10);
 	const pageNo = parseInt(currentPage, 10);
 	if(pageNo > 1) {
-		inlineKeyboardButtonList[0].push({text: 'First page', callback_data: `${listType}/page/1`});
+		inlineKeyboardButtonList[0].push({text: 'First page', callback_data: `${listType}/1/${preference}`});
 	}
 	if(pageNo > 2) {
-		inlineKeyboardButtonList[0].push({text: 'Previous page', callback_data: `${listType}/page/${pageNo - 1}`});
+		inlineKeyboardButtonList[0].push({text: 'Previous page', callback_data: `${listType}/${pageNo - 1}/${preference}`});
 	}
 	if(pageNo < lastPageNo - 1) {
-		inlineKeyboardButtonList[0].push({text: 'Next page', callback_data: `${listType}/page/${pageNo + 1}`});
+		inlineKeyboardButtonList[0].push({text: 'Next page', callback_data: `${listType}/${pageNo + 1}/${preference}`});
 	}
 	if(pageNo < lastPageNo) {
-		inlineKeyboardButtonList[0].push({text: 'Last page', callback_data: `${listType}/page/${lastPageNo}`});
+		inlineKeyboardButtonList[0].push({text: 'Last page', callback_data: `${listType}/${lastPageNo}/${preference}`});
 	}
 
 	return inlineKeyboardButtonList;
@@ -44,18 +44,14 @@ function getInlineKeyboardForListView(listType, restaurantList, currentPage, las
 function getMessageForRestaurantList(restaurants) {
 	let message = '';
 	for(let i = 0; i < restaurants.length; i++) {
-		message += `*${restaurants[i].name}*
-					Address: ${restaurants[i].address}
-					Opening Hours: ${restaurants[i].opening_hours}
-					Nearest MRT: ${restaurants[i].nearest_mrt}
-					Google Maps: ${restaurants[i].map_url}`;
+		message += `*${restaurants[i].name}*\nAddress: ${restaurants[i].address}\nOpening Hours: ${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n\n`;
 	}
 	return message;
 }
 
 function getMessageForListView(restaurants, totalRestaurants, pageNo, lastPageNo) {
 	let message = '';
-	if (totalRestaurants) > 0 {
+	if (totalRestaurants > 0) {
 		message = 
 		`There are a total of ${totalRestaurants} restaurants!\n\n`;
 		message += getMessageForRestaurantList(restaurants);
@@ -66,8 +62,13 @@ function getMessageForListView(restaurants, totalRestaurants, pageNo, lastPageNo
 	return message;
 }
 
+function getMessageForEmptyPage() {
+	return ("Oh no! So sorry but I could not find any restaurants to recommend! Why not try another cuisine?");
+}
+
 module.exports = {
     formatRestaurantMessage,
     getMessageForListView,
     getInlineKeyboardForListView,
+    getMessageForEmptyPage,
 }
