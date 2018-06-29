@@ -44,7 +44,7 @@ function getInlineKeyboardForListView(listType, restaurantList, currentPage, las
 function getMessageForRestaurantList(restaurants) {
 	let message = '';
 	for(let i = 0; i < restaurants.length; i++) {
-		message += `*${restaurants[i].name}*\nAddress: ${restaurants[i].address}\nOpening Hours: ${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n`;
+		message += `*${restaurants[i].name}*\nAddress: ${restaurants[i].address}\nOpening Hours: ${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n\n`;
 	}
 	return message;
 }
