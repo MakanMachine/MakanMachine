@@ -9,7 +9,7 @@ function filterLocation(content, long, lati){
     const nearby = geo.nearBy(lati, long, 20000);
     var arr = [];
     for(var x of nearby) {
-        value = cacheService.get(cacheService.cacheTables.ID, x["id"]);
+        value = cacheService.get(cacheService.cacheTables.ID, x["i"]);
         arr.push(value);
     }
     console.log(`Filtered location array: ${arr}`);
