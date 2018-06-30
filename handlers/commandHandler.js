@@ -77,7 +77,7 @@ async function handleSettings(chatID, msgObj) {
 }
 
 async function handleSurprise(chatID) {
-	const message;
+	var message;
 	const user = await userpref.getUser(chatID);
 	if(user == null) {
 		message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
