@@ -78,7 +78,9 @@ async function handleSettings(chatID, msgObj) {
 
 async function handleSurprise(chatID) {	
 	const user = await userpref.getUser(chatID);
-	const result = await cacheService.surprise(user.cuisine);
+	const result = await cacheService.surprise(user.cuisine).catch((error) => {
+		console.log(error);
+	});
 	console.log(`User: ${user}.`);
 	console.log(`Result: ${result.name}`);
 	if(result) {	
