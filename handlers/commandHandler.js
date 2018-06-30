@@ -87,7 +87,7 @@ async function handleSurprise(chatID) {
 	});
 	console.log(`User: ${user}.`);
 	console.log(`Result: ${result.name}`);
-	if(result == undefined) {
+	if(result) {
 		message = `There you go!
 Restaurant name: ${result.name}
 Address: ${result.address}
