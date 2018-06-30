@@ -69,6 +69,8 @@ async function handleUnknown(chatID) {
 // msgObj and call updateUser from userpref.
 async function handleSettings(chatID, msgObj) {
 	const message = await recommendUtil.getMessage('settings');
+	const availCuisines = "The available cuisines are: American, Mexican, Western, Indian, Desserts, Beer, European, Italian, Asian, Korean, Chinese, Vegetarian, Japanese, German, Indonesian, Malay, French, International, English, Indochinese, Thai, Turkish, Argentinean, Vietnamese";
+	await tgCaller.sendMessage(chatID, availCuisines);
 	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
 		});
