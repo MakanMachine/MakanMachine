@@ -85,9 +85,9 @@ async function handleSurprise(chatID) {
 	const result = await cacheService.surprise(user.cuisine).catch((error) => {
 		console.log(error);
 	});
-	console.log(`User: ${user}.`);
-	console.log(`Result: ${result.name}`);
 	if(result) {
+		console.log(`User: ${user}.`);
+		console.log(`Result: ${result.name}`);
 		message = `There you go!
 Restaurant name: ${result.name}
 Address: ${result.address}
