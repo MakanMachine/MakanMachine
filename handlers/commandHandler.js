@@ -95,7 +95,7 @@ Opening hours: ${result.opening_hours}
 Nearest MRT: ${result.nearest_mrt}
 Google Maps: ${result.map_url}`;
 	} else {
-		message = `Oops! We could not find you a restaurant based on your settings`;
+		message = `Oops! We could not find you a restaurant based on your preferences. Run /settings to edit your preferences!`;
 	}
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
