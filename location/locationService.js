@@ -6,8 +6,9 @@ function filterLocation(content, long, lati){
     const dataSet = Geo.createCompactSet(content, {id: '_id', lat: 'lat', lon: 'lng'});
     console.log(`dataSet: ${dataSet}`);
     const geo = new Geo(dataSet, {sorted: true});
+    const nearby = geo.nearBy(lati, long, 20000);
     var arr = [];
-    for(var x of geo) {
+    for(var x of nearby) {
         value = cacheService.get(cacheService.cacheTables.ID, x["id"]);
         arr.push(value);
     }
