@@ -49,9 +49,9 @@ async function surprise(preference) {
     for(var x of preference) {
         var arrTemp = await get(CACHE_TABLE.CUISINE, x);
         arrCuisine = arrCuisine.concat(arrTemp);
-        console.log(`arrTemp: ${arrTemp}`);
+        //console.log(`arrTemp: ${arrTemp}`);
     }
-    console.log(`Array: ${arrCuisine}`);
+    //console.log(`Array: ${arrCuisine}`);
     return arrCuisine[Math.floor(Math.random() * arrCuisine.length)];
 }
 

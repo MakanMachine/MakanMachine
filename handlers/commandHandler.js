@@ -76,22 +76,26 @@ async function handleSettings(chatID, msgObj) {
 		});
 }
 
-async function handleSurprise(chatID) {	
+async function handleSurprise(chatID) {
+	const message;
 	const user = await userpref.getUser(chatID);
+	if(user == null) {
+		message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
+	}
 	const result = await cacheService.surprise(user.cuisine).catch((error) => {
 		console.log(error);
 	});
 	console.log(`User: ${user}.`);
 	console.log(`Result: ${result.name}`);
-	if(result) {	
-		const message = `There you go!
+	if(result == undefined) {
+		message = `There you go!
 Restaurant name: ${result.name}
 Address: ${result.address}
 Opening hours: ${result.opening_hours}
 Nearest MRT: ${result.nearest_mrt}
 Google Maps: ${result.map_url}`;
 	} else {
-		const message = `Oops! We could not find you a restaurant.`;
+		message = `Oops! We could not find you a restaurant based on your settings`;
 	}
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
