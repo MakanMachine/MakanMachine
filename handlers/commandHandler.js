@@ -69,22 +69,34 @@ async function handleUnknown(chatID) {
 // msgObj and call updateUser from userpref.
 async function handleSettings(chatID, msgObj) {
 	const message = await recommendUtil.getMessage('settings');
+	const availCuisines = "The available cuisines are: American, Mexican, Western, Indian, Desserts, Beer, European, Italian, Asian, Korean, Chinese, Vegetarian, Japanese, German, Indonesian, Malay, French, International, English, Indochinese, Thai, Turkish, Argentinean, Vietnamese";
+	await tgCaller.sendMessage(chatID, availCuisines);
 	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
 		});
 }
 
-async function handleSurprise(chatID) {	
+async function handleSurprise(chatID) {
+	var message;
 	const user = await userpref.getUser(chatID);
-	const result = await cacheService.surprise(user.cuisine);
-	console.log(`User: ${user}.`);
-	console.log(`Result: ${result.name}`);
-	const message = `There you go!
+	if(user == null) {
+		message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
+	}
+	const result = await cacheService.surprise(user.cuisine).catch((error) => {
+		console.log(error);
+	});
+	if(result) {
+		console.log(`User: ${user}.`);
+		console.log(`Result: ${result.name}`);
+		message = `There you go!
 Restaurant name: ${result.name}
 Address: ${result.address}
 Opening hours: ${result.opening_hours}
 Nearest MRT: ${result.nearest_mrt}
 Google Maps: ${result.map_url}`;
+	} else {
+		message = `Oops! We could not find you a restaurant based on your preferences. Run /settings to edit your preferences!`;
+	}
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
