@@ -6,7 +6,13 @@ function filterLocation(content, long, lati){
     const dataSet = Geo.createCompactSet(content, {id: '_id', lat: 'lat', lon: 'lng'});
     console.log(`dataSet: ${dataSet}`);
     const geo = new Geo(dataSet, {sorted: true});
-    return geo.nearBy(lati, long, 100000);
+    var arr = [];
+    for(var x of geo) {
+        value = cacheService.get(cacheService.cacheTables.ID, x["id"]);
+        arr.push(value);
+    }
+    console.log(`Filtered location array: ${arr}`);
+    return arr;
 }
 
 module.exports = {

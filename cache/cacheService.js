@@ -6,6 +6,7 @@ const CACHE_TABLE = {
     CUISINE: 'cuisine',
     LOCATION: 'location',
     RECOMMEND: 'recommend',
+    ID: 'id',
 };
 
 async function get(table, key) {
