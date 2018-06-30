@@ -86,7 +86,7 @@ function updateCuisine(content) {
 }
 
 function updateLocation(content) {
-    const dataSet = Geo.createCompactSet(content, {id: '_id', lat: 'lat', lon: 'lon'});
+    const dataSet = Geo.createCompactSet(content, {id: '_id', lat: 'lat', lon: 'lng'});
     const geo = new Geo(dataSet, {sorted: true});
     cache.location.set(CACHE_TABLE.LOCATION, geo, (err) => {
     if(err)
