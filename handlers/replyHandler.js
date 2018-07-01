@@ -56,16 +56,19 @@ async function handleLocationReply(chatID, firstName, msgObj) {
 	var lati = msgObj.location.latitude;
 	const preference = await cService.get(cService.cacheTables.RECOMMEND, chatID);
 	console.log("Preference updated:" + preference);
-	//const message = `Got it! Please wait while I get the list of restaurants!`;
+	const message = `Got it! Please wait while I get the list of restaurants!`;
 	var arr = await cService.get(cService.cacheTables.CUISINE, preference);	
 	arr = await lService.filterLocation(arr, long, lati);
-	const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
-	// await tgCaller.sendMessage(chatID, message).catch((error) => {
-	// 	console.log(error);
-	// });
-	await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, restaurants).catch((error) => {
+	//const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
+	await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
 		console.log(error);
 	});
+	try {
+		const chatData = {chat_id: chatID};
+		await rHandler.handleRestaurants(rHandler.types.START, chatData, {user_pref: preference, user_long: long, user_lati: lati})
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 async function handleRecommendReply(chatID, firstName, msgObj) {
@@ -81,16 +84,6 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 		console.log("Preference updated:" + preference);
 		//const message = `Got it! Please wait while I get the list of restaurants!`;
 		const arr = await cService.get(cService.cacheTables.CUISINE, preference);
-		//if(arr.constructor === Array) {
-		//	console.log("arr is an Array");
-		//}
-		//else {
-		//	console.log("arr is not an Array");
-		//}
-		//const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
-		//await tgCaller.sendMessage(chatID, message).catch((error => {
-				//console.log(error);
-			//}));
 		try {
 			const chatData = {chat_id: chatID};
 			await rHandler.handleRestaurants(rHandler.types.START, chatData, {user_pref: preference});
