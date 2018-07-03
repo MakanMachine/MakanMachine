@@ -17,7 +17,7 @@ async function handleAllPages(chatID, msgID, payload) {
 		const restaurants = await cService.get(cService.cacheTables.CUISINE, payload.user_pref);
 		
 		if(payload.user_long != null) {
-			const restaurants = await lService.filterLocation(arr, long, lati);
+			const restaurants = await lService.filterLocation(restaurants, payload.long, payload.lati);
 		}
 		
 		const selectedRestaurantList = restaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
@@ -47,7 +47,7 @@ async function handleAllPages(chatID, msgID, payload) {
 }
 
 function handleStart(chatID, payload) {
-	handleAllPages(chatID, null, {page_no: 1, user_pref: payload.user_pref});
+	handleAllPages(chatID, null, {page_no: 1, user_pref: payload.user_pref, user_long: payload.user_long, user_lati: payload.user_lati});
 }
 
 async function handleRestaurants(type, chatData, payload) {
