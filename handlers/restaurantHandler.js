@@ -14,10 +14,10 @@ async function handleAllPages(chatID, msgID, payload) {
 	try {
 		const pageNo = payload.page_no;
 		const startIndex = (parseInt(pageNo, 10) - 1) * MAX_RESTAURANT_PER_PAGE;
-		const restaurants = await cService.get(cService.cacheTables.CUISINE, payload.user_pref);
+		var restaurants = await cService.get(cService.cacheTables.CUISINE, payload.user_pref);
 		
 		if(payload.user_long != null) {
-			const restaurants = await lService.filterLocation(restaurants, payload.long, payload.lati);
+			restaurants = await lService.filterLocation(restaurants, payload.user_long, payload.user_lati);
 		}
 		
 		const selectedRestaurantList = restaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
@@ -27,7 +27,8 @@ async function handleAllPages(chatID, msgID, payload) {
 					? Math.floor(restaurants.length / MAX_RESTAURANT_PER_PAGE) + 1
 					: restaurants.length / MAX_RESTAURANT_PER_PAGE;
 			const message = msgFormatter.getMessageForListView(selectedRestaurantList, restaurants.length, pageNo, lastPageNo);
-			const inlineKeyboard = msgFormatter.getInlineKeyboardForListView('restaurants', selectedRestaurantList, pageNo, lastPageNo, payload.user_pref);
+			const inlineKeyboard = msgFormatter.getInlineKeyboardForListView('restaurants', selectedRestaurantList, pageNo, lastPageNo, 
+				payload.user_pref, payload.user_long, payload.user_lati);
 			if (msgID) {
 				await tgCaller.editMessageWithInlineKeyboard(chatID, msgID, message, inlineKeyboard);
 			}
