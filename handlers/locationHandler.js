@@ -34,7 +34,7 @@ Google Maps: ${result.map_url}`;
 async function handleRecommendLocation(chatID, msgObj) {
     var long = msgObj.location.longitude;
     var lati = msgObj.location.latitude;
-    const session = await cService.get(cService.cacheTables.SESSION, chatID);
+    var session = await cService.get(cService.cacheTables.SESSION, chatID);
     const preference = session.cuisine;
     console.log("Preference updated:" + preference);
     const message = `Got it! Please wait while I get the list of restaurants!`;
@@ -59,7 +59,7 @@ async function handleUnknownLocation(chatID) {
     });
 }
 
-function handleLocation(chatID, msgObj) {
+async function handleLocation(chatID, msgObj) {
     var session = await cService.get(cService.cacheTables.SESSION, chatID);
     switch(session.type) {
         case 'recommend':
