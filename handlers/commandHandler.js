@@ -108,7 +108,7 @@ Google Maps: ${result.map_url}`;
 async function handleSurpriseNearby(chatID) {
 	await cacheService.set(cacheService.cacheTables.SESSION, chatID, {type: `surprise`});
 	var message = `Please click the button below to send us your location!`;
-	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtil.keyboardTypes.LOCATION, preference)).catch(error => {
+	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtil.getKeyboard(recommendUtil.keyboardTypes.LOCATION, preference)).catch(error => {
 		console.log(error);
 	});
 }
