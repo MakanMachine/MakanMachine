@@ -10,7 +10,7 @@ async function handleSurpriseLocation(chatID, msgObj) {
     if(user == null) {
         message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
     }
-    const result = await cacheService.surprise({cuisine: user.cuisine, location: msgObj.location}).catch((error) => {
+    const result = await cService.surprise({cuisine: user.cuisine, location: msgObj.location}).catch((error) => {
         console.log(error);
     });
     if(result) {

@@ -6,7 +6,7 @@
 const tgCaller = require('../api_caller/telegram_caller');
 const recommendUtil = require('../utils/recommendUtils');
 const userpref = require('../userpref');
-const cacheService = require('../cache/cacheService');
+const cService = require('../cache/cacheService');
 
 function handleCommand(chatID, msgObj, command) {
 	console.log("Handling command: " + command);
@@ -85,7 +85,7 @@ async function handleSurprise(chatID) {
 	if(user == null) {
 		message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
 	}
-	const result = await cacheService.surprise({cuisine: user.cuisine}).catch((error) => {
+	const result = await cService.surprise({cuisine: user.cuisine}).catch((error) => {
 		console.log(error);
 	});
 	if(result) {
@@ -106,7 +106,7 @@ Google Maps: ${result.map_url}`;
 }
 
 async function handleSurpriseNearby(chatID) {
-	await cacheService.set(cacheService.cacheTables.SESSION, chatID, {type: `surprise`});
+	await cService.set(cService.cacheTables.SESSION, chatID, {type: `surprise`});
 	var message = `Please click the button below to send us your location!`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtil.getKeyboard(recommendUtil.keyboardTypes.LOCATION)).catch(error => {
 		console.log(error);
