@@ -9,7 +9,7 @@ async function filterLocation(content, long, lati){
     const nearby = geo.nearBy(lati, long, 15000);
     var arr = [];
     for(var x of nearby) {
-        value = await cService.get(cService.cacheTables.ID, x["i"]);
+        value = await cService.get('id', x["i"]);
         arr.push(value);
         console.log(value);
     }
