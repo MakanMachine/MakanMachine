@@ -1,5 +1,5 @@
 const Geo = require('geo-nearby');
-const cService = require('./../cache/cacheService');
+const cService = require('../cache/cacheService');
 
 async function filterLocation(content, long, lati){
     console.log(`Filtering by long: ${long}, lati: ${lati}.`);
