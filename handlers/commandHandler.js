@@ -28,6 +28,9 @@ function handleCommand(chatID, msgObj, command) {
 		case 'surprise_me':
 			handleSurprise(chatID);
 			break;
+		case 'surprise_me_nearby':
+			handleSurpriseNearby(chatID);
+			break;
 		default:
 			handleUnknown(chatID);
 			break;
@@ -82,7 +85,7 @@ async function handleSurprise(chatID) {
 	if(user == null) {
 		message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
 	}
-	const result = await cacheService.surprise(user.cuisine).catch((error) => {
+	const result = await cacheService.surprise({cuisine: user.cuisine}).catch((error) => {
 		console.log(error);
 	});
 	if(result) {
@@ -98,6 +101,14 @@ Google Maps: ${result.map_url}`;
 		message = `Oops! We could not find you a restaurant based on your preferences. Run /settings to edit your preferences!`;
 	}
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
+		console.log(error);
+	});
+}
+
+async function handleSurpriseNearby(chatID) {
+	await cacheService.set(cacheService.cacheTables.SESSION, chatID, {type: `surprise`});
+	var message = `Please click the button below to send us your location!`;
+	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtil.keyboardTypes.LOCATION, preference)).catch(error => {
 		console.log(error);
 	});
 }

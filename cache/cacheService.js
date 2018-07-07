@@ -1,11 +1,13 @@
 const NodeCache = require('node-cache');
 const cacheProvider = require('./cacheProvider');
+const lService = require('../location/locationService');
+const is = require('is_js');
 
 const CACHE_TABLE = {
     GENERAL: 'general',
     CUISINE: 'cuisine',
     LOCATION: 'location',
-    RECOMMEND: 'recommend',
+    SESSION: 'session',
     ID: 'id',
 };
 
@@ -43,7 +45,8 @@ async function set(table, key, value) {
 }
 
 // Returns a random restaurant based on array of cuisines.
-async function surprise(preference) {
+async function surprise(options) {
+    const preference = options.cuisine;
     console.log(`Preparing surprise!`);
     console.log(`Preference: ${preference}`);
     var arrCuisine = [];
@@ -51,6 +54,10 @@ async function surprise(preference) {
         var arrTemp = await get(CACHE_TABLE.CUISINE, x);
         arrCuisine = arrCuisine.concat(arrTemp);
         console.log(`arrTemp: ${arrTemp}`);
+    }
+    if(is.propertyDefined(options, 'location')) {
+        let location = options.location;
+        arrCuisine = lService.filterLocation(arrCuisine, location.longitude, location.latitude);
     }
     console.log(`Array: ${arrCuisine}`);
     return arrCuisine[Math.floor(Math.random() * arrCuisine.length)];
