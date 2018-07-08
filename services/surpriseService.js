@@ -21,14 +21,14 @@ async function surprise(options) {
             arrCuisine = arrCuisine.concat(arrTemp);
             console.log(`arrTemp: ${arrTemp}`);
         }
-        
+
         // Filter by location if location is defined.
         if(is.propertyDefined(options, 'location')) {
             let location = options.location;
             var nearby = await lService.filterLocation(arrCuisine, location.longitude, location.latitude);
             var arrTemp = [];
             for(var x of nearby) {
-                value = await cService.get('id', x["i"]);
+                value = await cService.get(cService.cacheTables.ID, x["i"]);
                 arrTemp.push(value);
                 console.log(value);
             }

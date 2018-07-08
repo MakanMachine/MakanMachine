@@ -20,8 +20,8 @@ async function handleRecommendLocation(chatID, msgObj) {
     const preference = session.cuisine;
     console.log("Preference updated:" + preference);
     const message = `Got it! Please wait while I get the list of restaurants!`;
-    var arr = await cService.get(cService.cacheTables.CUISINE, preference); 
-    arr = await lService.filterLocation(arr, long, lati);
+    //var arr = await cService.get(cService.cacheTables.CUISINE, preference); 
+    //arr = await lService.filterLocation(arr, long, lati);
     //const restaurants = msgFormatter.formatRestaurantMessage(arr).join('');
     await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
         console.log(error);
