@@ -47,6 +47,5 @@ async function set(table, key, value) {
 module.exports = {
     cacheTables: CACHE_TABLE,
     get,
-    surprise,
     set,
 }
