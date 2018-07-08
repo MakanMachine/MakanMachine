@@ -55,7 +55,7 @@ async function handleAllPages(chatID, msgID, payload) {
 }
 
 function handleStart(chatID, payload) {
-	handleAllPages(chatID, null, {page_no: 1, user_pref: payload.user_pref, user_long: payload.user_long, user_lati: payload.user_lati});
+	handleAllPages(chatID, null, {page_no: 1, user_pref: payload.user_pref});
 }
 
 async function handleRestaurants(type, chatData, payload) {
