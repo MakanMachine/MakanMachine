@@ -7,6 +7,7 @@ const userpref = require('../userpref');
 async function surprise(options) {
     var user = await userpref.getUser(options.chatID);
     var message;
+
     if(user == undefined) {
         message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
     } else {
@@ -20,10 +21,18 @@ async function surprise(options) {
             arrCuisine = arrCuisine.concat(arrTemp);
             console.log(`arrTemp: ${arrTemp}`);
         }
+        
         // Filter by location if location is defined.
         if(is.propertyDefined(options, 'location')) {
             let location = options.location;
-            arrCuisine = await lService.filterLocation(arrCuisine, location.longitude, location.latitude);
+            var nearby = await lService.filterLocation(arrCuisine, location.longitude, location.latitude);
+            var arrTemp = [];
+            for(var x of nearby) {
+                value = await cService.get('id', x["i"]);
+                arrTemp.push(value);
+                console.log(value);
+            }
+            arrCuisine = arrTemp;
         }
 
         console.log(`Filtered array: ${arrCuisine}`);
