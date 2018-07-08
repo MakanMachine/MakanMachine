@@ -1,6 +1,6 @@
 const tgCaller = require('../api_caller/telegram_caller');
 const cService = require('../cache/cacheService');
-const lService = require('../location/locationService');
+const lService = require('../services/locationService');
 const msgFormatter = require('../formatters/messageFormatter');
 
 const MAX_RESTAURANT_PER_PAGE = 3;

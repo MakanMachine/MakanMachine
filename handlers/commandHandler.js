@@ -5,8 +5,8 @@
 
 const tgCaller = require('../api_caller/telegram_caller');
 const recommendUtil = require('../utils/recommendUtils');
-const userpref = require('../userpref');
 const cService = require('../cache/cacheService');
+const sService = require('../services/surpriseService');
 
 function handleCommand(chatID, msgObj, command) {
 	console.log("Handling command: " + command);
@@ -80,26 +80,7 @@ async function handleSettings(chatID, msgObj) {
 }
 
 async function handleSurprise(chatID) {
-	var message;
-	const user = await userpref.getUser(chatID);
-	if(user == null) {
-		message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
-	}
-	const result = await cService.surprise({cuisine: user.cuisine}).catch((error) => {
-		console.log(error);
-	});
-	if(result) {
-		console.log(`User: ${user}.`);
-		console.log(`Result: ${result.name}`);
-		message = `There you go!
-Restaurant name: ${result.name}
-Address: ${result.address}
-Opening hours: ${result.opening_hours}
-Nearest MRT: ${result.nearest_mrt}
-Google Maps: ${result.map_url}`;
-	} else {
-		message = `Oops! We could not find you a restaurant based on your preferences. Run /settings to edit your preferences!`;
-	}
+	var message = surpriseService.surprise({chatID: chatID})
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
