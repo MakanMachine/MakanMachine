@@ -1,4 +1,4 @@
-const cService = require('../cache/cService');
+const cService = require('../cache/cacheService');
 const lService = require('./lService');
 const is = require('is_js');
 const userpref = require('../userpref');
