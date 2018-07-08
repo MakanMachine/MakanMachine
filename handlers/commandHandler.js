@@ -80,7 +80,7 @@ async function handleSettings(chatID, msgObj) {
 }
 
 async function handleSurprise(chatID) {
-	var message = surpriseService.surprise({chatID: chatID})
+	var message = sService.surprise({chatID: chatID})
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
