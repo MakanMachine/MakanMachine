@@ -3,20 +3,22 @@
 *		1. handleMessageEvent(msgObj): Handles Telegram Message Event
 */
 
-const tgCaller = require('../api_caller/telegram_caller.js');
+const tgCaller = require('../api_caller/telegram_caller');
 const cmdHandler = require('./commandHandler');
 const rpHandler = require('./replyHandler');
+const locHandler = require('./locationHandler');
+const is = require('is_js');
 
 function handleMessageEvent(msgObj) {
 	console.log("Handling Telegram Message Event");
 	const chatID = msgObj.chat.id;
-	let location = msgObj.location;
 	let text = msgObj.text;
-	if(text || location) {
-		if (text) {
-			text = text.trim();
-		}
-		if(isReply(msgObj) || location) {
+	if(isLocation(msgObj)) {
+		console.log("Location detected");
+		locHandler.handleLocation(chatID, msgObj);
+	} else if(text) {
+		text = text.trim();
+		if(isReply(msgObj)) {
 			console.log("Reply Detected");
 			rpHandler.handleReply(chatID, msgObj);
 		}
@@ -52,6 +54,10 @@ function isReply(msgObj) {
 	else {
 		return false;
 	}
+}
+
+function isLocation(msgObj) {
+	return is.propertyDefined(msgObj, 'location');
 }
 
 module.exports = {

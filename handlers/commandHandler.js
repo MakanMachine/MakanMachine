@@ -5,8 +5,8 @@
 
 const tgCaller = require('../api_caller/telegram_caller');
 const recommendUtil = require('../utils/recommendUtils');
-const userpref = require('../userpref');
-const cacheService = require('../cache/cacheService');
+const cService = require('../cache/cacheService');
+const sService = require('../services/surpriseService');
 
 function handleCommand(chatID, msgObj, command) {
 	console.log("Handling command: " + command);
@@ -27,6 +27,9 @@ function handleCommand(chatID, msgObj, command) {
 			break;
 		case 'surprise_me':
 			handleSurprise(chatID);
+			break;
+		case 'surprise_me_nearby':
+			handleSurpriseNearby(chatID);
 			break;
 		default:
 			handleUnknown(chatID);
@@ -77,27 +80,16 @@ async function handleSettings(chatID, msgObj) {
 }
 
 async function handleSurprise(chatID) {
-	var message;
-	const user = await userpref.getUser(chatID);
-	if(user == null) {
-		message = `Oops! You have not yet configured your settings. Run /settings to begin!`;
-	}
-	const result = await cacheService.surprise(user.cuisine).catch((error) => {
+	const message = await sService.surprise({chatID: chatID})
+	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
-	if(result) {
-		console.log(`User: ${user}.`);
-		console.log(`Result: ${result.name}`);
-		message = `There you go!
-Restaurant name: ${result.name}
-Address: ${result.address}
-Opening hours: ${result.opening_hours}
-Nearest MRT: ${result.nearest_mrt}
-Google Maps: ${result.map_url}`;
-	} else {
-		message = `Oops! We could not find you a restaurant based on your preferences. Run /settings to edit your preferences!`;
-	}
-	await tgCaller.sendMessage(chatID, message).catch((error) => {
+}
+
+async function handleSurpriseNearby(chatID) {
+	await cService.set(cService.cacheTables.SESSION, chatID, {type: `surprise`});
+	var message = `Please click the button below to send us your location!`;
+	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtil.getKeyboard(recommendUtil.keyboardTypes.LOCATION)).catch(error => {
 		console.log(error);
 	});
 }

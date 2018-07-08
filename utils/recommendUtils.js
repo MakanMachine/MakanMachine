@@ -23,13 +23,13 @@ function getMessage(type, data) {
 		}
 }
 
-function getKeyboard(type, data) {
+function getKeyboard(type) {
 	switch (type) {
 		case 'recommend':
 			return getRecommendInlineKeyboard();
 			break;
 		case 'location':
-			return getRequestLocationReplyKeyboard(data);
+			return getRequestLocationReplyKeyboard();
 			break;
 	}
 }
@@ -47,7 +47,7 @@ function getRecommendInlineKeyboard() {
 		]]
 }
 
-function getRequestLocationReplyKeyboard(cuisine) {
+function getRequestLocationReplyKeyboard() {
 	return [
 		[{
 			text: `Send location`,

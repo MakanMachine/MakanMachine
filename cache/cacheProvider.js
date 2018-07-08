@@ -8,7 +8,7 @@ const CACHE_TABLE = {
     GENERAL: 'general',
     CUISINE: 'cuisine',
     LOCATION: 'location',
-    RECOMMEND: 'recommend',
+    SESSION: 'session',
     ID: 'id',
 };
 
@@ -19,7 +19,7 @@ function start() {
         cache.cuisine = new NodeCache();
         cache.general = new NodeCache();
         cache.location = new NodeCache();
-        cache.recommend = new NodeCache();
+        cache.session = new NodeCache();
         cache.id = new NodeCache();
     }
 
