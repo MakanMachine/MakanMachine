@@ -1,11 +1,13 @@
 const Geo = require('geo-nearby');
-const cacheService = require('../cache/cacheService');
 
+// Takes in array of restaurants and filters it according to long and lat.
+// Returns filtered array of restaurant IDs.
 async function filterLocation(content, long, lati){
     console.log(`Filtering by long: ${long}, lati: ${lati}.`);
     const dataSet = Geo.createCompactSet(content, {id: '_id', lat: 'lat', lon: 'lng'});
     //console.log(`dataSet: ${dataSet}`);
     const geo = new Geo(dataSet, {sorted: true});
+<<<<<<< HEAD:location/locationService.js
     const nearby = geo.nearBy(lati, long, 5000);
     var arr = [];
     for(var x of nearby) {
@@ -15,6 +17,10 @@ async function filterLocation(content, long, lati){
     }
     //console.log(`Filtered location array: ${arr}`);
     return arr;
+=======
+    const nearby = geo.nearBy(lati, long, 15000);
+    return nearby;
+>>>>>>> dev_mlab:services/locationService.js
 }
 
 module.exports = {

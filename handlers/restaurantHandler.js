@@ -1,7 +1,8 @@
 const tgCaller = require('../api_caller/telegram_caller');
 const cService = require('../cache/cacheService');
-const lService = require('../location/locationService');
+const lService = require('../services/locationService');
 const msgFormatter = require('../formatters/messageFormatter');
+const is = require('is_js');
 
 const MAX_RESTAURANT_PER_PAGE = 3;
 
@@ -16,8 +17,20 @@ async function handleAllPages(chatID, msgID, payload) {
 		const startIndex = (parseInt(pageNo, 10) - 1) * MAX_RESTAURANT_PER_PAGE;
 		var restaurants = await cService.get(cService.cacheTables.CUISINE, payload.user_pref);
 		
+<<<<<<< HEAD
 		if(payload.user_long != null) {
 			restaurants = await lService.filterLocation(restaurants, payload.user_long, payload.user_lati);
+=======
+		if(is.propertyDefined(payload, 'user_long')) {
+			var nearby = await lService.filterLocation(restaurants, payload.user_long, payload.user_lati);
+            var arrTemp = [];
+            for(var x of nearby) {
+                value = await cService.get(cService.cacheTables.ID, x["i"]);
+                arrTemp.push(value);
+                console.log(value);
+            }
+            restaurants = arrTemp;
+>>>>>>> dev_mlab
 		}
 		
 		const selectedRestaurantList = restaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
