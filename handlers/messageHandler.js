@@ -28,10 +28,14 @@ function handleMessageEvent(msgObj) {
 			cmdHandler.handleCommand(chatID, msgObj, command);
 		}
 		else {
-			console.log("Echoing Message");
-			tgCaller.sendMessage(chatID, text).catch((error) => {
-				console.log(error);
-			});
+				console.log('Natural Language Detected:', text);
+	      	try {
+	        	let dfQueryResult = {};
+	        	dfQueryResult = await dfCaller.postMessage(chatId, text);
+	        	intHandler.handleIntent(chatId, dfQueryResult, text, msgObj);
+	      	} catch (error) {
+	        	console.log(error);
+	      	}
 		}
 	} else {
 		console.log("Unhandled Message Event received: " + msgObj);

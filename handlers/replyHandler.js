@@ -10,6 +10,7 @@ const lService = require('../services/locationService');
 const msgFormatter = require('../formatters/messageFormatter');
 const recommendUtils = require('../utils/recommendUtils');
 const rHandler = require('../handlers/restaurantHandler');
+const is = require('is_js');
 
 const types = {
 	PREFERENCE: 'preference',
@@ -40,6 +41,17 @@ function handleReply(chatID, msgObj) {
 	}
 }
 
+function handleReplyIntent(chatID, firstName, dfObj) {
+	const type = dfObj.type;
+	switch (type) {
+		case (types.RECOMMEND):
+			handleRecommendReply(chatID, firstName, dfObj);
+			break;
+		default:
+			break;
+	}
+}
+
 async function handlePreferenceReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text;
 	console.log("Preference updated: " + preference);
@@ -56,7 +68,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
 	if(useLocation == 'y') {
 		await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', cuisine: preference});
-		var message = `Please click the button below to send us your location!`;
+		var message = `Please click the button below to send me your location!`;
 		await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 			console.log(error);
 		});
