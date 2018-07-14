@@ -21,7 +21,7 @@ Google Maps: ${x.map_url}
     return newArr;
 }
 
-function getInlineKeyboardForListView(listType, restaurantList, currentPage, lastPage, preference, long, lati) {
+function getInlineKeyboardWithLocation(listType, restaurantList, currentPage, lastPage, preference, long, lati) {
 	const inlineKeyboardButtonList = [[]];
 	const lastPageNo = parseInt(lastPage, 10);
 	const pageNo = parseInt(currentPage, 10);
@@ -36,6 +36,27 @@ function getInlineKeyboardForListView(listType, restaurantList, currentPage, las
 	}
 	if(pageNo < lastPageNo) {
 		inlineKeyboardButtonList[0].push({text: `${lastPageNo} >>`, callback_data: `${listType}/${lastPageNo}/${preference}/${long}/${lati}`});
+	}
+
+	return inlineKeyboardButtonList;
+}
+
+function getInlineKeyboardWithoutLocation(listType, restaurantList, currentPage, lastPage, preference) {
+	const inlineKeyboardButtonList = [[]];
+	const lastPageNo = parseInt(lastPage, 10);
+	const pageNo = parseInt(currentPage, 10);
+
+	if(pageNo > 1) {
+		inlineKeyboardButtonList[0].push({text: '<< 1', callback_data: `${listType}/1/${preference}`});
+	}
+	if(pageNo > 2) {
+		inlineKeyboardButtonList[0].push({text: `< ${pageNo - 1}`, callback_data: `${listType}/${pageNo - 1}/${preference}`});
+	}
+	if(pageNo < lastPageNo - 1) {
+		inlineKeyboardButtonList[0].push({text: `${pageNo + 1} >`, callback_data: `${listType}/${pageNo + 1}/${preference}`});
+	}
+	if(pageNo < lastPageNo) {
+		inlineKeyboardButtonList[0].push({text: `${lastPageNo} >>`, callback_data: `${listType}/${lastPageNo}/${preference}`});
 	}
 
 	return inlineKeyboardButtonList;
@@ -69,6 +90,7 @@ function getMessageForEmptyPage() {
 module.exports = {
     formatRestaurantMessage,
     getMessageForListView,
-    getInlineKeyboardForListView,
+    getInlineKeyboardWithLocation,
+    getInlineKeyboardWithoutLocation,
     getMessageForEmptyPage,
 }

@@ -14,9 +14,11 @@ async function handleAllPages(chatID, msgID, payload) {
 	try {
 		const pageNo = payload.page_no;
 		const startIndex = (parseInt(pageNo, 10) - 1) * MAX_RESTAURANT_PER_PAGE;
-		var restaurants = await cService.get(cService.cacheTables.CUISINE, payload.user_pref);
+		const restaurants = await cService.get(cService.cacheTables.CUISINE, payload.user_pref);
+		//console.log(restaurants);
 		
-		if(payload.user_long != null) {
+		if (payload.user_long) {
+			console.log("run from (1)");
 			restaurants = await lService.filterLocation(restaurants, payload.user_long, payload.user_lati);
 		}
 		
