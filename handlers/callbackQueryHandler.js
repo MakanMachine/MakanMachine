@@ -12,12 +12,10 @@ async function handleRestaurantCallbackQuery(chatData, callbackQueryData) {
 	else {
 		const pageNo = callbackQueryData[0];
 		const preference = callbackQueryData[1];
-		const long = callbackQueryData[2];
-		const lati = callbackQueryData[3];
-		console.log("page no:" + pageNo + ", preference:" + preference + ", long:" + long + ", lati:" + lati);
+		console.log("page no:" + pageNo + ", preference:" + preference);
 		if(pageNo) {
-			const payload = {page_no: pageNo, user_pref: preference, user_long: long, user_lati: lati};
-			//console.log(rHandler.types['ALL_PAGES']);
+			const payload = {page_no: pageNo, user_pref: preference};
+			console.log(rHandler.types['ALL_PAGES']);
 			rHandler.handleRestaurants('all_pages', chatData, payload);
 		}
 		else {
