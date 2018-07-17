@@ -32,8 +32,8 @@ async function handleMessageEvent(msgObj) {
 				console.log('Natural Language Detected:', text);
 	      	try {
 	        	let dfQueryResult = {};
-	        	dfQueryResult = await dfCaller.postMessage(chatId, text);
-	        	intHandler.handleIntent(chatId, dfQueryResult, text, msgObj);
+	        	dfQueryResult = await dfCaller.postMessage(chatID, text);
+	        	intHandler.handleIntent(chatID, dfQueryResult, text, msgObj);
 	      	} catch (error) {
 	        	console.log(error);
 	      	}
