@@ -41,8 +41,7 @@ async function surprise(options) {
         if(result) {
         console.log(`User: ${user}.`);
         console.log(`Result: ${result.name}`);
-        message = `There you go!
-Restaurant name: ${result.name}
+        message = `Restaurant name: ${result.name}
 Address: ${result.address}
 Opening hours: ${result.opening_hours}
 Nearest MRT: ${result.nearest_mrt}
