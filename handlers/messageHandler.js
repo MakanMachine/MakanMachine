@@ -8,6 +8,7 @@ const cmdHandler = require('./commandHandler');
 const rpHandler = require('./replyHandler');
 const locHandler = require('./locationHandler');
 const is = require('is_js');
+const dfCaller = require('./api_caller/dialogflowCaller')
 
 async function handleMessageEvent(msgObj) {
 	console.log("Handling Telegram Message Event");
