@@ -22,6 +22,10 @@ async function handleIntent(chatID, dfQueryResult, userQuery, msgObj) {
                 case 'recommend_cuisine_location':
                 await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: `${dfQueryResult.parameters.cuisine} y`, type: 'recommend'});
                 break;
+
+                case 'surprise_me':
+                await cHandler.handleCommand(chatID, msgObj, 'surprise');
+                break;
                 
                 default:
                 await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
