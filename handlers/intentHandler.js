@@ -25,17 +25,10 @@ async function handleIntent(chatID, dfQueryResult, userQuery, msgObj) {
                 
                 default:
                 await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
-                createDFActivity(chatID, intentName, userQuery, dfQueryResult.fulfillmentText);
                 break;
             }
         } else if (is.propertyDefined(dfQueryResult, 'fulfillmentText') && dfQueryResult.fulfillmentText !== '') {
             await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
-            createDFActivity(
-            chatID,
-            dfQueryResult.action || 'unknown action',
-            userQuery,
-            dfQueryResult.fulfillmentText,
-            );
         }
     } catch (error) {
         console.log(error);

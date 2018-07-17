@@ -99,4 +99,5 @@ function getReplyType(previousMsg) {
 
 module.exports = {
 	handleReply,
+	handleReplyIntent,
 }
