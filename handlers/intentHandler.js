@@ -2,6 +2,7 @@ const dfCaller = require('../api_caller/dialogflowCaller');
 const is = require('is_js');
 const cHandler = require('./commandHandler');
 const rHandler = require('./replyHandler');
+const tgCaller = require('../api_caller/telegram_caller');
 
 async function handleIntent(chatID, dfQueryResult, userQuery, msgObj) {
     console.log(`Handling DF Query Result: ${JSON.stringify(dfQueryResult)}`);
