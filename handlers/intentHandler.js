@@ -24,7 +24,7 @@ async function handleIntent(chatID, dfQueryResult, userQuery, msgObj) {
                 break;
 
                 case 'surprise_me':
-                await cHandler.handleCommand(chatID, msgObj, 'surprise');
+                await cHandler.handleCommand(chatID, msgObj, 'surprise_me');
                 break;
                 
                 default:
