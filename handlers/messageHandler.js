@@ -9,7 +9,7 @@ const rpHandler = require('./replyHandler');
 const locHandler = require('./locationHandler');
 const is = require('is_js');
 
-function handleMessageEvent(msgObj) {
+async function handleMessageEvent(msgObj) {
 	console.log("Handling Telegram Message Event");
 	const chatID = msgObj.chat.id;
 	let text = msgObj.text;
