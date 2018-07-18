@@ -7,7 +7,7 @@ const tgCaller = require('../api_caller/telegram_caller');
 async function handleIntent(chatID, dfQueryResult, userQuery, msgObj) {
     console.log(`Handling DF Query Result: ${JSON.stringify(dfQueryResult)}`);
     try {
-        if (is.propertyDefined(dfQueryResult, 'intent')) {
+        if (is.propertyDefined(dfQueryResult, 'intent') && dfQueryResult.intent != null) {
             const intentName = dfQueryResult.intent.displayName;
             switch (intentName) {
                 case 'Default Fallback Intent':
