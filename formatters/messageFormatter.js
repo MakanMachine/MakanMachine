@@ -26,16 +26,32 @@ function getInlineKeyboardForListView(listType, restaurantList, currentPage, las
 	const lastPageNo = parseInt(lastPage, 10);
 	const pageNo = parseInt(currentPage, 10);
 	if(pageNo > 1) {
-		inlineKeyboardButtonList[0].push({text: '<< 1', callback_data: `${listType}/1/${preference}/${long}/${lati}`});
+        if(long != null) {
+		  inlineKeyboardButtonList[0].push({text: '<< 1', callback_data: `${listType}/1/${preference}/${long}/${lati}`});
+        } else {
+            inlineKeyboardButtonList[0].push({text: '<< 1', callback_data: `${listType}/1/${preference}`});
+        }
 	}
 	if(pageNo > 2) {
-		inlineKeyboardButtonList[0].push({text: `< ${pageNo - 1}`, callback_data: `${listType}/${pageNo - 1}/${preference}/${long}/${lati}`});
+        if (long != null) {
+		  inlineKeyboardButtonList[0].push({text: `< ${pageNo - 1}`, callback_data: `${listType}/${pageNo - 1}/${preference}/${long}/${lati}`});
+        } else {
+            inlineKeyboardButtonList[0].push({text: `< ${pageNo - 1}`, callback_data: `${listType}/${pageNo - 1}/${preference}`});               
+        }
 	}
 	if(pageNo < lastPageNo - 1) {
-		inlineKeyboardButtonList[0].push({text: `${pageNo + 1} >`, callback_data: `${listType}/${pageNo + 1}/${preference}/${long}/${lati}`});
+        if (long != null) {
+		  inlineKeyboardButtonList[0].push({text: `${pageNo + 1} >`, callback_data: `${listType}/${pageNo + 1}/${preference}/${long}/${lati}`});
+        } else {
+            inlineKeyboardButtonList[0].push({text: `${pageNo + 1} >`, callback_data: `${listType}/${pageNo + 1}/${preference}`});
+        }
 	}
 	if(pageNo < lastPageNo) {
-		inlineKeyboardButtonList[0].push({text: `${lastPageNo} >>`, callback_data: `${listType}/${lastPageNo}/${preference}/${long}/${lati}`});
+        if (long != null) {
+		  inlineKeyboardButtonList[0].push({text: `${lastPageNo} >>`, callback_data: `${listType}/${lastPageNo}/${preference}/${long}/${lati}`});
+        } else {
+            inlineKeyboardButtonList[0].push({text: `${lastPageNo} >>`, callback_data: `${listType}/${lastPageNo}/${preference}`});
+        }
 	}
 
 	return inlineKeyboardButtonList;
@@ -51,7 +67,11 @@ function getMessageForRestaurantList(restaurants) {
 
 function getMessageForListView(restaurants, totalRestaurants, pageNo, lastPageNo) {
 	let message = '';
-	if (totalRestaurants > 0) {
+	if (totalRestaurants == 1) {
+        message = 
+        `There are a total of ${totalRestaurants} restaurant!\n\n`;
+        message += getMessageForRestaurantList(restaurants);
+    } else if (totalRestaurants > 1) {
 		message = 
 		`There are a total of ${totalRestaurants} restaurants!\n\n`;
 		message += getMessageForRestaurantList(restaurants);

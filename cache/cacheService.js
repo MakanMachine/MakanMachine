@@ -15,13 +15,11 @@ async function get(table, key) {
     if (typeof key == "string") {
         var key = key.trim().toLowerCase();
     }
-    console.log(`Getting cache value for: ${key}.`)
     return new Promise((resolve, reject) => {
         cacheProvider.getInstance()[table].get(key, (err, result) => {
             if(err) {
                 reject(new Error(`Unable to get cache value for: ${key} => Err: ${err}`));
             } else {
-                console.log(`Got cache value for: ${key}.`);
                 resolve(result);
             }
         });

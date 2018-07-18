@@ -20,14 +20,16 @@ async function handleMessageEvent(msgObj) {
 		locHandler.handleLocation(chatID, msgObj);
 	} else if(text) {
 		text = text.trim();
-		if(isReply(msgObj)) {
+		if (isReply(msgObj)) {
 			console.log("Reply Detected");
 			rpHandler.handleReply(chatID, msgObj);
-		}
-		else if(isCommand(text)) { 
+		} else if (isCommand(text)) { 
 			const command = text.substr(1);
 			console.log("Command Detected: " + command);
 			cmdHandler.handleCommand(chatID, msgObj, command);
+		} else if (isNotLocation(text)) {
+			console.log("Reply to not use location detected");
+			rpHandler.handleNoLocationReply(chatID, msgObj);
 		}
 		else {
 				console.log('Natural Language Detected:', text);
@@ -64,6 +66,14 @@ function isReply(msgObj) {
 
 function isLocation(msgObj) {
 	return is.propertyDefined(msgObj, 'location');
+}
+
+function isNotLocation(msgObj) {
+	if(msgObj == 'No, thanks') {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 module.exports = {
