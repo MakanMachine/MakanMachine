@@ -23,7 +23,7 @@ function handleCommand(chatID, msgObj, command) {
 			handleRecommend(chatID);
 			break;
 		case 'settings':
-			handleSettings(chatID, msgObj);
+			handleSettings(chatID);
 			break;
 		case 'surprise_me':
 			handleSurprise(chatID);
@@ -38,7 +38,7 @@ function handleCommand(chatID, msgObj, command) {
 }
 
 async function handleStart(chatID, firstName, msgObj) {
-	const message = `Hello ${firstName}! Hungry but don't know where to eat? Type /recommend to begin!`;
+	const message = `Hello ${firstName}! Hungry but don't know where to eat? Type /recommend or /settings to begin!`;
 	userpref.startUser(chatID, msgObj);
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
@@ -70,7 +70,7 @@ async function handleUnknown(chatID) {
 
 // Edit this function to tell user to type in 3 cuisines separated with commas (Eg. American, Chinese, Japanese). Then use that
 // msgObj and call updateUser from userpref.
-async function handleSettings(chatID, msgObj) {
+async function handleSettings(chatID) {
 	const message = await recommendUtil.getMessage('settings');
 	const availCuisines = "The available cuisines are: American, Mexican, Western, Indian, Desserts, Beer, European, Italian, Asian, Korean, Chinese, Vegetarian, Japanese, German, Indonesian, Malay, French, International, English, Indochinese, Thai, Turkish, Argentinean, Vietnamese";
 	await tgCaller.sendMessage(chatID, availCuisines);
@@ -80,7 +80,7 @@ async function handleSettings(chatID, msgObj) {
 }
 
 async function handleSurprise(chatID) {
-	const message = await sService.surprise({chatID: chatID})
+	const message = await sService.surprise({chatID: chatID});
 	await tgCaller.sendMessage(chatID, message).catch((error) => {
 		console.log(error);
 	});
@@ -88,7 +88,7 @@ async function handleSurprise(chatID) {
 
 async function handleSurpriseNearby(chatID) {
 	await cService.set(cService.cacheTables.SESSION, chatID, {type: `surprise`});
-	var message = `Please click the button below to send us your location!`;
+	var message = `Please click the button below to send me your location!`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtil.getKeyboard(recommendUtil.keyboardTypes.LOCATION)).catch(error => {
 		console.log(error);
 	});

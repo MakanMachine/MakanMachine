@@ -12,11 +12,23 @@ async function handleRestaurantCallbackQuery(chatData, callbackQueryData) {
 	else {
 		const pageNo = callbackQueryData[0];
 		const preference =  callbackQueryData[1];
+		var location = false;
+		if (callbackQueryData.length > 2) {
+			long = callbackQueryData[2];
+			lati = callbackQueryData[3];
+			location = true;
+		}
 		console.log("page no:" + pageNo + ", preference:" + preference);
-		if(pageNo) {
-			const payload = {page_no: pageNo, user_pref: preference};
-			console.log(rHandler.types['ALL_PAGES']);
-			rHandler.handleRestaurants('all_pages', chatData, payload);
+		if (pageNo) {
+			if (location) {
+				const payload = {page_no: pageNo, user_pref: preference, user_long: long, user_lati: lati};
+				console.log(rHandler.types['ALL_PAGES_LOCATION']);
+				rHandler.handleRestaurants('all_pages_location', chatData, payload);
+			} else {
+				const payload = {page_no: pageNo, user_pref: preference};
+				console.log(rHandler.types['ALL_PAGES_NO_LOCATION']);
+				rHandler.handleRestaurants('all_pages_no_location', chatData, payload);
+			}
 		}
 		else {
 			console.log('Error: Page No Invalid');

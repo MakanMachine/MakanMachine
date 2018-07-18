@@ -10,6 +10,7 @@ const lService = require('../services/locationService');
 const msgFormatter = require('../formatters/messageFormatter');
 const recommendUtils = require('../utils/recommendUtils');
 const rHandler = require('../handlers/restaurantHandler');
+const is = require('is_js');
 
 const types = {
 	PREFERENCE: 'preference',
@@ -40,6 +41,17 @@ function handleReply(chatID, msgObj) {
 	}
 }
 
+function handleReplyIntent(chatID, firstName, dfObj) {
+	const type = dfObj.type;
+	switch (type) {
+		case (types.RECOMMEND):
+			handleRecommendReply(chatID, firstName, dfObj);
+			break;
+		default:
+			break;
+	}
+}
+
 async function handlePreferenceReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text;
 	console.log("Preference updated: " + preference);
@@ -51,12 +63,12 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 		}));
 }
 
-async function handleRecommendReply(chatID, firstName, msgObj) {
+/*async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
 	if(useLocation == 'y') {
 		await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', cuisine: preference});
-		var message = `Please click the button below to send us your location!`;
+		var message = `Please click the button below to send me your location!`;
 		await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 			console.log(error);
 		});
@@ -71,13 +83,38 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 			console.log(error);
 		}
 	}
+}*/
+
+async function handleRecommendReply(chatID, firstName, msgObj) {
+	const preference = msgObj.text.split(' ')[0];
+	console.log("Preference updated: " + preference);
+	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', cuisine: preference});
+	var message = `Do you want me to use your current location to find restaurants that are nearby?`;
+	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
+		console.log(error);
+	});
+}
+
+async function handleNoLocationReply(chatID, msgObj) {
+	var session = await cService.get(cService.cacheTables.SESSION, chatID);
+    const preference = session.cuisine;
+    const message = `Got it! Please wait while I get the list of restaurants!`;
+    await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
+        console.log(error);
+    });
+    try {
+        const chatData = {chat_id: chatID};
+        await rHandler.handleRestaurants(rHandler.types.START, chatData, {user_pref: preference});
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 function getReplyType(previousMsg) {
 	switch(previousMsg) {
 		case 'Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese':
 			return types.PREFERENCE;
-		case 'Please specify a cuisine that you prefer, followed by a Y or N to indicate if you want to search by your current location!\nE.g Korean Y':
+		case 'Please specify a cuisine that you prefer feel like having! E.g Korean':
 			return types.RECOMMEND;
 		default:
 			console.log("Reply to message not supported");
@@ -87,4 +124,6 @@ function getReplyType(previousMsg) {
 
 module.exports = {
 	handleReply,
+	handleReplyIntent,
+	handleNoLocationReply,
 }
