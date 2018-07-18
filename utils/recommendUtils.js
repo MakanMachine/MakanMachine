@@ -13,7 +13,7 @@ const KEYBOARD_TYPES = {
 function getMessage(type, data) {
 	switch (type) {
 		case 'recommend':
-			return `Please specify a cuisine that you prefer, followed by a Y or N to indicate if you want to search by your current location!\nE.g Korean Y`;
+			return `Please specify a cuisine that you prefer feel like having! E.g Korean`;
 		case 'settings':
 			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
 		case 'help':
@@ -50,8 +50,12 @@ function getRecommendInlineKeyboard() {
 function getRequestLocationReplyKeyboard() {
 	return [
 		[{
-			text: `Send location`,
+			text: `Yes, send my location`,
 			request_location: true,
+		}],
+
+		[{
+			text: `No, thanks`,
 		}],
 	]
 }
