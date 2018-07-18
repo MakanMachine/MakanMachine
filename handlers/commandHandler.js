@@ -7,6 +7,7 @@ const tgCaller = require('../api_caller/telegram_caller');
 const recommendUtil = require('../utils/recommendUtils');
 const cService = require('../cache/cacheService');
 const sService = require('../services/surpriseService');
+const userpref = require('../userpref');
 
 function handleCommand(chatID, msgObj, command) {
 	console.log("Handling command: " + command);
