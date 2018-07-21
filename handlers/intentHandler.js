@@ -17,12 +17,12 @@ async function handleIntent(chatID, dfQueryResult, userQuery, msgObj) {
                 
                 case 'recommend_cuisine':
                 await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
-                await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: `${dfQueryResult.parameters.cuisine} n`, type: 'recommend'});
+                await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: dfQueryResult.parameters.cuisine, type: 'recommend'});
                 break;
 
                 case 'recommend_cuisine_location':
                 await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
-                await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: `${dfQueryResult.parameters.cuisine} y`, type: 'recommend'});
+                await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: dfQueryResult.parameters.cuisine, type: 'recommend'});
                 break;
 
                 case 'surprise_me':
