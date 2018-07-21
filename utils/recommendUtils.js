@@ -13,7 +13,7 @@ const KEYBOARD_TYPES = {
 function getMessage(type, data) {
 	switch (type) {
 		case 'recommend':
-			return `Please specify a cuisine that you prefer feel like having! E.g Korean`;
+			return `Reply this message with the cuisine that you feel like having! E.g Korean`;
 		case 'settings':
 			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
 		case 'help':

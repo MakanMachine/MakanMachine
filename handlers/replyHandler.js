@@ -114,7 +114,7 @@ function getReplyType(previousMsg) {
 	switch(previousMsg) {
 		case 'Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese':
 			return types.PREFERENCE;
-		case 'Please specify a cuisine that you prefer feel like having! E.g Korean':
+		case 'Reply this message with the cuisine that you feel like having! E.g Korean':
 			return types.RECOMMEND;
 		default:
 			console.log("Reply to message not supported");
