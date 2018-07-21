@@ -37,7 +37,7 @@ async function postMessage(chatId, message) {
     const response = await sessionClient.detectIntent(request);
     return response[0].queryResult;
   } catch (error) {
-    logger.cm.err(`Dialogflow Error: ${error}`);
+    console.log(`Dialogflow Error: ${error}`);
   }
   return null;
 }
