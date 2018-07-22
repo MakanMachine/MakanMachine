@@ -89,7 +89,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	console.log("Preference updated: " + preference);
 	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', cuisine: preference});
-	var message = `Do you want me to use your current location to find restaurants that are nearby?`;
+	var message = `Send me your location if you would like me to search using your current location.`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 		console.log(error);
 	});
