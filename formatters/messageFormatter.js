@@ -4,12 +4,7 @@ const is = require('is_js');
 function formatRestaurantMessage(array) {
     var newArr = [];
     for(var x of array) {
-        var message = `Restaurant name: ${x.name}
-Address: ${x.address}
-Opening hours: ${x.opening_hours}
-Nearest MRT: ${x.nearest_mrt}
-Google Maps: ${x.map_url}
-\n`;
+        var message = `*${x.name}*\nAddress: ${x.address}\nOpening hours: ${x.opening_hours}\nNearest MRT: ${x.nearest_mrt}\nGoogle Maps: ${x.map_url}\n`;
         newArr.push(message);
     }
     console.log(newArr);
