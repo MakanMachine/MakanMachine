@@ -118,17 +118,19 @@ function getInstance() {
 
 function updateMrt(content) {
     for(var x of content) {
-        for(var y of x.nearest_mrt) {
-            value = cache.mrt.get(y.toLowerCase());
+        var arr = x.nearest_mrt.split(",");
+        for(var y of arr) {
+            key = y.trim().toLowerCase()
+            value = cache.mrt.get(key);
             if(value == undefined) {
-                cache.mrt.set(y.toLowerCase(), new Array(x), (err) => {
+                cache.mrt.set(key, new Array(x), (err) => {
                     if(err)
                         console.log(`Failed to store ${y}`);
                 });
                 //console.log('new mrt key');
             } else {
                 value.push(x);
-                cache.mrt.set(y.toLowerCase(), value, (err) => {
+                cache.mrt.set(key, value, (err) => {
                     if(err)
                         console.log(`Failed to store ${y}`);
                 });
