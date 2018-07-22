@@ -118,9 +118,10 @@ function getInstance() {
 
 function updateMrt(content) {
     for(var x of content) {
+        console.log(x.nearest_mrt);
         var arr = x["nearest_mrt"].split(",");
         for(var y of arr) {
-            key = y.trim().toLowerCase()
+            key = y.trim().toLowerCase();
             value = cache.mrt.get(key);
             if(value == undefined) {
                 cache.mrt.set(key, new Array(x), (err) => {
