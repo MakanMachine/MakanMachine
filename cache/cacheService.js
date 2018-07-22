@@ -9,6 +9,7 @@ const CACHE_TABLE = {
     LOCATION: 'location',
     SESSION: 'session',
     ID: 'id',
+    MRT: 'mrt',
 };
 
 async function get(table, key) {
