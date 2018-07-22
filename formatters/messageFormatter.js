@@ -4,7 +4,7 @@ const is = require('is_js');
 function formatRestaurantMessage(array) {
     var newArr = [];
     for(var x of array) {
-        var message = `*${x.name}*\nAddress: ${x.address}\nOpening hours: ${x.opening_hours}\nNearest MRT: ${x.nearest_mrt}\nGoogle Maps: ${x.map_url}\n`;
+        var message = `*${x.name}*\nAddress: ${x.address}\nOpening hours:\n${x.opening_hours}\nNearest MRT: ${x.nearest_mrt}\nGoogle Maps: ${x.map_url}\n`;
         newArr.push(message);
     }
     console.log(newArr);
@@ -55,7 +55,7 @@ function getInlineKeyboardForListView(listType, restaurantList, currentPage, las
 function getMessageForRestaurantList(restaurants) {
 	let message = '';
 	for(let i = 0; i < restaurants.length; i++) {
-		message += `*${restaurants[i].name}*\nAddress: ${restaurants[i].address}\nOpening Hours: ${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n\n`;
+		message += `*${restaurants[i].name}*\nAddress: ${restaurants[i].address}\nOpening Hours:\n${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n\n`;
 	}
 	return message;
 }
