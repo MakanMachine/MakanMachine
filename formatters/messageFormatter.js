@@ -55,7 +55,13 @@ function getInlineKeyboardForListView(listType, restaurantList, currentPage, las
 function getMessageForRestaurantList(restaurants) {
 	let message = '';
 	for(let i = 0; i < restaurants.length; i++) {
-		message += `*${restaurants[i].name}*\nAddress: ${restaurants[i].address}\nOpening Hours:\n${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n\n`;
+        let address = '';
+        if (restaurants[i].address == "") {
+            address += '-';
+        } else {
+            address += restaurants[i].address
+        }
+		message += `*${restaurants[i].name}*\nAddress: ` + address + `\nOpening Hours:\n${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n\n`;
 	}
 	return message;
 }
@@ -64,7 +70,7 @@ function getMessageForListView(restaurants, totalRestaurants, pageNo, lastPageNo
 	let message = '';
 	if (totalRestaurants == 1) {
         message = 
-        `There are a total of ${totalRestaurants} restaurant!\n\n`;
+        `There is a total of ${totalRestaurants} restaurant!\n\n`;
         message += getMessageForRestaurantList(restaurants);
     } else if (totalRestaurants > 1) {
 		message = 
