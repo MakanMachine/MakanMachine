@@ -58,7 +58,7 @@ async function handleAllPagesWithLocation(chatID, msgID, payload) {
         }
         const filteredRestaurants = arrTemp;
 		
-			const selectedRestaurantList = filteredRestaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
+		const selectedRestaurantList = filteredRestaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
 		if(selectedRestaurantList.length > 0) {
 			const lastPageNo = 
 				restaurants.length % MAX_RESTAURANT_PER_PAGE > 0
