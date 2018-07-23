@@ -56,12 +56,22 @@ function getMessageForRestaurantList(restaurants) {
 	let message = '';
 	for(let i = 0; i < restaurants.length; i++) {
         let address = '';
+        let nearest_mrt = '';
         if (restaurants[i].address == "") {
             address += '-';
         } else {
             address += restaurants[i].address
         }
-		message += `*${restaurants[i].name}*\nAddress: ` + address + `\nOpening Hours:\n${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n\n`;
+        if (restaurants[i].nearest_mrt == undefined) {
+            nearest_mrt += '-';
+        } else {
+            nearest_mrt += restaurants[i].nearest_mrt;
+        }
+		message += `*${restaurants[i].name}*\nAddress: ` + address + `\nOpening Hours:\n${
+            restaurants[i].opening_hours
+        }\nNearest MRT: ` + nearest_mrt + 
+        `\nGoogle Maps: [View Map](${restaurants[i].map_url})\n\n`;
+        console.log(restaurants[i]);
 	}
 	return message;
 }
