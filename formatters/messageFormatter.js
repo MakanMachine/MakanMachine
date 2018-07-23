@@ -4,12 +4,7 @@ const is = require('is_js');
 function formatRestaurantMessage(array) {
     var newArr = [];
     for(var x of array) {
-        var message = `Restaurant name: ${x.name}
-Address: ${x.address}
-Opening hours: ${x.opening_hours}
-Nearest MRT: ${x.nearest_mrt}
-Google Maps: ${x.map_url}
-\n`;
+        var message = `*${x.name}*\nAddress: ${x.address}\nOpening hours:\n${x.opening_hours}\nNearest MRT: ${x.nearest_mrt}\nGoogle Maps: ${x.map_url}\n`;
         newArr.push(message);
     }
     console.log(newArr);
@@ -60,7 +55,23 @@ function getInlineKeyboardForListView(listType, restaurantList, currentPage, las
 function getMessageForRestaurantList(restaurants) {
 	let message = '';
 	for(let i = 0; i < restaurants.length; i++) {
-		message += `*${restaurants[i].name}*\nAddress: ${restaurants[i].address}\nOpening Hours: ${restaurants[i].opening_hours}\nNearest MRT: ${restaurants[i].nearest_mrt}\nGoogle Maps: ${restaurants[i].map_url}\n\n`;
+        let address = '';
+        let nearest_mrt = '';
+        if (restaurants[i].address == "") {
+            address += '-';
+        } else {
+            address += restaurants[i].address
+        }
+        if (restaurants[i].nearest_mrt == undefined) {
+            nearest_mrt += '-';
+        } else {
+            nearest_mrt += restaurants[i].nearest_mrt;
+        }
+		message += `*${restaurants[i].name}*\nAddress: ` + address + `\nOpening Hours:\n${
+            restaurants[i].opening_hours
+        }\nNearest MRT: ` + nearest_mrt + 
+        `\nGoogle Maps: [View Map](${restaurants[i].map_url})\n\n`;
+        console.log(restaurants[i]);
 	}
 	return message;
 }
@@ -69,7 +80,7 @@ function getMessageForListView(restaurants, totalRestaurants, pageNo, lastPageNo
 	let message = '';
 	if (totalRestaurants == 1) {
         message = 
-        `There are a total of ${totalRestaurants} restaurant!\n\n`;
+        `There is a total of ${totalRestaurants} restaurant!\n\n`;
         message += getMessageForRestaurantList(restaurants);
     } else if (totalRestaurants > 1) {
 		message = 

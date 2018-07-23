@@ -10,6 +10,7 @@ const CACHE_TABLE = {
     LOCATION: 'location',
     SESSION: 'session',
     ID: 'id',
+    MRT: 'mrt',
 };
 
 var cache = {};
@@ -21,6 +22,7 @@ function start() {
         cache.location = new NodeCache();
         cache.session = new NodeCache();
         cache.id = new NodeCache();
+        cache.mrt = new NodeCache();
     }
 
     axios({
@@ -38,6 +40,7 @@ function start() {
             updateCuisine(content);
             updateLocation(content);
             updateId(content);
+            updateMrt(content);
             //console.log(cache.cuisine.keys())
             //console.log(cache.cuisine.get('Japanese'));
         })
@@ -111,6 +114,35 @@ function updateLocation(content) {
 
 function getInstance() {
     return cache;
+}
+
+function updateMrt(content) {
+    for(var x of content) {
+        if (x.nearest_mrt == undefined) {
+            continue;
+        } else {
+            var arr = x["nearest_mrt"].split(",");
+            for(var y of arr) {
+                key = y.trim().toLowerCase();
+                value = cache.mrt.get(key);
+                if(value == undefined) {
+                    cache.mrt.set(key, new Array(x), (err) => {
+                        if(err)
+                            console.log(`Failed to store ${y}`);
+                    });
+                    //console.log('new mrt key');
+                } else {
+                    value.push(x);
+                    cache.mrt.set(key, value, (err) => {
+                        if(err)
+                            console.log(`Failed to store ${y}`);
+                    });
+                    //console.log('new restaurant added');
+                }
+            }
+        }
+    }
+    console.log('All mrt data written (cacheProvider)');
 }
 
 module.exports = {

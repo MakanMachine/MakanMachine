@@ -18,7 +18,7 @@ async function handleAllPagesWithoutLocation(chatID, msgID, payload) {
 		const startIndex = (parseInt(pageNo, 10) - 1) * MAX_RESTAURANT_PER_PAGE;
 		const restaurants = await cService.get(cService.cacheTables.CUISINE, payload.user_pref);
 		
-		const selectedRestaurantList = restaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
+		const selectedRestaurantList = ((restaurants == undefined) ? [] : restaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE));
 		if(selectedRestaurantList.length > 0) {
 			const lastPageNo = 
 				restaurants.length % MAX_RESTAURANT_PER_PAGE > 0
@@ -58,7 +58,7 @@ async function handleAllPagesWithLocation(chatID, msgID, payload) {
         }
         const filteredRestaurants = arrTemp;
 		
-			const selectedRestaurantList = filteredRestaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
+		const selectedRestaurantList = filteredRestaurants.slice(startIndex, startIndex + MAX_RESTAURANT_PER_PAGE);
 		if(selectedRestaurantList.length > 0) {
 			const lastPageNo = 
 				restaurants.length % MAX_RESTAURANT_PER_PAGE > 0

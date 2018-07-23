@@ -73,7 +73,7 @@ async function sendMessage(chatID, message, option) {
 async function sendMessageWithInlineKeyboard(chatID, message, inlineKeyboardButtonList) {
 	console.log('Sending message with inline keyboard: ', chatID);
 	const sendOptions = {
-		parse_mode: 'markdown',
+		parse_mode: 'Markdown',
 		inline_keyboard: {
 			inline_keyboard: inlineKeyboardButtonList,
 		},
@@ -84,7 +84,7 @@ async function sendMessageWithInlineKeyboard(chatID, message, inlineKeyboardButt
 async function sendMessageWithForcedReply(chatID, message) {
 	console.log('Forcing reply for preference: ', chatID);
 	await sendMessage(chatID, message, {
-		parse_mode: 'markdown',
+		parse_mode: 'Markdown',
 		force_reply: {force_reply: true },
 	});
 }
@@ -92,7 +92,7 @@ async function sendMessageWithForcedReply(chatID, message) {
 async function sendMessageWithReplyKeyboard(chatID, message, replyKeyboardButtonList) {
 	console.log('Sending message with reply keyboard:', chatID);
 	const sendOptions = {
-		parse_mode: 'markdown',
+		parse_mode: 'Markdown',
 		keyboard: {
 			keyboard: replyKeyboardButtonList,
 			one_time_keyboard: true,

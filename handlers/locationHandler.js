@@ -7,7 +7,7 @@ const sService = require('../services/surpriseService');
 
 async function handleSurpriseLocation(chatID, msgObj) {
     var message = await sService.surprise({chatID: chatID, location: msgObj.location});
-    await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
+    await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message, {parse_mode: 'markdown'}).catch((error) => {
         console.log(error);
     });
 }

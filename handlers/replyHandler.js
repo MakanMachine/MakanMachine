@@ -63,28 +63,6 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 		}));
 }
 
-/*async function handleRecommendReply(chatID, firstName, msgObj) {
-	const preference = msgObj.text.split(' ')[0];
-	const useLocation = msgObj.text.split(' ')[1].toLowerCase();
-	if(useLocation == 'y') {
-		await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', cuisine: preference});
-		var message = `Please click the button below to send me your location!`;
-		await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
-			console.log(error);
-		});
-	} else {
-		console.log("Preference updated:" + preference);
-		//const message = `Got it! Please wait while I get the list of restaurants!`;
-		const arr = await cService.get(cService.cacheTables.CUISINE, preference);
-		try {
-			const chatData = {chat_id: chatID};
-			await rHandler.handleRestaurants(rHandler.types.START, chatData, {user_pref: preference});
-		} catch (error) {
-			console.log(error);
-		}
-	}
-}*/
-
 async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	console.log("Preference updated: " + preference);
