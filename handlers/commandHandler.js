@@ -11,7 +11,6 @@ const userpref = require('../userpref');
 
 const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
 
-
 function handleCommand(chatID, msgObj, command) {
 	console.log("Handling command: " + command);
 	const firstName = msgObj.chat.first_name ? msgObj.chat.first_name : ' ';
@@ -58,10 +57,9 @@ async function handleHelp(chatID) {
 
 async function handleRecommend(chatID) {
 	const message = await recommendUtil.getMessage('recommend');
-<<<<<<< HEAD
+
 	const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
-=======
->>>>>>> 8fe07f0292b5d86fea4217b55d3d61a563b0f8f6
+
 	await tgCaller.sendMessage(chatID, availCuisines);
 	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 		console.log(error);
@@ -79,10 +77,9 @@ async function handleUnknown(chatID) {
 // msgObj and call updateUser from userpref.
 async function handleSettings(chatID) {
 	const message = await recommendUtil.getMessage('settings');
-<<<<<<< HEAD
+
 	const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
-=======
->>>>>>> 8fe07f0292b5d86fea4217b55d3d61a563b0f8f6
+
 	await tgCaller.sendMessage(chatID, availCuisines);
 	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
