@@ -17,7 +17,7 @@ function getMessage(type, data) {
 		case 'settings':
 			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
 		case 'help':
-			return "Makan Machine recommends you restaurants to dine at based on your criteria! Type /recommend to begin.";
+			return "Makan Machine recommends you restaurants to dine at based on your preferred cuisines!\nType /recommend or tell the bot the cuisine you are craving for recommendations now!\n\nFor those who are unsure of cuisine you want, head on over to /settings to key in your all time favourite cuisines and let /surprise_me choose a random restuarant for you!";
 		case 'unknown':
 			return "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
 		}
