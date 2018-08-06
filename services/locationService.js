@@ -2,7 +2,7 @@ const Geo = require('geo-nearby');
 
 // Takes in array of restaurants and filters it according to long and lat.
 // Returns filtered array of restaurant IDs.
-async function filterLocation(content, long, lati){
+async function filterLocation(content, long, lati) {
     console.log(`Filtering by long: ${long}, lati: ${lati}.`);
     if(content == undefined) {
         return [];
