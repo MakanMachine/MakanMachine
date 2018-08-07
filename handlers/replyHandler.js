@@ -16,7 +16,7 @@ const types = {
 	PREFERENCE: 'preference',
 	CUISINE: 'cuisine',
 	LOCATION: 'location',
-	MRT： 'mrt',
+	MRT: 'mrt',
 }
 
 function handleReply(chatID, msgObj) {
