@@ -41,7 +41,7 @@ async function handleUnknownLocation(chatID) {
 async function handleLocation(chatID, msgObj) {
     var session = await cService.get(cService.cacheTables.SESSION, chatID);
     switch(session.type) {
-        case 'recommend':
+        case 'cuisine':
             handleRecommendLocation(chatID, msgObj);
             break;
         case 'surprise':
