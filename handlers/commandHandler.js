@@ -57,11 +57,15 @@ async function handleHelp(chatID) {
 
 async function handleRecommend(chatID) {
 	const message = await recommendUtil.getMessage('recommend');
+	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtil.getKeyboard(recommendUtil.keyboardTypes.CUISINE, message)).catch((error) => {
+		console.log(error);
+	});
+	/*const message = await recommendUtil.getMessage('recommend');
 	const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
 	await tgCaller.sendMessage(chatID, availCuisines);
 	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 		console.log(error);
-	});
+	});*/
 }
 
 async function handleUnknown(chatID) {

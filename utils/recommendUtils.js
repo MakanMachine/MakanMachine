@@ -8,12 +8,17 @@
 const KEYBOARD_TYPES = {
 	RECOMMEND: 'recommend',
 	LOCATION: 'location',
+	CUISINE: 'cuisine',
 };
 
 function getMessage(type, data) {
 	switch (type) {
 		case 'recommend':
-			return `Reply this message with the cuisine that you feel like having! E.g Korean`;
+			return "Do you want to search for restaurants by cuisine or MRT location?";
+		case 'cuisine':
+			return "Reply this message with the cuisine that you feel like having! E.g Korean";
+		case 'MRT':
+			return "Reply this message with the MRT station you want to search with! E.g Dhoby Ghaut";
 		case 'settings':
 			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
 		case 'help':
@@ -30,6 +35,9 @@ function getKeyboard(type) {
 			break;
 		case 'location':
 			return getRequestLocationReplyKeyboard();
+			break;
+		case 'cuisine':
+			return getCuisineMRTInlineKeyboard();
 			break;
 	}
 }
@@ -56,6 +64,18 @@ function getRequestLocationReplyKeyboard() {
 
 		[{
 			text: `No, thanks`,
+		}],
+	]
+}
+
+function getCuisineMRTInlineKeyboard() {
+	return [
+		[{
+			text: 'Cuisine',
+		}],
+
+		[{
+			text: 'MRT',
 		}],
 	]
 }
