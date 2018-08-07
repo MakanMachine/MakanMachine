@@ -30,8 +30,7 @@ async function handleMessageEvent(msgObj) {
 		} else if (isNotLocation(text)) {
 			console.log("Reply to not use location detected");
 			rpHandler.handleNoLocationReply(chatID, msgObj);
-		}
-		else {
+		} else {
 				console.log('Natural Language Detected:', text);
 	      	try {
 	        	let dfQueryResult = {};
@@ -68,8 +67,8 @@ function isLocation(msgObj) {
 	return is.propertyDefined(msgObj, 'location');
 }
 
-function isNotLocation(msgObj) {
-	if(msgObj == 'No, thanks') {
+function isNotLocation(text) {
+	if(text == 'No, thanks') {
 		return true;
 	} else {
 		return false;

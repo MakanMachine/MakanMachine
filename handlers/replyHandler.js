@@ -34,7 +34,7 @@ function handleReply(chatID, msgObj) {
 				handlePreferenceReply(chatID, firstName, msgObj);
 				break;
 			case (types.RECOMMEND):
-				handleRecommendReply(chatID, firstName, msgObj);
+				handleCuisineReply(chatID, firstName, msgObj);
 				break;
 			case (types.MRT):
 				handleMrtReply(chatID, firstName, msgObj);
@@ -66,7 +66,7 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 		}));
 }
 
-async function handleRecommendReply(chatID, firstName, msgObj) {
+async function handleCuisineReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	console.log("Preference updated: " + preference);
 	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', preference: preference});
@@ -97,7 +97,7 @@ function getReplyType(previousMsg) {
 			return types.PREFERENCE;
 		case 'Reply this message with the cuisine that you feel like having! E.g. Korean':
 			return types.RECOMMEND;
-		case 'Reply this message with the MRT station of your choice! E.g. Bugis':
+		case 'Reply this message with the MRT station you want to search with! E.g Dhoby Ghaut':
 			return types.MRT;
 		default:
 			console.log("Reply to message not supported");
@@ -107,23 +107,23 @@ function getReplyType(previousMsg) {
 
 // New function
 // Sends message based on type of recommend.
-// function handleRecommendReply(chatID, type) {
-// 	if(type == 'cuisine') {
-// 		const message = await recommendUtils.getMessage('recommend');
+function handleRecommendReply(chatID, type) {
+	if(type == 'cuisine') {
+		const message = await recommendUtils.getMessage('recommend');
 
-// 		const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
+		const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
 
-// 		await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, availCuisines);
-// 		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
-// 			console.log(error);
-// 		});
-// 	} else if(type == 'mrt') {
-// 		const message = await recommendUtils.getMessage('mrt');
-// 		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
-// 			console.log(error);
-// 		});
-// 	}
-// }
+		await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, availCuisines);
+		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
+			console.log(error);
+		});
+	} else if(type == 'mrt') {
+		const message = await recommendUtils.getMessage('mrt');
+		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
+			console.log(error);
+		});
+	}
+}
 
 async function handleMrtReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
