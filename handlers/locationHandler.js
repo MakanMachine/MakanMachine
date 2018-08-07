@@ -17,7 +17,7 @@ async function handleRecommendLocation(chatID, msgObj) {
     var long = msgObj.location.longitude;
     var lati = msgObj.location.latitude;
     var session = await cService.get(cService.cacheTables.SESSION, chatID);
-    const preference = session.cuisine;
+    const preference = session.preference;
     console.log("Preference updated:" + preference);
     const message = `Got it! Please wait while I get the list of restaurants!`;
     await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
