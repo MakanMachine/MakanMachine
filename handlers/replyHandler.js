@@ -107,7 +107,7 @@ function getReplyType(previousMsg) {
 
 async function handleRecommendReply(chatID, type) {
 	if(type == 'Cuisine') {
-		const message = await recommendUtils.getMessage('recommend');
+		const message = await recommendUtils.getMessage('cuisine');
 
 		const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
 
