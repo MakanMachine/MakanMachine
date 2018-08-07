@@ -105,7 +105,7 @@ function getReplyType(previousMsg) {
 	}
 }
 
-function handleRecommendReply(chatID, type) {
+async function handleRecommendReply(chatID, type) {
 	if(type == 'Cuisine') {
 		const message = await recommendUtils.getMessage('recommend');
 
