@@ -50,6 +50,9 @@ function handleReplyIntent(chatID, firstName, dfObj) {
 		case (types.CUISINE):
 			handleCuisineReply(chatID, firstName, dfObj);
 			break;
+		case (types.MRT):
+			handleMrtReply(chatID, firstName, dfObj);
+			break;
 		default:
 			break;
 	}
@@ -108,9 +111,7 @@ function getReplyType(previousMsg) {
 async function handleRecommendReply(chatID, type) {
 	if(type == 'Cuisine') {
 		const message = await recommendUtils.getMessage('cuisine');
-
 		const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
-
 		await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, availCuisines);
 		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
