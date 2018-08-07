@@ -16,6 +16,7 @@ const types = {
 	PREFERENCE: 'preference',
 	RECOMMEND: 'recommend',
 	LOCATION: 'location',
+	MRT： 'mrt',
 }
 
 function handleReply(chatID, msgObj) {
@@ -35,6 +36,8 @@ function handleReply(chatID, msgObj) {
 			case (types.RECOMMEND):
 				handleRecommendReply(chatID, firstName, msgObj);
 				break;
+			case (types.MRT):
+				handleMrtReply(chatID, firstName, msgObj);
 			default:
 				break;
 		}
@@ -66,7 +69,7 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 async function handleRecommendReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	console.log("Preference updated: " + preference);
-	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', cuisine: preference});
+	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', preference: preference});
 	var message = `Send me your location if you would like me to search using your current location.`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 		console.log(error);
@@ -75,7 +78,7 @@ async function handleRecommendReply(chatID, firstName, msgObj) {
 
 async function handleNoLocationReply(chatID, msgObj) {
 	var session = await cService.get(cService.cacheTables.SESSION, chatID);
-    const preference = session.cuisine;
+    const preference = session.preference;
     const message = `Got it! Please wait while I get the list of restaurants!`;
     await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
         console.log(error);
@@ -92,12 +95,51 @@ function getReplyType(previousMsg) {
 	switch(previousMsg) {
 		case 'Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese':
 			return types.PREFERENCE;
-		case 'Reply this message with the cuisine that you feel like having! E.g Korean':
+		case 'Reply this message with the cuisine that you feel like having! E.g. Korean':
 			return types.RECOMMEND;
+		case 'Reply this message with the MRT station of your choice! E.g. Bugis':
+			return types.MRT;
 		default:
 			console.log("Reply to message not supported");
 			return null;
 	}
+}
+
+// New function
+// Sends message based on type of recommend.
+// function handleRecommendReply(chatID, type) {
+// 	if(type == 'cuisine') {
+// 		const message = await recommendUtils.getMessage('recommend');
+
+// 		const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
+
+// 		await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, availCuisines);
+// 		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
+// 			console.log(error);
+// 		});
+// 	} else if(type == 'mrt') {
+// 		const message = await recommendUtils.getMessage('mrt');
+// 		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
+// 			console.log(error);
+// 		});
+// 	}
+// }
+
+async function handleMrtReply(chatID, firstName, msgObj) {
+	const preference = msgObj.text.split(' ')[0];
+	console.log("Preference updated: " + preference);
+	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', preference: preference});
+	const message = `Got it! Please wait while I get the list of restaurants!`;
+	await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
+        console.log(error);
+    });
+    try {
+        const chatData = {chat_id: chatID};
+        await rHandler.handleRestaurants(rHandler.types.START, chatData, {user_pref: preference});
+    } catch (error) {
+        console.log(error);
+    }
+	
 }
 
 module.exports = {
