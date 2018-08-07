@@ -16,9 +16,9 @@ function getMessage(type, data) {
 		case 'recommend':
 			return "Do you want to search for restaurants by cuisine or MRT location?";
 		case 'cuisine':
-			return "Reply this message with the cuisine that you feel like having! E.g Korean";
+			return "Reply this message with the cuisine that you feel like having! E.g. Korean";
 		case 'mrt':
-			return "Reply this message with the MRT station you want to search with! E.g Dhoby Ghaut";
+			return "Reply this message with the MRT station of your choice! E.g. Dhoby Ghaut";
 		case 'settings':
 			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
 		case 'help':

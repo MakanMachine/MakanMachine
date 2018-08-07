@@ -30,6 +30,8 @@ async function handleMessageEvent(msgObj) {
 		} else if (isNotLocation(text)) {
 			console.log("Reply to not use location detected");
 			rpHandler.handleNoLocationReply(chatID, msgObj);
+		} else if (isRecommendType(text)) {
+			rpHandler.handleRecommendReply(chatID, text);
 		} else {
 				console.log('Natural Language Detected:', text);
 	      	try {
@@ -73,6 +75,13 @@ function isNotLocation(text) {
 	} else {
 		return false;
 	}
+}
+
+function isRecommendType(text) {
+	if(text == 'MRT' || text == 'Cuisine')
+		return true;
+	else
+		return false;
 }
 
 module.exports = {

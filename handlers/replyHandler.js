@@ -14,7 +14,7 @@ const is = require('is_js');
 
 const types = {
 	PREFERENCE: 'preference',
-	RECOMMEND: 'recommend',
+	CUISINE: 'cuisine',
 	LOCATION: 'location',
 	MRT： 'mrt',
 }
@@ -33,7 +33,7 @@ function handleReply(chatID, msgObj) {
 			case (types.PREFERENCE):
 				handlePreferenceReply(chatID, firstName, msgObj);
 				break;
-			case (types.RECOMMEND):
+			case (types.CUISINE):
 				handleCuisineReply(chatID, firstName, msgObj);
 				break;
 			case (types.MRT):
@@ -47,8 +47,8 @@ function handleReply(chatID, msgObj) {
 function handleReplyIntent(chatID, firstName, dfObj) {
 	const type = dfObj.type;
 	switch (type) {
-		case (types.RECOMMEND):
-			handleRecommendReply(chatID, firstName, dfObj);
+		case (types.CUISINE):
+			handleCuisineReply(chatID, firstName, dfObj);
 			break;
 		default:
 			break;
@@ -69,7 +69,7 @@ async function handlePreferenceReply(chatID, firstName, msgObj) {
 async function handleCuisineReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	console.log("Preference updated: " + preference);
-	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', preference: preference});
+	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'cuisine', preference: preference});
 	var message = `Send me your location if you would like me to search using your current location.`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 		console.log(error);
@@ -96,8 +96,8 @@ function getReplyType(previousMsg) {
 		case 'Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese':
 			return types.PREFERENCE;
 		case 'Reply this message with the cuisine that you feel like having! E.g. Korean':
-			return types.RECOMMEND;
-		case 'Reply this message with the MRT station you want to search with! E.g Dhoby Ghaut':
+			return types.CUISINE;
+		case 'Reply this message with the MRT station of your choice! E.g. Dhoby Ghaut':
 			return types.MRT;
 		default:
 			console.log("Reply to message not supported");
@@ -105,10 +105,8 @@ function getReplyType(previousMsg) {
 	}
 }
 
-// New function
-// Sends message based on type of recommend.
 function handleRecommendReply(chatID, type) {
-	if(type == 'cuisine') {
+	if(type == 'Cuisine') {
 		const message = await recommendUtils.getMessage('recommend');
 
 		const availCuisines = "The available cuisines are: American, Argentinean, Asian, Beer, Chinese, Desserts, English, European, French, German, Indian, Indochinese, Indonesian, International, Italian, Japanese, Korean, Malay, Mexican, Thai, Turkish, Vegetarian, Vietnamese, Western";
@@ -117,8 +115,10 @@ function handleRecommendReply(chatID, type) {
 		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
 		});
-	} else if(type == 'mrt') {
+	} else if(type == 'MRT') {
 		const message = await recommendUtils.getMessage('mrt');
+		const availMrts = "Choose from any MRT station in Singapore!";
+		await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, availMrts);
 		await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
 		});
@@ -126,9 +126,9 @@ function handleRecommendReply(chatID, type) {
 }
 
 async function handleMrtReply(chatID, firstName, msgObj) {
-	const preference = msgObj.text.split(' ')[0];
+	const preference = msgObj.text.trim();
 	console.log("Preference updated: " + preference);
-	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'recommend', preference: preference});
+	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'mrt', preference: preference});
 	const message = `Got it! Please wait while I get the list of restaurants!`;
 	await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
         console.log(error);
@@ -146,4 +146,5 @@ module.exports = {
 	handleReply,
 	handleReplyIntent,
 	handleNoLocationReply,
+	handleRecommendReply,
 }
