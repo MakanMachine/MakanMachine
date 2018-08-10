@@ -78,9 +78,15 @@ async function handleUnknown(chatID) {
 // Edit this function to tell user to type in 3 cuisines separated with commas (Eg. American, Chinese, Japanese). Then use that
 // msgObj and call updateUser from userpref.
 async function handleSettings(chatID) {
+	var user = await userpref.getUser(chatID);
+	if (user.cuisine) {
+		var currPrefMsg = `Your current preferences are: ${user.cuisine.toString()}\n`;
+	} else {
+		var currPrefMsg = `You have not yet configured your preferences.\n\n`
+	}
 	const message = await recommendUtil.getMessage('settings');
 	await tgCaller.sendMessage(chatID, availCuisines);
-	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
+	await tgCaller.sendMessageWithForcedReply(chatID, currPrefMsg + message).catch((error) => {
 			console.log(error);
 		});
 }
