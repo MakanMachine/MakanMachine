@@ -80,13 +80,18 @@ async function handleUnknown(chatID) {
 async function handleSettings(chatID) {
 	var user = await userpref.getUser(chatID);
 	if (user.cuisine) {
-		var currPrefMsg = `Your current preferences are: ${user.cuisine.toString()}\n\n`;
+		var currPrefMsg = `Your current preferences are: ${user.cuisine.toString()}`;
 	} else {
-		var currPrefMsg = `You have not yet configured your preferences.\n\n`
+		var currPrefMsg = `You have not yet configured your preferences.`
 	}
 	const message = await recommendUtil.getMessage('settings');
-	await tgCaller.sendMessage(chatID, availCuisines);
-	await tgCaller.sendMessageWithForcedReply(chatID, currPrefMsg + message).catch((error) => {
+	await tgCaller.sendMessage(chatID, availCuisines).catch((error) => {
+			console.log(error);
+		});;
+	await tgCaller.sendMessage(chatID, currPrefMsg).catch((error) => {
+			console.log(error);
+		});;
+	await tgCaller.sendMessageWithForcedReply(chatID, message).catch((error) => {
 			console.log(error);
 		});
 }
