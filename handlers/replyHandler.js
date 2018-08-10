@@ -96,7 +96,7 @@ async function handleNoLocationReply(chatID, msgObj) {
 
 function getReplyType(previousMsg) {
 	switch(previousMsg) {
-		case 'Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese':
+		case 'If you wish to edit your preferences, please *reply* to this message in the following format, up to a maximum of 3 cuisines E.g. American, Chinese, Japanese':
 			return types.PREFERENCE;
 		case 'Reply this message with the cuisine that you feel like having! E.g. Korean':
 			return types.CUISINE;

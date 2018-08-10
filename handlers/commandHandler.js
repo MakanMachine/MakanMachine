@@ -80,7 +80,7 @@ async function handleUnknown(chatID) {
 async function handleSettings(chatID) {
 	var user = await userpref.getUser(chatID);
 	if (user.cuisine) {
-		var currPrefMsg = `Your current preferences are: ${user.cuisine.toString()}\n`;
+		var currPrefMsg = `Your current preferences are: ${user.cuisine.toString()}\n\n`;
 	} else {
 		var currPrefMsg = `You have not yet configured your preferences.\n\n`
 	}
