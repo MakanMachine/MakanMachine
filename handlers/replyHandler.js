@@ -73,7 +73,7 @@ async function handleCuisineReply(chatID, firstName, msgObj) {
 	const preference = msgObj.text.split(' ')[0];
 	console.log("Preference updated: " + preference);
 	await cService.set(cService.cacheTables.SESSION, chatID, {type: 'cuisine', preference: preference});
-	var message = `Send me your location if you would like me to search using your current location.`;
+	var message = `Send me your location if you would like me to search using your current location.\n\nAlternatively, you can also choose to send me any location by clicking the \u{1F4CE} icon below.`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtils.getKeyboard(recommendUtils.keyboardTypes.LOCATION, preference)).catch(error => {
 		console.log(error);
 	});

@@ -43,7 +43,7 @@ async function surprise(options) {
             console.log(`Result: ${result.name}`);
             message = `*${result.name}*\n_${result.cuisine.toString()}_\n\nAddress: ${result.address}\nOpening hours:\n${result.opening_hours}\nNearest MRT: ${result.nearest_mrt}\nGoogle Maps: [View Map](${result.map_url})`;
         } else {
-            message = `Oops! We could not find you a restaurant based on your preferences. Run /settings to edit your preferences!`;
+            message = `Sorry, I could not find you a restaurant based on your settings. Run /settings to edit your preferences!`;
         }
     }
     return message;
