@@ -105,7 +105,7 @@ async function handleSurprise(chatID) {
 
 async function handleSurpriseNearby(chatID) {
 	await cService.set(cService.cacheTables.SESSION, chatID, {type: `surprise`});
-	var message = `Please click the button below to send me your location!`;
+	var message = `Please click the button below to send me your location!\n\nAlternatively, you can also choose to send me any location by clicking the \u{1F4CE} icon below.`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtil.getKeyboard(recommendUtil.keyboardTypes.LOCATION)).catch(error => {
 		console.log(error);
 	});
