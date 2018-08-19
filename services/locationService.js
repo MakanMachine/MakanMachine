@@ -10,7 +10,7 @@ async function filterLocation(content, long, lati) {
     const dataSet = Geo.createCompactSet(content, {id: '_id', lat: 'lat', lon: 'lng'});
     console.log(`dataSet: ${dataSet}`);
     const geo = new Geo(dataSet, {sorted: true});
-    const nearby = geo.nearBy(lati, long, 5000);
+    const nearby = geo.nearBy(lati, long, 2000);
     return nearby;
 }
 
