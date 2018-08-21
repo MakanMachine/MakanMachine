@@ -98,7 +98,7 @@ async function handleSettings(chatID) {
 
 async function handleSurprise(chatID) {
 	const message = await sService.surprise({chatID: chatID});
-	await tgCaller.sendMessage(chatID, message, {parse_mode: 'markdown'}).catch((error) => {
+	await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message, {parse_mode: 'markdown'}).catch((error) => {
 		console.log(error);
 	});
 }
