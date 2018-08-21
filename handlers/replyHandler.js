@@ -87,7 +87,7 @@ async function handleNoLocationReply(chatID, msgObj) {
 		await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message, {parse_mode: 'markdown'}).catch((error) => {
 			console.log(error);
 		});
-	} else if (session.type == 'recommend') {
+	} else if (session.type == 'cuisine') {
 	    const preference = session.preference;
 	    const message = `Got it! Please wait while I get the list of restaurants!`;
 	    await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {

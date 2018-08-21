@@ -14,7 +14,7 @@ const KEYBOARD_TYPES = {
 function getMessage(type, data) {
 	switch (type) {
 		case 'recommend':
-			return "Do you want to search for restaurants by cuisine or MRT location?";
+			return "Do you want to search for restaurants by cuisine or MRT station?";
 		case 'cuisine':
 			return "Reply this message with the cuisine that you feel like having! E.g. Korean";
 		case 'mrt':

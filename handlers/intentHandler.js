@@ -30,7 +30,6 @@ async function handleIntent(chatID, dfQueryResult, userQuery, msgObj) {
                 break;
 
                 case 'surprise_me':
-                await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
                 await cHandler.handleCommand(chatID, msgObj, 'surprise_me');
                 break;
                 

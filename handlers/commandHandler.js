@@ -102,7 +102,7 @@ async function handleSettings(chatID) {
 
 async function handleSurprise(chatID) {
 	await cService.set(cService.cacheTables.SESSION, chatID, {type: `surprise`});
-	var message = `Please click the button below to send me your location!\n\nAlternatively, you can also choose to send me any location by clicking the \u{1F4CE} icon below.`;
+	var message = `Please click the button below if you wish to search by your location!\n\nAlternatively, you can also choose to send me any location by clicking the \u{1F4CE} icon below.`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtil.getKeyboard(recommendUtil.keyboardTypes.LOCATION)).catch(error => {
 		console.log(error);
 	});
