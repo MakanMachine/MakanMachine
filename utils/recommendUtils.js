@@ -22,7 +22,7 @@ function getMessage(type, data) {
 		case 'settings':
 			return "If you wish to edit your preferences, please *reply* to this message in the following format, up to a maximum of 3 cuisines. E.g. American, Chinese, Japanese";
 		case 'help':
-			return "Makan Machine recommends you restaurants to dine at based on your preferred cuisines!\n\nType /recommend or simply tell the bot the cuisine you are craving for recommendations now!\n\nFor those who are unsure of the cuisine you want, head on over to /settings to key in your all-time favourite cuisines and let /surprise_me choose a random restuarant for you!";
+			return `Makan Machine recommends you restaurants to dine at based on your preferred cuisines!\n\nType /recommend or simply tell the bot the cuisine you are craving for recommendations now!\n\nFor those who are unsure of the cuisine you want, head on over to /settings to key in your all-time favourite cuisines and let /surprise_me choose a random restuarant for you!\n\nAlternatively, you can try conversing with me by typing something like "Find me a Japanese restaurant in Bugis" or "Surprise"`;
 		case 'unknown':
 			return "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
 	}
