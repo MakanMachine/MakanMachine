@@ -9,8 +9,9 @@ const cService = require('../cache/cacheService');
 const lService = require('../services/locationService');
 const msgFormatter = require('../formatters/messageFormatter');
 const recommendUtils = require('../utils/recommendUtils');
-const rHandler = require('../handlers/restaurantHandler');
+const rHandler = require('./restaurantHandler');
 const is = require('is_js');
+const cHandler = require('./commandHandler');
 
 const types = {
 	PREFERENCE: 'preference',
@@ -81,17 +82,21 @@ async function handleCuisineReply(chatID, firstName, msgObj) {
 
 async function handleNoLocationReply(chatID, msgObj) {
 	var session = await cService.get(cService.cacheTables.SESSION, chatID);
-    const preference = session.preference;
-    const message = `Got it! Please wait while I get the list of restaurants!`;
-    await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
-        console.log(error);
-    });
-    try {
-        const chatData = {chat_id: chatID};
-        await rHandler.handleRestaurants(rHandler.types.START, chatData, {user_pref: preference});
-    } catch (error) {
-        console.log(error);
-    }
+	if(session.type == 'surprise') {
+		cHandler.handleCommand(chatID, msgObj, 'surprise_me');
+	} else if (session.type == 'recommend') {
+	    const preference = session.preference;
+	    const message = `Got it! Please wait while I get the list of restaurants!`;
+	    await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message).catch((error) => {
+	        console.log(error);
+	    });
+	    try {
+	        const chatData = {chat_id: chatID};
+	        await rHandler.handleRestaurants(rHandler.types.START, chatData, {user_pref: preference});
+	    } catch (error) {
+	        console.log(error);
+	    }
+	}
 }
 
 function getReplyType(previousMsg) {
