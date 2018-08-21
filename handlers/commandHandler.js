@@ -31,9 +31,6 @@ function handleCommand(chatID, msgObj, command) {
 		case 'surprise_me':
 			handleSurprise(chatID);
 			break;
-		case 'surprise_me_nearby':
-			handleSurpriseNearby(chatID);
-			break;
 		default:
 			handleUnknown(chatID);
 			break;
@@ -96,14 +93,14 @@ async function handleSettings(chatID) {
 		});
 }
 
-async function handleSurprise(chatID) {
-	const message = await sService.surprise({chatID: chatID});
-	await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message, {parse_mode: 'markdown'}).catch((error) => {
-		console.log(error);
-	});
-}
+// async function handleSurprise(chatID) {
+// 	const message = await sService.surprise({chatID: chatID});
+// 	await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message, {parse_mode: 'markdown'}).catch((error) => {
+// 		console.log(error);
+// 	});
+// }
 
-async function handleSurpriseNearby(chatID) {
+async function handleSurprise(chatID) {
 	await cService.set(cService.cacheTables.SESSION, chatID, {type: `surprise`});
 	var message = `Please click the button below to send me your location!\n\nAlternatively, you can also choose to send me any location by clicking the \u{1F4CE} icon below.`;
 	await tgCaller.sendMessageWithReplyKeyboard(chatID, message, recommendUtil.getKeyboard(recommendUtil.keyboardTypes.LOCATION)).catch(error => {

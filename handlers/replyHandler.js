@@ -11,7 +11,7 @@ const msgFormatter = require('../formatters/messageFormatter');
 const recommendUtils = require('../utils/recommendUtils');
 const rHandler = require('./restaurantHandler');
 const is = require('is_js');
-const cHandler = require('./commandHandler');
+const sService = require('../services/surpriseService');
 
 const types = {
 	PREFERENCE: 'preference',
@@ -83,7 +83,10 @@ async function handleCuisineReply(chatID, firstName, msgObj) {
 async function handleNoLocationReply(chatID, msgObj) {
 	var session = await cService.get(cService.cacheTables.SESSION, chatID);
 	if(session.type == 'surprise') {
-		cHandler.handleCommand(chatID, msgObj, 'surprise_me');
+		const message = await sService.surprise({chatID: chatID});
+		await tgCaller.sendMessageWithReplyKeyboardRemoved(chatID, message, {parse_mode: 'markdown'}).catch((error) => {
+			console.log(error);
+		});
 	} else if (session.type == 'recommend') {
 	    const preference = session.preference;
 	    const message = `Got it! Please wait while I get the list of restaurants!`;
