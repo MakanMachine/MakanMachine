@@ -41,7 +41,12 @@ async function surprise(options) {
         if(result) {
             console.log(`User: ${user}.`);
             console.log(`Result: ${result.name}`);
-            message = `*${result.name}*\n_${result.cuisine.toString()}_\n\nAddress: ${result.address}\nOpening hours:\n${result.opening_hours}\nNearest MRT: ${result.nearest_mrt}\nGoogle Maps: [View Map](${result.map_url})`;
+            var cuisineStr = result.cuisine[0];
+            var length = result.cuisine.length;
+            for(var i=1, i<length, i++) {
+                cuisineStr = cuisineStr + ', ' + result.cuisine[i];
+            }
+            message = `*${result.name}*\n_${cuisineStr}_\n\nAddress: ${result.address}\nOpening hours:\n${result.opening_hours}\nNearest MRT: ${result.nearest_mrt}\nGoogle Maps: [View Map](${result.map_url})`;
         } else {
             message = `Sorry, I could not find you a restaurant based on your settings. Run /settings to edit your preferences!`;
         }
