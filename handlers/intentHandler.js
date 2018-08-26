@@ -17,16 +17,19 @@ async function handleIntent(chatID, dfQueryResult, userQuery, msgObj) {
                 
                 case 'recommend_cuisine':
                 await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
-                await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: dfQueryResult.parameters.fields.cuisine.stringValue, type: 'recommend'});
+                await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: dfQueryResult.parameters.fields.cuisine.stringValue, type: 'cuisine'});
                 break;
 
-                // case 'recommend_cuisine_location':
-                // await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
-                // await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: dfQueryResult.parameters.fields.cuisine.stringValue, type: 'recommend'});
-                // break;
+                case 'recommend_mrt':
+                await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
+                await rHandler.handleReplyIntent(chatID, msgObj.chat.first_name, {text: dfQueryResult.parameters.fields.mrt_station.stringValue, type: 'mrt'});
+                break;
+
+                case 'recommend':
+                await cHandler.handleCommand(chatID, msgObj, 'recommend');
+                break;
 
                 case 'surprise_me':
-                await tgCaller.sendMessage(chatID, dfQueryResult.fulfillmentText);
                 await cHandler.handleCommand(chatID, msgObj, 'surprise_me');
                 break;
                 

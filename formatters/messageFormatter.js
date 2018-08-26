@@ -88,13 +88,13 @@ function getMessageForListView(restaurants, totalRestaurants, pageNo, lastPageNo
 		message += getMessageForRestaurantList(restaurants);
 	}
 	else {
-		message = "Oh no, there are no restaurants I can recommend! Maybe you want to try another cuisine?";
+		message = "Oh no, there are no restaurants I can recommend! Maybe you would like to try something else?";
 	}
 	return message;
 }
 
 function getMessageForEmptyPage() {
-	return ("Oh no! So sorry but I could not find any restaurants to recommend! Why not try another cuisine?");
+	return ("Oh no! So sorry but I could not find any restaurants to recommend! Why not try something else?");
 }
 
 module.exports = {

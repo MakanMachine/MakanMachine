@@ -8,19 +8,24 @@
 const KEYBOARD_TYPES = {
 	RECOMMEND: 'recommend',
 	LOCATION: 'location',
+	CUISINE: 'cuisine',
 };
 
 function getMessage(type, data) {
 	switch (type) {
 		case 'recommend':
-			return `Reply this message with the cuisine that you feel like having! E.g Korean`;
+			return "Do you want to search for restaurants by cuisine or MRT station?";
+		case 'cuisine':
+			return "Reply this message with the cuisine that you feel like having! E.g. Korean";
+		case 'mrt':
+			return "Reply this message with the MRT station of your choice! E.g. Dhoby Ghaut";
 		case 'settings':
-			return "Please type in a maximum of 3 cuisines that you prefer, with a comma separating each cuisine! Eg. American, Chinese, Japanese";
+			return "If you wish to edit your preferences, please *reply* to this message in the following format, up to a maximum of 3 cuisines. E.g. American, Chinese, Japanese";
 		case 'help':
-			return "Makan Machine recommends you restaurants to dine at based on your preferred cuisines!\nType /recommend or tell the bot the cuisine you are craving for recommendations now!\n\nFor those who are unsure of cuisine you want, head on over to /settings to key in your all time favourite cuisines and let /surprise_me choose a random restuarant for you!";
+			return "Makan Machine recommends you restaurants to dine at based on your preferred cuisines!\n\nType /recommend or simply tell the bot the cuisine you are craving for recommendations now!\n\nFor those who are unsure of the cuisine you want, head on over to /settings to key in your all-time favourite cuisines and let /surprise_me choose a random restuarant for you!";
 		case 'unknown':
 			return "Ah? Sorry I don't understand. Type /help to see the commands available or type /recommend to get a restaurant recommendation!";
-		}
+	}
 }
 
 function getKeyboard(type) {
@@ -30,6 +35,9 @@ function getKeyboard(type) {
 			break;
 		case 'location':
 			return getRequestLocationReplyKeyboard();
+			break;
+		case 'cuisine':
+			return getCuisineMRTInlineKeyboard();
 			break;
 	}
 }
@@ -56,6 +64,18 @@ function getRequestLocationReplyKeyboard() {
 
 		[{
 			text: `No, thanks`,
+		}],
+	]
+}
+
+function getCuisineMRTInlineKeyboard() {
+	return [
+		[{
+			text: 'Cuisine',
+		}],
+
+		[{
+			text: 'MRT',
 		}],
 	]
 }
